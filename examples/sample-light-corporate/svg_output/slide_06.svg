@@ -1,0 +1,28 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/></g>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="6" height="720" fill="#1D4ED8" />
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="#F8FAFC" />
+    <text x="1184" y="710" font-family="Calibri, Arial, sans-serif" font-size="12" fill="#CBD5E1" text-anchor="end">06 / 08</text>
+  </g>
+  <g id="content-title-06">
+    <text x="96" y="108" font-family="Calibri, Arial, sans-serif" font-size="44" font-weight="700" fill="#0F172A">Technology Stack</text>
+    <rect x="96" y="118" width="80" height="4" fill="#1D4ED8"/>
+  </g>
+  <g id="content-body-06">
+    <rect x="80" y="148" width="1120" height="56" rx="8" fill="#F8FAFC"/>
+    <text x="120" y="183" font-family="Calibri, Arial, sans-serif" font-size="22" fill="#1D4ED8">&#x2022;</text>
+    <text x="148" y="183" font-family="Calibri, Arial, sans-serif" font-size="22" fill="#334155">Cloud-native microservices architecture</text>
+    <rect x="80" y="212" width="1120" height="56" rx="8" fill="#CBD5E1"/>
+    <text x="120" y="247" font-family="Calibri, Arial, sans-serif" font-size="22" fill="#1D4ED8">&#x2022;</text>
+    <text x="148" y="247" font-family="Calibri, Arial, sans-serif" font-size="22" fill="#334155">Apache Kafka for stream processing</text>
+    <rect x="80" y="276" width="1120" height="56" rx="8" fill="#F8FAFC"/>
+    <text x="120" y="311" font-family="Calibri, Arial, sans-serif" font-size="22" fill="#1D4ED8">&#x2022;</text>
+    <text x="148" y="311" font-family="Calibri, Arial, sans-serif" font-size="22" fill="#334155">ML models updated every 24 hours</text>
+    <rect x="80" y="340" width="1120" height="56" rx="8" fill="#CBD5E1"/>
+    <text x="120" y="375" font-family="Calibri, Arial, sans-serif" font-size="22" fill="#1D4ED8">&#x2022;</text>
+    <text x="148" y="375" font-family="Calibri, Arial, sans-serif" font-size="22" fill="#334155">SOC 2 Type II certified</text>
+  </g>
+</svg>

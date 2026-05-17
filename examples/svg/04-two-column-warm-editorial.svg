@@ -1,0 +1,38 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background-04">
+    <rect x="0" y="0" width="1280" height="720" fill="#FDF6EE" />
+  </g>
+  <g id="chrome-stripe-04">
+    <rect x="0" y="0" width="6" height="720" fill="#EA580C" />
+  </g>
+  <g id="content-title-04">
+    <text x="96" y="86" font-family="Georgia, serif" font-size="38" font-weight="700" fill="#1C1917">Tradition vs Innovation</text>
+    <rect x="96" y="100" width="60" height="3" fill="#EA580C" />
+  </g>
+  <g id="content-left-04">
+    <rect x="80" y="130" width="555" height="540" rx="12" fill="#FFFBF5" />
+    <text x="120" y="180" font-family="Georgia, serif" font-size="14" font-weight="700" fill="#EA580C" letter-spacing="2">SIDE A</text>
+    <text x="120" y="232" font-family="Georgia, serif" font-size="34" font-weight="700" font-style="italic" fill="#1C1917">Tradition</text>
+    <line x1="120" y1="252" x2="595" y2="252" stroke="#D6D3D1" stroke-width="1" />
+    <text x="120" y="306" font-family="Georgia, serif" font-size="20" fill="#57534E">Centuries of refinement.</text>
+    <text x="120" y="338" font-family="Georgia, serif" font-size="20" fill="#57534E">Trusted patterns, proven over</text>
+    <text x="120" y="370" font-family="Georgia, serif" font-size="20" fill="#57534E">generations of practitioners.</text>
+    <text x="120" y="450" font-family="Georgia, serif" font-size="18" font-style="italic" fill="#57534E">"What worked yesterday may</text>
+    <text x="120" y="478" font-family="Georgia, serif" font-size="18" font-style="italic" fill="#57534E">still work tomorrow."</text>
+  </g>
+  <g id="content-right-04">
+    <rect x="648" y="130" width="555" height="540" rx="12" fill="#FFFBF5" />
+    <text x="688" y="180" font-family="Georgia, serif" font-size="14" font-weight="700" fill="#EA580C" letter-spacing="2">SIDE B</text>
+    <text x="688" y="232" font-family="Georgia, serif" font-size="34" font-weight="700" font-style="italic" fill="#1C1917">Innovation</text>
+    <line x1="688" y1="252" x2="1163" y2="252" stroke="#D6D3D1" stroke-width="1" />
+    <text x="688" y="306" font-family="Georgia, serif" font-size="20" fill="#57534E">New tools shift the ground</text>
+    <text x="688" y="338" font-family="Georgia, serif" font-size="20" fill="#57534E">beneath us — and open doors</text>
+    <text x="688" y="370" font-family="Georgia, serif" font-size="20" fill="#57534E">that were shut yesterday.</text>
+    <text x="688" y="450" font-family="Georgia, serif" font-size="18" font-style="italic" fill="#57534E">"The cost of standing still</text>
+    <text x="688" y="478" font-family="Georgia, serif" font-size="18" font-style="italic" fill="#57534E">is no longer zero."</text>
+  </g>
+  <g id="chrome-footer-04">
+    <rect x="0" y="688" width="1280" height="32" fill="#FFFBF5" />
+    <text x="1184" y="708" font-family="Georgia, serif" font-size="12" fill="#A8A29E" text-anchor="end">04 / 12</text>
+  </g>
+</svg>

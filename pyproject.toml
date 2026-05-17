@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "slide-skill"
+version = "3.0.0"
+description = "SVG-first slide generation toolkit with intelligent content planning and domain-specific layouts"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [
+    { name = "icgma" },
+]
+keywords = ["pptx", "powerpoint", "slides", "svg", "presentation", "ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Graphics :: Presentation",
+    "Topic :: Office/Business :: Office Suites",
+    "Typing :: Typed",
+]
+dependencies = [
+    "lxml>=6.1.0",
+    "python-pptx>=1.0.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "build>=1.2.0",
+]
+image = [
+    "openai>=2.33.0",
+    "requests>=2.31.0",
+]
+audio = [
+    "edge-tts>=7.2.8",
+]
+mimo = [
+    "openai>=2.33.0",
+]
+pdf = [
+    "fpdf2>=2.8.0",
+]
+geometry = [
+    "svgpathtools>=1.7.2",
+]
+all = [
+    "slide-skill[dev,image,audio,mimo,pdf,geometry]",
+]
+
+[project.urls]
+Homepage = "https://github.com/icgma/slide-skill"
+Repository = "https://github.com/icgma/slide-skill"
+Documentation = "https://icgma.github.io/slide-skill"
+Issues = "https://github.com/icgma/slide-skill/issues"
+
+[project.scripts]
+slide-skill = "slide_skill.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["tools/slide/src"]
+
+[tool.setuptools.package-dir]
+"" = "tools/slide/src"
+
+[tool.pytest.ini_options]
+pythonpath = ["tools/slide/src"]
+testpaths = ["tests"]

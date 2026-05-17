@@ -1,0 +1,28 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="close-orb-08" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#0F172A"/></g>
+  <g id="decor-08">
+    <circle cx="640" cy="360" r="380" fill="url(#close-orb-08)"/>
+  </g>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="6" height="720" fill="#3B82F6" />
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="#1E293B" />
+    <text x="1184" y="710" font-family="Aptos, Arial, sans-serif" font-size="12" fill="#334155" text-anchor="end">08 / 08</text>
+  </g>
+  <g id="content-eyebrow-08">
+    <line x1="608" y1="250" x2="672" y2="250" stroke="#3B82F6" stroke-width="2"/>
+  </g>
+  <g id="content-title-08">
+    <text x="640" y="330" font-family="Aptos, Arial, sans-serif" font-size="68" font-weight="700" fill="#F1F5F9" text-anchor="middle">Why Now</text>
+  </g>
+  <g id="content-body-08">
+    <text x="640" y="390" font-family="Aptos, Arial, sans-serif" font-size="22" fill="#94A3B8" text-anchor="middle">The convergence of affordable cloud compute, mature ML tooling, and regulatory pressure on data governance creates a unique window for market leadership.</text>
+  </g>
+</svg>

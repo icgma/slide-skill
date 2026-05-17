@@ -1,0 +1,36 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background-03">
+    <rect x="0" y="0" width="1280" height="720" fill="#F1F5F9" />
+  </g>
+  <g id="chrome-stripe-03">
+    <rect x="0" y="0" width="6" height="720" fill="#0284C7" />
+  </g>
+  <g id="content-title-03">
+    <text x="96" y="100" font-family="Roboto, Arial, sans-serif" font-size="44" font-weight="700" fill="#0F172A">2025 Performance</text>
+    <rect x="96" y="118" width="80" height="4" fill="#0284C7" />
+    <text x="96" y="156" font-family="Roboto, Arial, sans-serif" font-size="18" fill="#475569">A record year across customer, revenue, and product metrics</text>
+  </g>
+  <g id="content-metric-03">
+    <rect x="80" y="200" width="356" height="440" rx="16" fill="#FFFFFF" />
+    <rect x="80" y="200" width="356" height="6" rx="3" fill="#0284C7" />
+    <text x="258" y="380" font-family="Roboto, Arial, sans-serif" font-size="84" font-weight="700" fill="#0284C7" text-anchor="middle">87%</text>
+    <text x="258" y="430" font-family="Roboto, Arial, sans-serif" font-size="20" font-weight="600" fill="#0F172A" text-anchor="middle">Customer Retention</text>
+    <text x="258" y="460" font-family="Roboto, Arial, sans-serif" font-size="16" fill="#475569" text-anchor="middle">Up from 71% last year</text>
+
+    <rect x="462" y="200" width="356" height="440" rx="16" fill="#FFFFFF" />
+    <rect x="462" y="200" width="356" height="6" rx="3" fill="#0284C7" />
+    <text x="640" y="380" font-family="Roboto, Arial, sans-serif" font-size="76" font-weight="700" fill="#0284C7" text-anchor="middle">$2.4M</text>
+    <text x="640" y="430" font-family="Roboto, Arial, sans-serif" font-size="20" font-weight="600" fill="#0F172A" text-anchor="middle">Annual Recurring Revenue</text>
+    <text x="640" y="460" font-family="Roboto, Arial, sans-serif" font-size="16" fill="#475569" text-anchor="middle">3x year-over-year growth</text>
+
+    <rect x="844" y="200" width="356" height="440" rx="16" fill="#FFFFFF" />
+    <rect x="844" y="200" width="356" height="6" rx="3" fill="#0284C7" />
+    <text x="1022" y="380" font-family="Roboto, Arial, sans-serif" font-size="84" font-weight="700" fill="#0284C7" text-anchor="middle">12k</text>
+    <text x="1022" y="430" font-family="Roboto, Arial, sans-serif" font-size="20" font-weight="600" fill="#0F172A" text-anchor="middle">Active Users</text>
+    <text x="1022" y="460" font-family="Roboto, Arial, sans-serif" font-size="16" fill="#475569" text-anchor="middle">8.4k WAU · 92% engagement</text>
+  </g>
+  <g id="chrome-footer-03">
+    <rect x="0" y="688" width="1280" height="32" fill="#FFFFFF" />
+    <text x="1184" y="708" font-family="Roboto, Arial, sans-serif" font-size="12" fill="#94A3B8" text-anchor="end">03 / 12</text>
+  </g>
+</svg>

@@ -1,0 +1,12 @@
+When the user asks to create, edit, or verify a PowerPoint deck (PPTX), follow the Slide Skill workflow:
+
+1. Before generating SVG, collect design gate confirmations: title, audience, key points, layout strategy, color scheme, page count, special requirements, final confirmation
+2. Write confirmations: `slide-skill confirm <project> --title "..." --audience "..." ...`
+3. Verify: `slide-skill check-confirm <project>` must pass before SVG generation
+4. Run `slide-skill quickstart <source.md> --name <deck-name>` for end-to-end creation (use --skip-confirm for fast iteration)
+5. For step-by-step: init → confirm → spec → svg → check-svg → finalize-svg → export → qa
+6. Add animations via SVG `data-transition` and `data-anim` attributes on `<g>` elements
+7. Add narration: `slide-skill narrate <project> --voice zh-CN-XiaoxiaoNeural`
+8. Use `slide-skill formats` to see canvas presets (ppt169, xhs, wechat, etc.)
+9. Always run QA before declaring done: `slide-skill qa <project> --strict`
+10. Report: project path, .pptx path, QA report, known limitations
