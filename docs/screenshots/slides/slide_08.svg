@@ -1,0 +1,19 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="#0F172A"/>
+  </g>
+  <g id="decor-08">
+    <line x1="96" y1="178" x2="1184" y2="178" stroke="#2563EB" stroke-width="4"/>
+  </g>
+  <g id="content-title-08">
+    <text x="96" y="132" font-family="Aptos, Arial, sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">团队介绍</text>
+  </g>
+  <g id="content-body-08">
+    <rect x="72" y="220" width="1136" height="410" rx="28" fill="#FFFFFF"/>
+    <text x="96" y="288" font-family="Aptos, Arial, sans-serif" font-size="25" fill="#334155"><tspan x="96" dy="0">- CEO：XX 大学计算机系，3 年 AI 教育产品经验 - CTO：XX 大学 NLP 实验室，发表 SCI 论文 5 篇 - 教育顾问：XX</tspan>
+<tspan x="96" dy="34">中学特级教师，30 年教学经验</tspan></text>
+  </g>
+  <g id="footer">
+    <text x="1164" y="676" font-family="Aptos, Arial, sans-serif" font-size="18" fill="#E2E8F0" text-anchor="end">08</text>
+  </g>
+</svg>

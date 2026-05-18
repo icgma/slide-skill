@@ -1,0 +1,18 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="#0F172A"/>
+  </g>
+  <g id="decor-03">
+    <rect x="1020" y="92" width="170" height="170" rx="24" fill="#2A3D63"/>
+  </g>
+  <g id="content-title-03">
+    <text x="96" y="132" font-family="Aptos, Arial, sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">痛点分析</text>
+  </g>
+  <g id="content-body-03">
+    <rect x="72" y="220" width="1136" height="410" rx="28" fill="#FFFFFF"/>
+    <text x="96" y="288" font-family="Aptos, Arial, sans-serif" font-size="25" fill="#334155"><tspan x="96" dy="0">- 学生：错题反复错，薄弱知识点无人针对性辅导 - 教师：批改作业占 40% 时间，无法逐人分析学情 - 家长：辅导焦虑，不知道孩子真实学习状态</tspan></text>
+  </g>
+  <g id="footer">
+    <text x="1164" y="676" font-family="Aptos, Arial, sans-serif" font-size="18" fill="#E2E8F0" text-anchor="end">03</text>
+  </g>
+</svg>

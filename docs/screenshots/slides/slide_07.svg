@@ -1,0 +1,19 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="#0F172A"/>
+  </g>
+  <g id="decor-07">
+    <circle cx="1130" cy="135" r="78" fill="#2A3D63"/>
+  </g>
+  <g id="content-title-07">
+    <text x="96" y="132" font-family="Aptos, Arial, sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">市场分析</text>
+  </g>
+  <g id="content-body-07">
+    <rect x="72" y="220" width="1136" height="410" rx="28" fill="#FFFFFF"/>
+    <text x="96" y="288" font-family="Aptos, Arial, sans-serif" font-size="25" fill="#334155"><tspan x="96" dy="0">- K12 智能教育市场规模 2026 年预计达 1200 亿元 - 目标用户：一二线城市初中/高中学生家庭 - 竞品对比：XX 学而思（题库型）、XX</tspan>
+<tspan x="96" dy="34">作业帮（搜题型），本方案聚焦&quot;归因 + 自适应&quot;</tspan></text>
+  </g>
+  <g id="footer">
+    <text x="1164" y="676" font-family="Aptos, Arial, sans-serif" font-size="18" fill="#E2E8F0" text-anchor="end">07</text>
+  </g>
+</svg>

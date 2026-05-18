@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>slide-skill · 80 个开箱即用模板的真实样例</title>
+<meta name="description" content="SVG 优先的 PPT 生成工具:Markdown → SVG → PPTX。10 大场景 × 80 个模板,一行命令出图。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     slide-skill landing — bento + Apple-style light, designed via
+     ui-ux-pro-max skill (style: Bento Grid; type: JetBrains Mono +
+     IBM Plex Sans; pattern: Feature-Rich Showcase).
+     ============================================================ */
+
+  :root[data-theme="light"]{
+    --page:#F5F5F7;          --surface:#FFFFFF;       --surface-2:#FAFAFC;
+    --text:#1D1D1F;          --text-soft:#3F3F46;     --muted:#6B7280;
+    --line:rgba(15,23,42,.08); --line-strong:rgba(15,23,42,.14);
+    --accent:#4F46E5;        --accent-2:#7C3AED;      --accent-soft:rgba(79,70,229,.10);
+    --success:#10B981;       --warn:#F59E0B;
+    --shadow-sm:0 1px 2px rgba(15,23,42,.04);
+    --shadow-md:0 4px 12px rgba(15,23,42,.06), 0 1px 2px rgba(15,23,42,.04);
+    --shadow-lg:0 12px 32px rgba(15,23,42,.10), 0 2px 6px rgba(15,23,42,.05);
+    --hero-grad:radial-gradient(900px 500px at 85% -10%,rgba(124,58,237,.10),transparent 60%),
+                radial-gradient(800px 480px at 5% 0%,rgba(79,70,229,.10),transparent 60%);
+    --code-bg:#0F172A;       --code-fg:#E2E8F0;       --code-c:#64748B; --code-k:#A78BFA;
+    --code-s:#86EFAC;        --code-n:#FCD34D;
+    --chip-bg:rgba(79,70,229,.08); --chip-fg:#3730A3;
+  }
+  :root[data-theme="dark"]{
+    --page:#0A0A0F;          --surface:#16161C;       --surface-2:#1C1C24;
+    --text:#F5F5F7;          --text-soft:#D4D4D8;     --muted:#A1A1AA;
+    --line:rgba(245,245,247,.08); --line-strong:rgba(245,245,247,.16);
+    --accent:#818CF8;        --accent-2:#C4B5FD;      --accent-soft:rgba(129,140,248,.16);
+    --success:#34D399;       --warn:#FBBF24;
+    --shadow-sm:none;
+    --shadow-md:0 0 0 1px rgba(245,245,247,.03);
+    --shadow-lg:0 0 0 1px rgba(245,245,247,.05), 0 12px 40px rgba(0,0,0,.4);
+    --hero-grad:radial-gradient(900px 500px at 85% -10%,rgba(167,139,250,.16),transparent 60%),
+                radial-gradient(800px 480px at 5% 0%,rgba(129,140,248,.16),transparent 60%);
+    --code-bg:#06060A;       --code-fg:#E2E8F0;       --code-c:#64748B; --code-k:#C4B5FD;
+    --code-s:#86EFAC;        --code-n:#FCD34D;
+    --chip-bg:rgba(129,140,248,.16); --chip-fg:#C7D2FE;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--page);color:var(--text);
+    font-family:"IBM Plex Sans","PingFang SC","Microsoft YaHei",
+                -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:16px;line-height:1.6;letter-spacing:-0.005em;
+    -webkit-font-smoothing:antialiased;
+    transition:background-color .3s ease, color .3s ease}
+  ::selection{background:var(--accent-soft);color:var(--accent)}
+
+  a{color:var(--accent);text-decoration:none;transition:color .15s ease}
+  a:hover{color:var(--accent-2)}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+  .mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  code{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    background:var(--surface-2);border:1px solid var(--line);
+    padding:1px 6px;border-radius:6px;font-size:.88em;color:var(--text-soft)}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+
+  /* ---------- top nav ---------- */
+  .nav{position:sticky;top:0;z-index:40;background:rgba(245,245,247,.78);
+    backdrop-filter:saturate(160%) blur(14px);
+    -webkit-backdrop-filter:saturate(160%) blur(14px);
+    border-bottom:1px solid var(--line)}
+  :root[data-theme="dark"] .nav{background:rgba(10,10,15,.72)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;
+    height:60px;gap:16px}
+  .brand{display:inline-flex;align-items:center;gap:10px;color:var(--text);
+    font-weight:600;font-size:15px;letter-spacing:-0.01em}
+  .brand-mark{width:28px;height:28px;border-radius:8px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:inline-flex;align-items:center;justify-content:center;
+    color:#fff;font-family:"JetBrains Mono",monospace;font-weight:700;font-size:14px;
+    box-shadow:0 4px 10px rgba(79,70,229,.30)}
+  .brand-text small{display:block;font-size:11px;color:var(--muted);
+    font-weight:400;margin-top:-2px;letter-spacing:.02em}
+  .nav-links{display:flex;align-items:center;gap:6px}
+  .nav-links a{color:var(--text-soft);font-size:14px;font-weight:500;
+    padding:6px 12px;border-radius:8px;transition:background .15s ease,color .15s ease}
+  .nav-links a:hover{background:var(--surface);color:var(--text)}
+  @media (max-width:680px){.nav-links a:not(.cta){display:none}}
+  .nav-links a.cta{background:var(--text);color:var(--page);
+    padding:7px 14px;font-weight:600}
+  :root[data-theme="dark"] .nav-links a.cta{background:var(--surface);color:var(--text)}
+  .nav-links a.cta:hover{background:var(--accent);color:#fff}
+  .theme-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
+    background:var(--surface);color:var(--text);cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;
+    transition:border-color .15s, background .15s, transform .15s}
+  .theme-btn:hover{border-color:var(--accent);background:var(--surface-2)}
+  .theme-btn:active{transform:scale(.95)}
+  .theme-btn svg{width:18px;height:18px}
+  :root[data-theme="light"] .theme-btn .icon-light{display:none}
+  :root[data-theme="dark"]  .theme-btn .icon-dark{display:none}
+
+  /* ---------- hero ---------- */
+  .hero{padding:88px 0 64px;background-image:var(--hero-grad)}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;
+    font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;
+    color:var(--accent);background:var(--accent-soft);
+    padding:6px 12px;border-radius:999px;margin-bottom:20px;font-weight:500}
+  .eyebrow .dot{width:6px;height:6px;border-radius:999px;background:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-soft);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  h1{font-size:clamp(36px,6.2vw,68px);line-height:1.05;margin:0 0 20px;
+    font-weight:700;letter-spacing:-0.025em}
+  h1 .accent{background:linear-gradient(120deg,var(--accent) 0%,var(--accent-2) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:19px;color:var(--text-soft);max-width:680px;margin:0;line-height:1.6}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+  .btn{display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;border-radius:12px;font-weight:600;font-size:15px;
+    border:1px solid transparent;cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn:active{transform:translateY(0)}
+  .btn-primary{background:var(--text);color:var(--page);box-shadow:var(--shadow-md)}
+  .btn-primary:hover{background:var(--accent);color:#fff;box-shadow:var(--shadow-lg)}
+  :root[data-theme="dark"] .btn-primary{background:var(--accent);color:#fff}
+  :root[data-theme="dark"] .btn-primary:hover{background:var(--accent-2)}
+  .btn-ghost{background:var(--surface);color:var(--text);border-color:var(--line);
+    box-shadow:var(--shadow-sm)}
+  .btn-ghost:hover{border-color:var(--text);color:var(--text)}
+
+  /* hero stats bento mini-row */
+  .stats-bento{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+    margin-top:48px}
+  @media (max-width:760px){.stats-bento{grid-template-columns:repeat(2,1fr)}}
+  .stat{padding:22px 22px;border-radius:18px;background:var(--surface);
+    border:1px solid var(--line);box-shadow:var(--shadow-sm);
+    transition:transform .2s ease, box-shadow .2s ease}
+  .stat:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+  .stat .n{font-family:"JetBrains Mono",monospace;font-size:32px;
+    font-weight:700;color:var(--text);line-height:1;letter-spacing:-.02em}
+  .stat .l{margin-top:8px;color:var(--muted);font-size:12px;letter-spacing:.04em;
+    text-transform:uppercase;font-weight:500}
+
+  /* ---------- section heads ---------- */
+  section{padding:80px 0}
+  .section-head{display:flex;align-items:end;justify-content:space-between;
+    flex-wrap:wrap;gap:16px;margin-bottom:40px}
+  .section-head h2{font-size:clamp(28px,4vw,38px);margin:0;font-weight:700;
+    letter-spacing:-0.02em;line-height:1.15}
+  .section-head .sub{color:var(--muted);margin:0;font-size:15px;max-width:520px}
+  .section-tag{display:inline-block;font-family:"JetBrains Mono",monospace;
+    font-size:11px;letter-spacing:.08em;color:var(--accent);
+    text-transform:uppercase;font-weight:500;margin-bottom:8px}
+
+  /* ---------- code block ---------- */
+  .code-card{background:var(--code-bg);border-radius:18px;overflow:hidden;
+    box-shadow:var(--shadow-md);border:1px solid var(--line)}
+  .code-head{display:flex;align-items:center;gap:10px;padding:14px 18px;
+    border-bottom:1px solid rgba(255,255,255,.06)}
+  .code-dots{display:inline-flex;gap:6px}
+  .code-dots i{width:11px;height:11px;border-radius:999px;background:#3F3F46}
+  .code-dots i:nth-child(1){background:#FF5F57}
+  .code-dots i:nth-child(2){background:#FEBC2E}
+  .code-dots i:nth-child(3){background:#28C840}
+  .code-title{color:#94A3B8;font-family:"JetBrains Mono",monospace;
+    font-size:12px;margin-left:6px}
+  pre{margin:0;padding:22px 24px;overflow:auto;
+    color:var(--code-fg);font-family:"JetBrains Mono",monospace;
+    font-size:13.5px;line-height:1.75}
+  pre .c{color:var(--code-c);font-style:italic}
+  pre .k{color:var(--code-k)}
+  pre .s{color:var(--code-s)}
+  pre .n{color:var(--code-n)}
+
+  /* ---------- bento gallery ---------- */
+  .bento{display:grid;grid-template-columns:repeat(6,1fr);
+    grid-auto-rows:minmax(0,auto);gap:20px}
+  @media (max-width:1024px){.bento{grid-template-columns:repeat(4,1fr)}}
+  @media (max-width:680px){.bento{grid-template-columns:1fr;gap:18px}}
+
+  .card{background:var(--surface);border:1px solid var(--line);
+    border-radius:22px;overflow:hidden;display:flex;flex-direction:column;
+    box-shadow:var(--shadow-sm);
+    transition:transform .25s cubic-bezier(.2,.8,.2,1),
+               box-shadow .25s ease, border-color .25s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);
+    border-color:var(--line-strong)}
+  /* span variants — desktop only */
+  @media (min-width:1025px){
+    .card.span-3{grid-column:span 3}
+    .card.span-2{grid-column:span 2}
+  }
+  @media (max-width:1024px) and (min-width:681px){
+    .card{grid-column:span 2}
+    .card.span-3{grid-column:span 4}
+  }
+
+  .frame{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden;
+    cursor:pointer;border-bottom:1px solid var(--line)}
+  .frame img{width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+  .frame:hover img{transform:scale(1.03)}
+  .frame .gif{display:none}
+  .card.playing .gif{display:block}
+  .card.playing .cover{display:none}
+  .play-btn{position:absolute;inset:0;display:flex;align-items:center;
+    justify-content:center;pointer-events:none;
+    background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.35) 100%);
+    transition:opacity .3s ease}
+  .play-btn .circle{width:54px;height:54px;border-radius:999px;
+    background:rgba(255,255,255,.92);color:#0F172A;
+    display:inline-flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 28px rgba(0,0,0,.32);transition:transform .2s ease}
+  .frame:hover .play-btn .circle{transform:scale(1.08)}
+  .play-btn .circle svg{width:22px;height:22px;margin-left:3px}
+  .card.playing .play-btn{opacity:0}
+  .badge-cat{position:absolute;top:12px;left:12px;
+    background:rgba(15,23,42,.78);color:#fff;
+    font-family:"JetBrains Mono",monospace;font-size:11px;
+    padding:5px 10px;border-radius:999px;letter-spacing:.02em;
+    backdrop-filter:blur(6px)}
+  .meta{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
+  .meta h3{margin:0 0 6px;font-size:19px;font-weight:600;
+    letter-spacing:-0.01em;color:var(--text)}
+  .meta .en{color:var(--muted);font-size:13px;margin:0 0 14px;
+    font-family:"JetBrains Mono",monospace}
+  .meta .desc{margin:0 0 18px;color:var(--text-soft);font-size:14.5px;
+    line-height:1.6;flex:1}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+  .chip{font-family:"JetBrains Mono",monospace;font-size:11px;
+    padding:3px 9px;border-radius:6px;background:var(--chip-bg);
+    color:var(--chip-fg);letter-spacing:0}
+  .links{display:flex;gap:14px;flex-wrap:wrap;
+    padding-top:16px;border-top:1px solid var(--line)}
+  .links a{font-size:13px;font-weight:500;display:inline-flex;
+    align-items:center;gap:5px;color:var(--text-soft)}
+  .links a:hover{color:var(--accent)}
+  .links a.primary{color:var(--accent);font-weight:600}
+  .links svg{width:14px;height:14px}
+
+  /* ---------- categories strip ---------- */
+  .cats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  @media (max-width:900px){.cats{grid-template-columns:repeat(2,1fr)}}
+  .cat-pill{padding:18px 20px;border-radius:16px;background:var(--surface);
+    border:1px solid var(--line);box-shadow:var(--shadow-sm);
+    transition:transform .2s, box-shadow .2s, border-color .2s}
+  .cat-pill:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);
+    border-color:var(--line-strong)}
+  .cat-pill .num{font-family:"JetBrains Mono",monospace;font-size:11px;
+    color:var(--accent);font-weight:600;letter-spacing:.04em}
+  .cat-pill .name{margin-top:6px;font-weight:600;font-size:15px;color:var(--text)}
+  .cat-pill .en{margin-top:2px;font-size:12px;color:var(--muted);
+    font-family:"JetBrains Mono",monospace}
+
+  /* ---------- footer ---------- */
+  footer{padding:48px 0 80px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px;text-align:center;
+    background:var(--surface-2)}
+  footer .built{margin-bottom:6px;color:var(--text-soft)}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark">/s</span>
+      <span class="brand-text">slide-skill<small>v3.1 · SVG-first PPT</small></span>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#quickstart">上手</a>
+      <a href="#examples">样例</a>
+      <a href="#categories">分类</a>
+      <a class="cta" href="https://github.com/Yuuqq/slide-skill">GitHub →</a>
+    </nav>
+    <button class="theme-btn" id="themeToggle" aria-label="切换主题">
+      <svg class="icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============== HERO ============== -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>v3.1 · 80 templates · 22 themes</span>
+    <h1>从 Markdown 到 PPT,<br/><span class="accent">只需一行命令。</span></h1>
+    <p class="lede">slide-skill 是一个 SVG 优先的演示文稿生成工具。
+      10 大场景 × 8 套精选模板 = <strong>80 个开箱即用</strong>的 PPT 配方。
+      色板与字体配对吸收自 <code>pptx</code> 与 <code>ui-ux-pro-max</code> 等顶级设计技能。</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://github.com/Yuuqq/slide-skill">
+        GitHub 仓库
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#examples">滚动看 10 个样例 ↓</a>
+      <a class="btn btn-ghost" href="https://github.com/Yuuqq/slide-skill/blob/master/docs/TEMPLATES.md">模板目录</a>
+    </div>
+    <div class="stats-bento">
+      <div class="stat"><div class="n">80</div><div class="l">named templates</div></div>
+      <div class="stat"><div class="n">10</div><div class="l">categories</div></div>
+      <div class="stat"><div class="n">22</div><div class="l">visual themes</div></div>
+      <div class="stat"><div class="n">274</div><div class="l">tests passing</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== QUICKSTART ============== -->
+<section id="quickstart">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">$ quickstart</span>
+        <h2>30 秒上手</h2>
+        <p class="sub">挑一个模板,填上标题,剩下的交给 SVG 渲染管线。</p>
+      </div>
+    </div>
+    <div class="code-card">
+      <div class="code-head">
+        <span class="code-dots"><i></i><i></i><i></i></span>
+        <span class="code-title">~/my-deck — zsh</span>
+      </div>
+<pre><span class="c"># 看全部 80 个模板</span>
+slide-skill <span class="k">templates</span>
+
+<span class="c"># 钻入某个分类</span>
+slide-skill <span class="k">templates</span> --category business
+
+<span class="c"># 看某模板的配方(主题 / 布局序列 / 示例提纲)</span>
+slide-skill <span class="k">templates</span> --show <span class="s">biz-mck-strategy</span>
+
+<span class="c"># 一行生成项目骨架,自动套主题、写好示例提纲</span>
+slide-skill <span class="k">template-quickstart</span> <span class="s">biz-mck-strategy</span> --title <span class="s">"我的战略复盘"</span>
+
+<span class="c"># 把骨架变成 PPTX</span>
+slide-skill <span class="k">svg</span>          projects/biz-mck-strategy --source ...
+slide-skill <span class="k">finalize-svg</span> projects/biz-mck-strategy
+slide-skill <span class="k">export</span>       projects/biz-mck-strategy
+<span class="c"># → projects/biz-mck-strategy/exports/biz-mck-strategy_*.pptx ✓</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============== EXAMPLES (BENTO) ============== -->
+<section id="examples" style="padding-top:32px">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// gallery</span>
+        <h2>10 个真实样例</h2>
+        <p class="sub">每张图都是 slide-skill 真实生成出来的 PPTX → PDF → GIF。
+          点封面播放,或下载 <code>.pptx</code> 自己改。</p>
+      </div>
+    </div>
+    <div class="bento" id="cards"></div>
+  </div>
+</section>
+
+<!-- ============== CATEGORIES ============== -->
+<section id="categories">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// categories</span>
+        <h2>10 大分类 · 80 个模板</h2>
+        <p class="sub">每个分类下 8 个具名模板,
+          覆盖咨询、融资、产品、复盘、教学、学术、营销、政务、技术、培训。</p>
+      </div>
+    </div>
+    <div class="cats" id="catGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="built">Built with <a href="https://github.com/Yuuqq/slide-skill">slide-skill</a> v3.1</p>
+    <p>样例由
+      <a href="https://github.com/Yuuqq/slide-skill/blob/master/scripts/build_examples.py">scripts/build_examples.py</a>
+       自动生成 · UI 由 <code>ui-ux-pro-max</code> 设计技能驱动</p>
+  </div>
+</footer>
+
+<script>
+// ---------- theme ----------
+(function () {
+  const KEY = "slide-skill-theme";
+  const root = document.documentElement;
+  const saved = localStorage.getItem(KEY);
+  const prefDark = window.matchMedia &&
+                   window.matchMedia("(prefers-color-scheme: dark)").matches;
+  root.setAttribute("data-theme", saved || (prefDark ? "dark" : "light"));
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+    root.setAttribute("data-theme", next);
+    localStorage.setItem(KEY, next);
+  });
+})();
+
+// ---------- examples (bento layout: span-3 first two = wide-featured,
+// then alternating to create visual rhythm) ----------
+const EXAMPLES = [
+  {slug:"biz-mck-strategy", cat:"商业咨询", zh:"麦肯锡战略复盘", en:"McKinsey Strategy Review",
+   theme:"mckinsey-consulting", span:"span-3",
+   desc:"三段式战略复盘:核心结论 → 主线对照 → 落地路径 → 关键 OKR → 风险对冲。",
+   layouts:["executive-summary","comparison","process-flow","metric-highlight","quote-block"]},
+  {slug:"prod-keynote", cat:"产品发布", zh:"苹果发布会风", en:"Apple Keynote Style",
+   theme:"ocean-deep", span:"span-3",
+   desc:"极简留白 + 大字号 + 一图一字,发布会舞台风格。",
+   layouts:["quote-block","metric-highlight","comparison","process-flow"]},
+  {slug:"pitch-seed", cat:"创业融资", zh:"种子轮路演", en:"Seed Round Pitch",
+   theme:"indigo-saas", span:"span-2",
+   desc:"10 页种子轮经典框架:问题 → 洞察 → 方案 → 市场 → 数据 → Ask。",
+   layouts:["quote-block","executive-summary","metric-highlight","process-flow"]},
+  {slug:"rep-monthly", cat:"内部复盘", zh:"月度业务复盘", en:"Monthly Business Review",
+   theme:"data-forward", span:"span-2",
+   desc:"数据驱动的月度复盘:北极星 → 同比 → 三大洞察 → 行动项 → 风险预警。",
+   layouts:["metric-highlight","comparison","process-flow"]},
+  {slug:"edu-stem", cat:"教学课件", zh:"理工科推导", en:"STEM Derivation",
+   theme:"data-forward", span:"span-2",
+   desc:"数学 / 物理 / CS 推导课件:目标 → 已知 → 推导 → 例题 → 数值验证。",
+   layouts:["executive-summary","process-flow","comparison","metric-highlight"]},
+  {slug:"aca-thesis", cat:"学术汇报", zh:"毕业论文答辩", en:"Thesis Defense",
+   theme:"academic-royal", span:"span-2",
+   desc:"本硕博答辩:选题 → 问题 → 方法 → 创新 → 实验 → 不足与展望。",
+   layouts:["executive-summary","process-flow","comparison","metric-highlight"]},
+  {slug:"mkt-campaign", cat:"营销品牌", zh:"整合营销方案", en:"Integrated Campaign",
+   theme:"coral-energy", span:"span-2",
+   desc:"洞察 + 创意主张 + 渠道矩阵 + 投入产出 + 效果预测。",
+   layouts:["executive-summary","quote-block","process-flow","comparison","metric-highlight"]},
+  {slug:"gov-work-report", cat:"政务汇报", zh:"工作总结汇报", en:"Government Work Report",
+   theme:"gov-red", span:"span-3",
+   desc:"机关年度工作总结,结构对仗、口吻庄重、数据扎实。",
+   layouts:["quote-block","executive-summary","metric-highlight","process-flow"]},
+  {slug:"tech-conf-talk", cat:"技术分享", zh:"技术大会演讲", en:"Conference Tech Talk",
+   theme:"ocean-deep", span:"span-3",
+   desc:"QCon / KubeCon 风格:痛点 → 数据 → 解法 → 对比 → 经验沉淀。",
+   layouts:["quote-block","metric-highlight","process-flow","comparison"]},
+  {slug:"trn-onboarding", cat:"培训讲座", zh:"新员工入职培训", en:"New-Hire Onboarding",
+   theme:"sage-calm", span:"span-2",
+   desc:"新人入职第一课:公司 → 团队 → 文化 → 工具 → 联系人。",
+   layouts:["quote-block","executive-summary","process-flow","comparison"]},
+];
+
+const PLAY_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const DL_SVG   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+const EXT_SVG  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
+const MD_SVG   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
+
+const cards = document.getElementById("cards");
+EXAMPLES.forEach((e, i) => {
+  const card = document.createElement("article");
+  card.className = `card ${e.span}`;
+  card.style.animationDelay = `${i * 40}ms`;
+  card.innerHTML = `
+    <div class="frame">
+      <span class="badge-cat">${e.cat} · ${e.theme}</span>
+      <img class="cover" src="examples/${e.slug}/cover.png" alt="${e.zh} 封面" loading="lazy" />
+      <img class="gif"   src="examples/${e.slug}/preview.gif" alt="${e.zh} 动画预览" loading="lazy" />
+      <span class="play-btn"><span class="circle">${PLAY_SVG}</span></span>
+    </div>
+    <div class="meta">
+      <h3>${e.zh}</h3>
+      <p class="en">${e.en} · <code>${e.slug}</code></p>
+      <p class="desc">${e.desc}</p>
+      <div class="chips">${e.layouts.map(l => `<span class="chip">${l}</span>`).join("")}</div>
+      <div class="links">
+        <a class="primary" href="examples/${e.slug}/${e.slug}.pptx" download>${DL_SVG}下载 PPTX</a>
+        <a href="examples/${e.slug}/preview.gif" target="_blank" rel="noopener">${EXT_SVG}动图直链</a>
+        <a href="https://github.com/Yuuqq/slide-skill/blob/master/examples/_content/${e.slug}.md"
+           target="_blank" rel="noopener">${MD_SVG}Markdown 源</a>
+      </div>
+    </div>`;
+  card.querySelector(".frame").addEventListener("click",
+    () => card.classList.toggle("playing"));
+  cards.appendChild(card);
+});
+
+// ---------- categories ----------
+const CATS = [
+  {n:"01", name:"商业咨询", en:"business"},
+  {n:"02", name:"创业融资", en:"pitch"},
+  {n:"03", name:"产品发布", en:"product"},
+  {n:"04", name:"内部复盘", en:"report"},
+  {n:"05", name:"教学课件", en:"education"},
+  {n:"06", name:"学术汇报", en:"academic"},
+  {n:"07", name:"营销品牌", en:"marketing"},
+  {n:"08", name:"政务汇报", en:"government"},
+  {n:"09", name:"技术分享", en:"tech"},
+  {n:"10", name:"培训讲座", en:"training"},
+];
+const catGrid = document.getElementById("catGrid");
+CATS.forEach(c => {
+  const el = document.createElement("a");
+  el.className = "cat-pill";
+  el.href = `https://github.com/Yuuqq/slide-skill/blob/master/docs/TEMPLATES.md#${c.en}`;
+  el.target = "_blank";
+  el.rel = "noopener";
+  el.innerHTML = `<div class="num">${c.n} / 10</div>
+                  <div class="name">${c.name}</div>
+                  <div class="en">${c.en} · 8 templates</div>`;
+  catGrid.appendChild(el);
+});
+</script>
+</body>
+</html>

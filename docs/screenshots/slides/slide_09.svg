@@ -1,0 +1,18 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="#0F172A"/>
+  </g>
+  <g id="decor-09">
+    <rect x="1020" y="92" width="170" height="170" rx="24" fill="#2A3D63"/>
+  </g>
+  <g id="content-title-09">
+    <text x="96" y="132" font-family="Aptos, Arial, sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">财务与里程碑</text>
+  </g>
+  <g id="content-body-09">
+    <rect x="72" y="220" width="1136" height="410" rx="28" fill="#FFFFFF"/>
+    <text x="96" y="288" font-family="Aptos, Arial, sans-serif" font-size="25" fill="#334155"><tspan x="96" dy="0">- 已完成种子轮 500 万融资 - 月活用户 2 万，付费转化率 8% - 12 个月内目标：覆盖 50 所学校，月活 10 万</tspan></text>
+  </g>
+  <g id="footer">
+    <text x="1164" y="676" font-family="Aptos, Arial, sans-serif" font-size="18" fill="#E2E8F0" text-anchor="end">09</text>
+  </g>
+</svg>

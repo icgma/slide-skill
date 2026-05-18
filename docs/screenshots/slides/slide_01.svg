@@ -1,0 +1,18 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="#0F172A"/>
+  </g>
+  <g id="decor-01">
+    <circle cx="1130" cy="135" r="78" fill="#2A3D63"/>
+  </g>
+  <g id="content-title-01">
+    <text x="96" y="132" font-family="Aptos, Arial, sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">智能学伴——基于大语言模型的个性化学习助手</text>
+  </g>
+  <g id="content-body-01">
+    <rect x="72" y="220" width="1136" height="410" rx="28" fill="#FFFFFF"/>
+    <text x="96" y="288" font-family="Aptos, Arial, sans-serif" font-size="25" fill="#334155"><tspan x="96" dy="0"></tspan></text>
+  </g>
+  <g id="footer">
+    <text x="1164" y="676" font-family="Aptos, Arial, sans-serif" font-size="18" fill="#E2E8F0" text-anchor="end">01</text>
+  </g>
+</svg>

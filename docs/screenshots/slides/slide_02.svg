@@ -1,0 +1,18 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="#0F172A"/>
+  </g>
+  <g id="decor-02">
+    <line x1="96" y1="178" x2="1184" y2="178" stroke="#2563EB" stroke-width="4"/>
+  </g>
+  <g id="content-title-02">
+    <text x="96" y="132" font-family="Aptos, Arial, sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">项目背景</text>
+  </g>
+  <g id="content-body-02">
+    <rect x="72" y="220" width="1136" height="410" rx="28" fill="#FFFFFF"/>
+    <text x="96" y="288" font-family="Aptos, Arial, sans-serif" font-size="25" fill="#334155"><tspan x="96" dy="0">全国 2.9 亿在校生面临&quot;千人一面&quot;的教学困境：同一进度、同一作业、同一反馈。每个学生的学习路径、薄弱点和理解节奏完全不同，但教育资源无法按需分配。</tspan></text>
+  </g>
+  <g id="footer">
+    <text x="1164" y="676" font-family="Aptos, Arial, sans-serif" font-size="18" fill="#E2E8F0" text-anchor="end">02</text>
+  </g>
+</svg>

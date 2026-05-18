@@ -1,0 +1,31 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cover-bg-01" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    <radialGradient id="glow-01" cx="80%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <g id="background-01">
+    <rect x="0" y="0" width="1280" height="720" fill="url(#cover-bg-01)" />
+    <rect x="0" y="0" width="1280" height="720" fill="url(#glow-01)" />
+  </g>
+  <g id="chrome-stripe-01">
+    <rect x="0" y="0" width="6" height="720" fill="#3B82F6" />
+  </g>
+  <g id="content-title-01">
+    <text x="120" y="100" font-family="Aptos, Arial, sans-serif" font-size="14" font-weight="600" fill="#3B82F6" letter-spacing="3">PRODUCT STRATEGY · 2026</text>
+    <text x="120" y="320" font-family="Aptos, Arial, sans-serif" font-size="84" font-weight="700" fill="#F1F5F9">AI Product</text>
+    <text x="120" y="412" font-family="Aptos, Arial, sans-serif" font-size="84" font-weight="700" fill="#3B82F6">Strategy 2026</text>
+    <rect x="120" y="446" width="200" height="4" fill="#3B82F6" />
+    <text x="120" y="510" font-family="Aptos, Arial, sans-serif" font-size="26" fill="#94A3B8">From research to launch — a year of decisions</text>
+  </g>
+  <g id="chrome-footer-01">
+    <rect x="0" y="688" width="1280" height="32" fill="#1E293B" />
+    <text x="120" y="708" font-family="Aptos, Arial, sans-serif" font-size="12" fill="#94A3B8">Acme Corp · Confidential</text>
+    <text x="1184" y="708" font-family="Aptos, Arial, sans-serif" font-size="12" fill="#334155" text-anchor="end">01 / 12</text>
+  </g>
+</svg>

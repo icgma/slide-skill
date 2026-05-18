@@ -1,0 +1,8 @@
+ID                     Name                     Time     Pages      Sections
+-------------------------------------------------------------------------------------
+internet-plus          互联网+创新创业大赛               8min     15-20      8
+challenge-cup          挑战杯课外学术科技作品竞赛            8min     15-18      7
+math-modeling          数学建模竞赛                   10min     12-18      8
+innovation-training    大学生创新创业训练计划（大创）          5min     10-15      7
+thesis-defense         毕业论文答辩                   15min     15-25      7
+course-presentation    课程展示                     10min     8-12       4

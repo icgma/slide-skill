@@ -1,0 +1,19 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="#0F172A"/>
+  </g>
+  <g id="decor-04">
+    <circle cx="1130" cy="135" r="78" fill="#2A3D63"/>
+  </g>
+  <g id="content-title-04">
+    <text x="96" y="132" font-family="Aptos, Arial, sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">解决方案：AI 学伴</text>
+  </g>
+  <g id="content-body-04">
+    <rect x="72" y="220" width="1136" height="410" rx="28" fill="#FFFFFF"/>
+    <text x="96" y="288" font-family="Aptos, Arial, sans-serif" font-size="25" fill="#334155"><tspan x="96" dy="0">基于 MiMo 大模型的多模态学习助手，实现： - 错题智能归因——不只给答案，定位概念薄弱点 - 自适应练习——根据掌握度动态调整题目难度 -</tspan>
+<tspan x="96" dy="34">学情可视化——家长和教师实时查看学习画像</tspan></text>
+  </g>
+  <g id="footer">
+    <text x="1164" y="676" font-family="Aptos, Arial, sans-serif" font-size="18" fill="#E2E8F0" text-anchor="end">04</text>
+  </g>
+</svg>

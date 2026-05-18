@@ -1,0 +1,71 @@
+# Slide Skill — AI Agent Instructions
+
+When the user asks to create, edit, or verify a PowerPoint deck (PPTX), follow the Slide Skill workflow below.
+
+## Quick Reference
+
+| Task | Command |
+|------|---------|
+| End-to-end deck from source | `slide-skill quickstart <source.md> --name <deck-name>` |
+| Create workspace | `slide-skill init <name> --format ppt169` |
+| Convert source to Markdown | `slide-skill source-to-md <file> -o <project>/sources/source.md` |
+| Create design spec | `slide-skill spec <project> --source <project>/sources/source.md` |
+| Generate SVG pages | `slide-skill svg <project> --source <project>/sources/source.md` |
+| Run SVG QA | `slide-skill check-svg <project>` |
+| Finalize SVG | `slide-skill finalize-svg <project>` |
+| Export PPTX | `slide-skill export <project>` |
+| Add voice narration | `slide-skill narrate <project> --voice zh-CN-XiaoxiaoNeural` |
+| List canvas formats | `slide-skill formats` |
+| Run QA | `slide-skill qa <project>` |
+
+## Design Gate
+
+Before generating SVG, collect 8 confirmations from the user: title, audience, key_points, layout_strategy, color_scheme, page_count, special_requirements, confirmation. Write with `slide-skill confirm <project> --title "..." --audience "..." ...`, then `slide-skill check-confirm <project>` must pass. Use `--skip-confirm` on quickstart/svg for fast iteration.
+
+## Image Acquisition
+
+Search CC images: `slide-skill image-search <project> --query "..." --limit 5`. Generate AI images: `slide-skill image-generate <project> --prompt "..."` (needs IMAGE_API_KEY). Default license filter: CC BY / CC BY-SA / CC0 only (use --allow-nc for NC). Images auto-referenced in SVG via spec_lock.resources.
+
+## Core Pipeline
+
+```
+source -> Markdown -> project workspace -> design_spec + spec_lock
+-> svg_output -> SVG QA -> svg_final -> editable PPTX export -> QA report
+```
+
+## Required Discipline
+
+1. Normalize source content before designing slides.
+2. Create `design_spec.md` and `spec_lock.json` before SVG generation.
+3. Generate SVG pages in `svg_output/` and keep top-level semantic `<g id="...">` groups.
+4. Run `slide-skill check-svg <project>` before export.
+5. Put speaker notes in `notes/total.md` using `## Slide N` sections or per-slide `notes/slide_XX.md` files.
+6. Run `slide-skill finalize-svg <project>` and export from `svg_final/`.
+7. Run `slide-skill qa <project> --strict` before declaring completion.
+
+## SVG Rules for Design
+
+### Supported Elements
+rect, circle, ellipse, line, text, image, path, polygon, polyline
+
+### Animation Attributes (on `<g>` elements)
+- `data-transition="fade|push|wipe|split|zoom"` — slide transition
+- `data-anim="fly-in|fade-in|wipe|zoom-in|float-in"` — entrance animation
+- `data-anim-duration="500"` — duration in ms (default: 500)
+- `data-anim-delay="200"` — delay in ms (default: 0)
+
+### Canvas Formats
+Run `slide-skill formats` to see all presets: ppt169, ppt43, xhs, wechat, square, story, a4, letter, ipad, ultrawide, banner.
+
+### Speaker Notes (Markdown)
+- `**bold**` → bold runs
+- `*italic*` → italic runs
+- `- bullet` → indented paragraphs
+
+## Output Contract
+
+For every generated deck, report:
+- Project path
+- Exported `.pptx` path
+- QA report path
+- Known limitations

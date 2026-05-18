@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "slide-skill"
+version = "3.0.0"
+description = "SVG-first slide generation toolkit with intelligent content planning and domain-specific layouts"
+requires-python = ">=3.11"
+dependencies = [
+    "edge-tts>=7.2.8",
+    "lxml>=6.1.0",
+    "openai>=2.33.0",
+    "python-pptx>=1.0.2",
+    "svgpathtools>=1.7.2",
+]
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+]
+image = [
+  "requests>=2.31.0",
+  "openai>=1.0.0",
+]
+pdf = [
+  "fpdf2>=2.8.0",
+]
+
+[project.scripts]
+slide-skill = "slide_skill.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["tools/slide/src"]
+
+[tool.setuptools.package-dir]
+"" = "tools/slide/src"
+
+[tool.pytest.ini_options]
+pythonpath = ["tools/slide/src"]
+testpaths = ["tests"]

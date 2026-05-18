@@ -1,0 +1,18 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="#0F172A"/>
+  </g>
+  <g id="decor-05">
+    <line x1="96" y1="178" x2="1184" y2="178" stroke="#2563EB" stroke-width="4"/>
+  </g>
+  <g id="content-title-05">
+    <text x="96" y="132" font-family="Aptos, Arial, sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">核心技术</text>
+  </g>
+  <g id="content-body-05">
+    <rect x="72" y="220" width="1136" height="410" rx="28" fill="#FFFFFF"/>
+    <text x="96" y="288" font-family="Aptos, Arial, sans-serif" font-size="25" fill="#334155"><tspan x="96" dy="0">- RAG + 知识图谱：构建学科知识点关联网络 - 自适应算法：基于 IRT（项目反应理论）的难度调节 - 多模态理解：拍照识题 + 手写公式识别</tspan></text>
+  </g>
+  <g id="footer">
+    <text x="1164" y="676" font-family="Aptos, Arial, sans-serif" font-size="18" fill="#E2E8F0" text-anchor="end">05</text>
+  </g>
+</svg>

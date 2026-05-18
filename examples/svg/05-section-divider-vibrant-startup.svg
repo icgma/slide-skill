@@ -1,0 +1,30 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="band-grad-05" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7C3AED" />
+      <stop offset="100%" stop-color="#EC4899" />
+    </linearGradient>
+    <radialGradient id="bg-grad-05" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" stop-color="#FAFAFA" />
+      <stop offset="100%" stop-color="#FFFFFF" />
+    </radialGradient>
+  </defs>
+  <g id="background-05">
+    <rect x="0" y="0" width="1280" height="720" fill="url(#bg-grad-05)" />
+  </g>
+  <g id="chrome-stripe-05">
+    <rect x="0" y="0" width="6" height="720" fill="#7C3AED" />
+  </g>
+  <g id="section-band-05">
+    <rect x="0" y="290" width="1280" height="140" fill="url(#band-grad-05)" />
+  </g>
+  <g id="content-title-05">
+    <text x="640" y="270" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#7C3AED" text-anchor="middle" letter-spacing="6">PART TWO</text>
+    <text x="640" y="380" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="800" fill="#FFFFFF" text-anchor="middle">Go-to-Market</text>
+    <text x="640" y="490" font-family="Inter, Arial, sans-serif" font-size="20" fill="#6B7280" text-anchor="middle">How we'll find, win, and keep our first 100 customers</text>
+  </g>
+  <g id="chrome-footer-05">
+    <rect x="0" y="688" width="1280" height="32" fill="#FAFAFA" />
+    <text x="1184" y="708" font-family="Inter, Arial, sans-serif" font-size="12" fill="#9CA3AF" text-anchor="end">05 / 12</text>
+  </g>
+</svg>
