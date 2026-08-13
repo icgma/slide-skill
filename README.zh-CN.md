@@ -290,12 +290,12 @@ v5.0 主线是把 AI 生产链做扎实，并让无 key 路径成为一等公民
 
   目前支持的两个手动安装目标是 `~/.claude/skills/slide-skill/` 与 `.cursor/skills/`。`npx skills add`（skills 市场）安装方式会随公开仓库发布一起上线 —— 在那之前请使用上面的手动方式。
 
-  Skill 文件里写明：
-  - 何时激活（中英文触发词）
-  - 那条搞定 90% 工作的命令
-  - 32 套主题如何选择
-  - Markdown 写作约定（标题层级、项目符号、用 **粗体数字** 表示数据指标、`### A / ### B` 表示对比）
-  - Agent 应当遵循的决策流程
+  `SKILL.md` 是一个**路由型 skill**：入口文件只负责识别场景，然后分发到
+  [`workflows/`](workflows/) 下唯一对应的流程文档 ——
+  [defense-fill](workflows/defense-fill.md)（校方模板保真填充）、
+  [competition](workflows/competition.md)（比赛路演）、[course](workflows/course.md)（课程汇报/教学课件）、
+  [fast](workflows/fast.md)（2 秒极速出片）、以及推荐路线
+  [agent-authoring](workflows/agent-authoring.md) —— 由宿主 agent 在逐页纪律约束下亲手编写每一页 SVG。
 
   ---
 

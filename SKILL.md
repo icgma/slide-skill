@@ -1,293 +1,74 @@
 ---
 name: slide-skill
-description: Convert any source material into a polished, fully-editable PowerPoint (.pptx). Use whenever the user asks for slides, a deck, a presentation, or "做一份 PPT". IMPORTANT — this skill requires a multi-step interactive workflow. You MUST assess the user's needs BEFORE generating anything.
+description: Convert any source material into a polished, fully-editable PowerPoint (.pptx). Use whenever the user asks for slides, a deck, a presentation, or "做一份 PPT". IMPORTANT — this is a ROUTED skill. Assess the user's scenario first, then follow exactly ONE workflow doc — defense-fill (校方模板), competition (比赛路演), course (课程汇报), fast (deadline 快速出片), or free-design (host agent hand-writes SVG).
 ---
 
 # slide-skill — AI Agent Skill (v5.0.0a1)
 
 An SVG-first pipeline that turns prose into `.pptx` whose every shape, text run,
-and gradient is natively editable. 32 built-in themes, full CJK support, domain-
-specific generators for teaching, courses, and competitions.
-
-## ⚠️ CRITICAL: Never Generate Without Understanding
-
-**The #1 failure mode is running `quickstart` blindly on raw input.** The tool is
-deterministic — garbage in, garbage out. YOUR job as the agent is to:
-
-1. Understand what the user actually needs
-2. Prepare the right input
-3. Choose the right settings
-4. Show a preview and iterate
-
-If you skip steps 1-2, the output WILL be unusable. This has been proven repeatedly.
+and gradient is natively editable. 32 built-in themes, full CJK support, school
+template fill, competition packs, and automated QA gates. This entry file owns
+**scenario routing only** — each route's procedure lives in its own workflow doc.
 
 ---
 
-## When to Activate
+## Global Execution Discipline (applies to every route)
 
-**English**: "make slides", "build a deck", "create a presentation", "turn this into PPT"
-**Chinese**: "做一份 PPT", "生成幻灯片", "演示文稿", "汇报材料", "教学课件", "答辩 PPT", "比赛 PPT"
-
----
-
-## Step 1: Needs Assessment (MANDATORY)
-
-Before touching any tool command, ask the user these questions. Adapt your phrasing
-naturally — don't read this list robotically. Skip questions whose answers are obvious
-from context.
-
-### 1a. Scenario Identification
-
-| Scenario | Trigger phrases | Key constraints |
-|----------|----------------|-----------------|
-| **教学课件** (Teaching) | "课件", "教学", "给学生讲", "上课用" | Low density, clear hierarchy, may need pinyin/bilingual |
-| **学生课程汇报** (Course presentation) | "课程汇报", "作业展示", "课堂展示" | Academic structure, 8-12 slides, 10 min |
-| **学生比赛** (Competition) | "互联网+", "挑战杯", "数学建模", "大创", "答辩", "比赛" | Strict page/time limits, competition-specific structure |
-| **通用** (General) | Everything else | Flexible |
-
-**Ask**: "这份 PPT 是用于什么场景？教学课件、课程汇报、比赛答辩，还是其他用途？"
-
-### 1b. Audience
-
-**Ask**: "受众是谁？" Examples:
-- Teaching: "国际学生？本科生？研究生？什么水平？" (For language teaching: "HSK 几级？")
-- Competition: "评委是教授还是企业导师？"
-- Course: "老师和同学？"
-
-### 1c. Content Density
-
-**Ask based on scenario**:
-- Teaching: "每页最多放几个知识点/词汇？" (Default: 3-4 for vocab, 1 for grammar)
-- Competition: "预计演讲几分钟？页数限制？"
-- Course: "大概需要多少页？"
-
-### 1d. Language & Visual
-
-**Ask if relevant**:
-- "需要中英双语吗？需要拼音标注吗？"
-- "有偏好的视觉风格吗？"（然后推荐合适的 theme）
-
-### 1e. Source Material
-
-**Assess the input quality**:
-- Is it a well-structured markdown? → Can use directly
-- Is it a PDF of slides/screenshots? → Needs OCR/vision extraction first
-- Is it raw notes? → Needs restructuring
-- Is it a topic with no material? → Need to draft content together
+1. **Assess before generating.** Understand the scenario, audience, time budget,
+   and source quality BEFORE touching any command. Never run a generator blindly
+   on raw input — garbage in, garbage out has been proven repeatedly.
+2. **Serial steps.** Execute pipeline stages in order. Never skip a QA gate,
+   never run stages speculatively out of order.
+3. **Closed world.** Slide text comes ONLY from the user's source material or an
+   agreed plan. Never invent facts, numbers, or claims absent from the source.
+4. **QA gates are mandatory.** A deck is done when the QA report passes — not
+   when an export command exits 0.
+5. **Match the user's language.** Chinese request → Chinese deck and replies.
 
 ---
 
-## Step 2: Content Preparation (Agent's Responsibility)
+## Routing Table
 
-**This is YOUR job, not the tool's.** The tool's markdown parser is basic — it splits
-on `#` headings. YOU must prepare clean, well-structured markdown.
+Resolve the user's request to EXACTLY ONE route. Open that route's workflow doc
+and follow it end to end. When two routes seem to match, ask one clarifying
+question instead of guessing.
 
-### For Teaching Slides (教学课件)
+| Route | Triggers (中 / EN) | Workflow doc | Output contract |
+|-------|--------------------|--------------|-----------------|
+| **defense-fill** | "学校模板 / 答辩模板 / 开题 / 中期 / 按模板填" + user HAS a `.pptx` template | [workflows/defense-fill.md](workflows/defense-fill.md) | Template pages untouched, content filled in, FILL-REPORT clean |
+| **competition** | "互联网+ / 挑战杯 / 数模 / 数学建模 / 大创 / 比赛路演 / roadshow pitch" | [workflows/competition.md](workflows/competition.md) | Deck follows the competition's section budget + judge tips, with speaker notes and timing |
+| **course** | "课程汇报 / 作业展示 / 教学课件 / 上课用 / course presentation / teaching slides" | [workflows/course.md](workflows/course.md) | Academic-clean deck matching classroom density rules |
+| **fast** | "今晚就要 / deadline / 快点 / 越快越好 / no API key available" | [workflows/fast.md](workflows/fast.md) | Presentable deck in seconds via the deterministic renderer |
+| **free-design** | "自由设计 / 高质量定制 / 精心设计 / design it yourself / make it beautiful" | [workflows/agent-authoring.md](workflows/agent-authoring.md) | Host agent hand-writes every SVG page under per-page discipline; highest visual ceiling |
 
-Structure the markdown so each `#` heading maps to ONE teaching unit:
-
-```markdown
-# 第一课：看病 (Seeing the Doctor)
-
-## 生词 (Vocabulary)
-- 医院 (yīyuàn) — hospital
-- 感冒 (gǎnmào) — cold/flu
-- 发烧 (fāshāo) — fever
-- 头疼 (tóuténg) — headache
-
-## 例句 (Example Sentences)
-- 我感冒了，要去医院。
-  Wǒ gǎnmào le, yào qù yīyuàn.
-  I have a cold and need to go to the hospital.
-
-## 对话 (Dialogue)
-A: 你怎么了？(What's wrong?)
-B: 我头疼，还发烧。(I have a headache and a fever.)
-```
-
-**CRITICAL for teaching**: If the user provides dense material (e.g., 20 vocab items),
-YOU must split it into multiple sections of 3-4 items each BEFORE passing to the tool.
-The tool will NOT do intelligent splitting for you.
-
-### For Competition Slides (比赛)
-
-Use the built-in competition templates:
-
-```bash
-slide-skill competitions                    # list available templates
-slide-skill init my-deck --competition internet-plus  # scaffold with structure
-```
-
-Then fill in content following the competition's section structure.
-
-### For Course Presentations (课程汇报)
-
-Structure as: Introduction → 2-4 Body Sections → Conclusion
-
-```markdown
-# 主题名称
-
-## 研究背景
-- Key point 1
-- Key point 2
-
-## 核心内容
-### 要点一
-...
-
-## 结论与思考
-...
-```
+**RECOMMENDED route:** when the driving model is capable and time permits,
+prefer **free-design** ([workflows/agent-authoring.md](workflows/agent-authoring.md)).
+You — the host agent — author every page yourself. That is what this toolkit
+is built for: the harness handles conversion and QA; the model designs.
 
 ---
 
-## Step 3: Theme Selection
+## Fallback: no capable host agent
 
-Pick based on scenario. **Always confirm with the user.**
+If the driving model cannot hand-author SVG (or the user wants zero involvement):
 
-### Recommended by Scenario
-
-| Scenario | Recommended themes | Why |
-|----------|-------------------|-----|
-| Teaching (language) | `vibrant-startup`, `sage-calm` | Bright, friendly, low fatigue |
-| Teaching (STEM) | `data-forward`, `light-corporate` | Clean, data-friendly |
-| Teaching (humanities) | `warm-editorial`, `terracotta-warm` | Warm, readable |
-| Competition (互联网+/大创) | `vibrant-startup`, `indigo-saas` | Energy, modern |
-| Competition (挑战杯/学术) | `academic-royal`, `data-forward` | Scholarly, rigorous |
-| Competition (答辩) | `academic-royal`, `midnight-executive` | Formal, authoritative |
-| Course presentation | `light-corporate`, `dark-tech` | Professional, clean |
-
-```bash
-slide-skill themes    # list all 32 themes with previews
-```
+- **Built-in AI executor** — `slide-skill quickstart <md> --mode ai` with
+  `OPENAI_API_KEY` + `OPENAI_BASE_URL` configured. The toolkit's own
+  planner/executor/visual-critic chain generates the deck.
+- **Fast mode** — `slide-skill quickstart <md> --mode fast`. Deterministic,
+  no key, seconds. See [workflows/fast.md](workflows/fast.md).
 
 ---
 
-## Step 4: Generate
+## Scenario Identification Cheat Sheet
 
-```bash
-# The one command — but ONLY after steps 1-3 are done
-slide-skill quickstart <prepared-input.md> --theme <theme-name>
-```
+Ask when unclear: "这份 PPT 用于什么场景？有学校模板吗？什么时候要？"
 
-Default `--mode auto`: AI generation when a key is configured, deterministic fast templates otherwise. Force with `--mode fast` or `--mode ai`.
-
-Output structure:
-```
-projects/<name>/
-├── sources/          ← copy of input
-├── svg_output/       ← one SVG per slide (inspectable!)
-├── svg_final/        ← finalized SVGs
-├── exports/
-│   └── <name>_<timestamp>.pptx    ← the deliverable
-└── qa/
-    └── QA.md         ← quality report
-```
-
-### For Multi-Step Control
-
-```bash
-slide-skill init <name> --theme <theme>
-slide-skill spec <project> --source <md> --theme <theme>
-slide-skill svg <project> --source <md>
-slide-skill check-svg <project>
-slide-skill finalize-svg <project>
-slide-skill export <project>
-```
-
----
-
-## Step 5: Preview & Iterate (MANDATORY)
-
-After generation, you MUST:
-
-1. **Check the QA report**: Read `qa/QA.md` — is status "passed"?
-2. **Inspect the SVG output**: Read 2-3 SVG files to verify content and layout
-3. **Generate HTML preview** (if available):
-   ```bash
-   slide-skill html-preview <project>
-   ```
-4. **Report to the user**: Show them what was generated, ask for feedback
-5. **Iterate if needed**: Re-prepare markdown, adjust theme, regenerate
-
-### Common Adjustments
-
-| User says | What to do |
-|-----------|-----------|
-| "字太小了" | Reduce content per slide, restructure markdown |
-| "太密了" | Split sections into more slides with fewer items |
-| "配色不喜欢" | `slide-skill quickstart <md> --theme <different-theme>` |
-| "某一页需要改" | Edit the SVG in `svg_output/`, re-run `finalize-svg` + `export` |
-| "顺序不对" | Restructure the source markdown, regenerate |
-| "需要加一页" | Add a `#` section to the markdown, regenerate |
-
----
-
-## Decision Flow
-
-```
-User asks for slides
-        │
-        ▼
-Step 1: NEEDS ASSESSMENT ← You MUST do this
-        │
-   ┌────┴───────────────────┐
-   │ Identify scenario:     │
-   │ Teaching / Course /    │
-   │ Competition / General  │
-   └────┬───────────────────┘
-        │
-        ▼
-Step 2: PREPARE CONTENT ← You MUST do this
-        │
-   ┌────┴───────────────────┐
-   │ - Clean up input       │
-   │ - Split dense sections │
-   │ - Structure properly   │
-   └────┬───────────────────┘
-        │
-        ▼
-Step 3: CHOOSE THEME ← Recommend + confirm
-        │
-        ▼
-Step 4: GENERATE
-        │
-        ▼
-Step 5: PREVIEW & ITERATE ← Show user, get feedback
-        │
-   ┌────┴────┐
-   Approved   Needs changes
-   │          │
-   ▼          └──→ Go back to Step 2 or 4
-   Done — deliver .pptx path
-```
-
----
-
-## Other Useful Commands
-
-| Command | What it does |
-|---------|-------------|
-| `slide-skill themes` | List all 32 themes |
-| `slide-skill formats` | Canvas sizes (16:9, 4:3, A4, etc.) |
-| `slide-skill competitions` | List competition templates |
-| `slide-skill rehearse <project>` | Estimate speaking time per slide |
-| `slide-skill draft-notes <project>` | Auto-generate speaker notes |
-| `slide-skill narrate <project>` | TTS audio from notes |
-| `slide-skill html-preview <project>` | Self-contained HTML presenter |
-| `slide-skill font-preflight <project>` | Check for missing CJK glyphs |
-| `slide-skill validate-pptx <file>` | Validate PPTX structure |
-
----
-
-## Common Pitfalls
-
-1. **PDF is images, not text** → Extract with vision AI first, then prepare markdown
-2. **Dense content = ugly slides** → YOU must split content before generating
-3. **Long titles get clipped** → Keep titles under 25 characters
-4. **Chinese boxes in LibreOffice** → `noto-fonts-cjk` system package needed
-5. **"一键生成" mentality** → This tool needs intelligent input preparation. 
-   The agent IS the intelligence layer.
+- User has a mandated school `.pptx` → **defense-fill** (redesigning it is a failure mode)
+- Named competition (互联网+/挑战杯/数模/大创) → **competition**
+- Classroom / homework / teaching → **course**
+- Urgent, or no API key and no capable agent → **fast**
+- "Make it beautiful", flexible timeline, capable model → **free-design**
 
 ---
 
@@ -297,14 +78,13 @@ Step 5: PREVIEW & ITERATE ← Show user, get feedback
 git clone https://github.com/icgma/slide-skill.git
 cd slide-skill
 pip install -e .
-pip install pymupdf  # optional: PDF input support
 
-slide-skill --help   # verify
-slide-skill themes   # see available themes
+slide-skill --help    # verify
+slide-skill themes    # list all 32 themes
 ```
 
 ---
 
-**Bottom line**: You are NOT a command proxy. You are a presentation consultant who
-happens to have a powerful rendering engine. Understand first, prepare carefully,
-generate, preview, iterate. The tool renders; YOU design.
+**Bottom line**: You are NOT a command proxy. You are a presentation consultant
+with a rendering harness. Route first, follow the workflow doc exactly, let the
+QA gates arbitrate. The tool converts and verifies; YOU design.

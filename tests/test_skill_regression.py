@@ -402,6 +402,83 @@ class TestVersionSingleSource(unittest.TestCase):
 
 
 # ---------------------------------------------------------------------------
+# AGENT-01/02: routed skill structure. SKILL.md owns routing only (≤150
+# lines) and every route's procedure lives in its own workflows/*.md doc.
+# agent-authoring.md must carry the two discipline rules that make
+# host-agent decks consistent: per-page spec_lock re-read and the ban on
+# script-generated SVG.
+# ---------------------------------------------------------------------------
+
+
+class TestRoutedSkillStructure(unittest.TestCase):
+    """SKILL.md is a router; the five workflow docs own the procedures."""
+
+    _REPO_ROOT = Path(__file__).resolve().parents[1]
+    _ROUTE_DOCS = (
+        "workflows/defense-fill.md",
+        "workflows/competition.md",
+        "workflows/course.md",
+        "workflows/fast.md",
+        "workflows/agent-authoring.md",
+    )
+
+    def _skill_text(self) -> str:
+        return (self._REPO_ROOT / "SKILL.md").read_text(encoding="utf-8")
+
+    def test_entry_is_at_most_150_lines(self) -> None:
+        """The routing entry must stay small enough to load quickly."""
+        line_count = len(self._skill_text().splitlines())
+        self.assertLessEqual(
+            line_count, 150,
+            f"SKILL.md has {line_count} lines; the routed entry must be ≤150",
+        )
+
+    def test_routing_table_wires_all_five_routes(self) -> None:
+        """Every route doc path appears in the SKILL.md routing table."""
+        text = self._skill_text()
+        for doc in self._ROUTE_DOCS:
+            self.assertIn(
+                doc, text,
+                f"SKILL.md routing table missing a reference to {doc}",
+            )
+
+    def test_route_docs_exist_and_are_substantive(self) -> None:
+        """Each workflows/*.md exists and is non-empty."""
+        for doc in self._ROUTE_DOCS:
+            path = self._REPO_ROOT / doc
+            self.assertTrue(path.is_file(), f"{doc} does not exist")
+            body = path.read_text(encoding="utf-8").strip()
+            self.assertGreater(
+                len(body.splitlines()), 30,
+                f"{doc} looks stubbed ({len(body.splitlines())} lines)",
+            )
+
+    def test_agent_authoring_carries_min_lines(self) -> None:
+        """The centerpiece route doc must be substantial (plan: ≥80 lines)."""
+        path = self._REPO_ROOT / "workflows/agent-authoring.md"
+        lines = path.read_text(encoding="utf-8").splitlines()
+        self.assertGreaterEqual(len(lines), 80)
+
+    def test_agent_authoring_discipline_rules_present(self) -> None:
+        """spec_lock re-read + no-script-generation rules must survive edits."""
+        text = (
+            self._REPO_ROOT / "workflows/agent-authoring.md"
+        ).read_text(encoding="utf-8")
+        self.assertRegex(
+            text, r"[Rr]e-read\s+`?spec_lock\.json`?",
+            "agent-authoring.md lost the per-page spec_lock.json re-read rule",
+        )
+        self.assertRegex(
+            text, r"[Nn]ever generate pages with a script",
+            "agent-authoring.md lost the no-script-generated-SVG rule",
+        )
+        self.assertRegex(
+            text, r"never delegate pages to a sub-agent",
+            "agent-authoring.md lost the no-sub-agent rule",
+        )
+
+
+# ---------------------------------------------------------------------------
 # Integration: end-to-end plan → svg → qa gate on the original repro.
 # ---------------------------------------------------------------------------
 

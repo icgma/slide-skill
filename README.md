@@ -293,12 +293,13 @@ What landed in **v2.1** and still ships: native PowerPoint gradients (SVG `<line
 
     The two supported manual install targets are `~/.claude/skills/slide-skill/` and `.cursor/skills/`. `npx skills add` (skills-marketplace) install support lands together with the public repository release — until then, use the manual targets above.
 
-    The skill file documents:
-    - When to activate (English + Chinese trigger phrases)
-    - The single command that does 90% of the work
-    - How to choose between the 32 themes
-    - Markdown authoring conventions (headings, bullets, **bold numbers** for metrics, `### A / ### B` for comparisons)
-    - The decision flow the agent should follow
+    `SKILL.md` is a **routed skill**: the entry file only identifies the scenario
+    and dispatches to exactly one workflow doc under [`workflows/`](workflows/) —
+    [defense-fill](workflows/defense-fill.md) (school-template fidelity fill),
+    [competition](workflows/competition.md) (contest roadshows), [course](workflows/course.md)
+    (course & teaching decks), [fast](workflows/fast.md) (2-second deadline mode), and
+    [agent-authoring](workflows/agent-authoring.md) — the recommended free-design route
+    where the host agent hand-writes every SVG page under per-page discipline.
 
     ---
 
