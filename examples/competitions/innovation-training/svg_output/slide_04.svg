@@ -1,0 +1,84 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="row-grad-04" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="card-shadow-04" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-04" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#6366F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-04" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#8B8EFF" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#8B8EFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F5F3FF"/></g>
+  <g id="decor-04">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-04)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-04)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#6366F1" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#6366F1" stroke-width="1" opacity="0.08"/>
+  </g>
+  <g id="decor-bar-04">
+    <rect x="1232" y="0" width="48" height="720" fill="#6366F1" opacity="0.04"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-04" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#6366F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#6366F1" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-04)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" fill="#4A4485" text-anchor="end" opacity="0.7">04 / 13</text>
+  </g>
+  <g id="content-title-04">
+    <text x="36" y="64" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="64" font-weight="700" fill="#1E1B4B">研究现状与空白</text>
+    <rect x="36" y="76" width="72" height="3.5" rx="1.75" fill="#6366F1" opacity="0.8"/>
+  </g>
+  <g id="content-body-04">
+    <rect x="36" y="104" width="1208" height="128" rx="24" fill="url(#row-grad-04)" stroke="#6366F1" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-04)"/>
+    <rect x="36" y="104" width="4" height="128" rx="2" fill="#6366F1" opacity="0.8"/>
+    <circle cx="68" cy="168" r="22" fill="none" stroke="#6366F1" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="168" r="15" fill="#6366F1" fill-opacity="0.12"/>
+    <text x="68" y="173" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" font-weight="700" fill="#8184FF" text-anchor="middle">01</text>
+    <circle cx="110" cy="144" r="4" fill="#6366F1" opacity="0.85"/>
+    <text x="124" y="150" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="36" fill="#1E1B4B"><tspan x="124" dy="0"><tspan font-weight="700" fill="#8184FF">国外</tspan><tspan fill="#E0E7FF" opacity="0.6">：</tspan>Woebot、Wysa 等认知行为疗法聊天机器人已有随机对照试</tspan><tspan x="124" dy="52">验证据</tspan></text>
+    <path d="M 1220 162 L 1226 168 L 1220 174" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="244" width="1208" height="76" rx="24" fill="url(#row-grad-04)" stroke="#4548D3" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-04)"/>
+    <rect x="36" y="244" width="4" height="76" rx="2" fill="#4548D3" opacity="0.8"/>
+    <circle cx="68" cy="282" r="22" fill="none" stroke="#4548D3" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="282" r="15" fill="#4548D3" fill-opacity="0.12"/>
+    <text x="68" y="287" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" font-weight="700" fill="#4548D3" text-anchor="middle">02</text>
+    <circle cx="110" cy="284" r="4" fill="#4548D3" opacity="0.85"/>
+    <text x="124" y="290" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="36" fill="#1E1B4B"><tspan x="124" dy="0"><tspan font-weight="700" fill="#4548D3">国内</tspan><tspan fill="#E0E7FF" opacity="0.6">：</tspan>通用心理助手 App 多面向社会用户，缺乏校园场景适配</tspan></text>
+    <path d="M 1220 276 L 1226 282 L 1220 288" fill="none" stroke="#4548D3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="332" width="1208" height="76" rx="24" fill="url(#row-grad-04)" stroke="#8B8EFF" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-04)"/>
+    <rect x="36" y="332" width="4" height="76" rx="2" fill="#8B8EFF" opacity="0.8"/>
+    <circle cx="68" cy="370" r="22" fill="none" stroke="#8B8EFF" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="370" r="15" fill="#8B8EFF" fill-opacity="0.12"/>
+    <text x="68" y="375" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" font-weight="700" fill="#8184FF" text-anchor="middle">03</text>
+    <circle cx="110" cy="372" r="4" fill="#8B8EFF" opacity="0.85"/>
+    <text x="124" y="378" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="36" fill="#1E1B4B"><tspan x="124" dy="0"><tspan font-weight="700" fill="#8184FF">高校实践</tspan><tspan fill="#E0E7FF" opacity="0.6">：</tspan>多停留在测评量表线上化，对话式陪伴产品近乎空白</tspan></text>
+    <path d="M 1220 364 L 1226 370 L 1220 376" fill="none" stroke="#8B8EFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="420" width="1208" height="128" rx="24" fill="url(#row-grad-04)" stroke="#6366F1" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-04)"/>
+    <rect x="36" y="420" width="4" height="128" rx="2" fill="#6366F1" opacity="0.8"/>
+    <circle cx="68" cy="484" r="22" fill="none" stroke="#6366F1" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="484" r="15" fill="#6366F1" fill-opacity="0.12"/>
+    <text x="68" y="489" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" font-weight="700" fill="#8184FF" text-anchor="middle">04</text>
+    <circle cx="110" cy="460" r="4" fill="#6366F1" opacity="0.85"/>
+    <text x="124" y="466" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="36" fill="#1E1B4B"><tspan x="124" dy="0"><tspan font-weight="700" fill="#8184FF">研究空白</tspan><tspan fill="#E0E7FF" opacity="0.6">：</tspan>缺少针对中国大学生语境（学业、宿舍、就业）的对话语</tspan><tspan x="124" dy="52">料与安全规范</tspan></text>
+    <path d="M 1220 478 L 1226 484 L 1220 490" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+  </g>
+</svg>

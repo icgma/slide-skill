@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import re
 import shutil
@@ -50,6 +51,145 @@ def replace_text(input_pptx: Path | str, output_pptx: Path | str, replacements: 
             tree.write(slide, encoding="utf-8", xml_declaration=True)
         _zip(root, output)
     return output
+
+
+def replace_text_scoped(
+    input_pptx: Path | str,
+    output_pptx: Path | str,
+    slide_replacements: dict[int, dict[str, str]],
+    *,
+    applied: dict[int, set[str]] | None = None,
+) -> Path:
+    """Apply per-slide text replacements (``{slide_number: {old: new}}``).
+
+    Unlike :func:`replace_text`, each mapping only touches its slide's XML
+    part, so identical sample text on different slides can receive different
+    content. Matching runs in three tiers per key: whole-shape exact text,
+    whole-paragraph exact text, then substring within a paragraph. Multi-line
+    values expand into cloned paragraphs that inherit the matched paragraph's
+    run/paragraph properties — the operation is format-preserving (only text
+    content changes; formatting elements are cloned, never rewritten).
+
+    When ``applied`` is given it is filled with ``{slide_number: {old keys
+    that matched}}`` so callers can detect replacements that never landed.
+    """
+    source = Path(input_pptx)
+    output = Path(output_pptx)
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _unzip(source, root)
+        ordered = _ordered_slide_files(root)
+        for slide_number, mapping in slide_replacements.items():
+            if not mapping or slide_number < 1 or slide_number > len(ordered):
+                continue
+            slide_path = ordered[slide_number - 1]
+            tree = ET.parse(slide_path)
+            done = _apply_scoped_replacements(tree.getroot(), mapping)
+            if applied is not None and done:
+                applied.setdefault(slide_number, set()).update(done)
+            tree.write(slide_path, encoding="utf-8", xml_declaration=True)
+        _zip(root, output)
+    return output
+
+
+def shape_paragraph_texts(sp: ET.Element) -> list[str] | None:
+    """Per-paragraph visible text of a ``<p:sp>``, or None when it has no text body."""
+    txbody = sp.find(f"{{{P_NS}}}txBody")
+    if txbody is None:
+        return None
+    return [
+        "".join(node.text or "" for node in para.iter(f"{{{A_NS}}}t"))
+        for para in txbody.findall(f"{{{A_NS}}}p")
+    ]
+
+
+def _apply_scoped_replacements(root: ET.Element, mapping: dict[str, str]) -> set[str]:
+    applied: set[str] = set()
+    for old, new in mapping.items():
+        if not old:
+            continue
+        lines = new.split("\n")
+        if _replace_shape_exact(root, old, lines):
+            applied.add(old)
+            continue
+        if _replace_paragraph_exact(root, old, lines):
+            applied.add(old)
+            continue
+        if _replace_visible_text(root, {old: new}):
+            applied.add(old)
+    return applied
+
+
+def _replace_shape_exact(root: ET.Element, old: str, lines: list[str]) -> bool:
+    hit = False
+    for sp in root.iter(f"{{{P_NS}}}sp"):
+        texts = shape_paragraph_texts(sp)
+        if texts is None or "\n".join(texts) != old:
+            continue
+        txbody = sp.find(f"{{{P_NS}}}txBody")
+        if txbody is not None and _set_shape_lines(txbody, lines):
+            hit = True
+    return hit
+
+
+def _replace_paragraph_exact(root: ET.Element, old: str, lines: list[str]) -> bool:
+    hit = False
+    for sp in root.iter(f"{{{P_NS}}}sp"):
+        txbody = sp.find(f"{{{P_NS}}}txBody")
+        if txbody is None:
+            continue
+        for para in list(txbody.findall(f"{{{A_NS}}}p")):
+            text = "".join(node.text or "" for node in para.iter(f"{{{A_NS}}}t"))
+            if text != old or para.find(f".//{{{A_NS}}}t") is None:
+                continue
+            _set_paragraph_text(para, lines[0])
+            position = list(txbody).index(para)
+            for offset, line in enumerate(lines[1:], start=1):
+                clone = copy.deepcopy(para)
+                _set_paragraph_text(clone, line)
+                txbody.insert(position + offset, clone)
+            hit = True
+            break
+    return hit
+
+
+def _set_shape_lines(txbody: ET.Element, lines: list[str]) -> bool:
+    paragraphs = txbody.findall(f"{{{A_NS}}}p")
+    prototypes = [para for para in paragraphs if para.find(f".//{{{A_NS}}}t") is not None]
+    if not prototypes:
+        return False
+    for para in paragraphs:
+        txbody.remove(para)
+    for index, line in enumerate(lines):
+        clone = copy.deepcopy(prototypes[min(index, len(prototypes) - 1)])
+        _set_paragraph_text(clone, line)
+        txbody.append(clone)
+    return True
+
+
+def _set_paragraph_text(para: ET.Element, line: str) -> None:
+    nodes = [node for node in para.iter(f"{{{A_NS}}}t")]
+    if not nodes:
+        return
+    nodes[0].text = line
+    for node in nodes[1:]:
+        node.text = ""
+
+
+def _ordered_slide_files(root: Path) -> list[Path]:
+    """Slide part paths in presentation (sldIdLst) order."""
+    pres, rels = _load_presentation(root)
+    targets = {
+        rel.attrib.get("Id", ""): rel.attrib.get("Target", "")
+        for rel in rels.getroot()
+        if rel.attrib.get("Type", "").endswith("/slide")
+    }
+    files: list[Path] = []
+    for elem in _slide_id_elements(pres):
+        target = targets.get(elem.attrib.get(f"{{{R_NS}}}id", ""), "")
+        if target:
+            files.append(_target_path(root, target))
+    return files
 
 
 def delete_slides(input_pptx: Path | str, output_pptx: Path | str, slide_numbers: list[int]) -> Path:

@@ -827,6 +827,34 @@ BUILTIN_THEMES: dict[str, ThemeSpec] = {
         layout_rhythm=["anchor", "breathing", "breathing"],
         icons={"stroke": "#F0F4FF", "weight": "1.5"},
     ),
+    # ------------------------------------------------------------------
+    # Phase 52 — Chinese university thesis-defense conventions
+    # (cross-validated in .planning/research/v5.0-COMPETITIVE-GAP.md §2.3:
+    # navy primary, white bg, YaHei-first type, dark red for key data only).
+    # ------------------------------------------------------------------
+    "academic-defense": ThemeSpec(
+        name="academic-defense",
+        palette={
+            "background": "#FFFFFF",
+            "surface": "#F4F6FA",
+            "text": "#1B2A4A",
+            "body": "#44506B",
+            "accent": "#2D4A7A",
+            "muted": "#C9D2E3",
+        },
+        font_family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif",
+        design_hints=(
+            "Chinese academic defense deck for university thesis review (毕业答辩). "
+            "White background with navy structural color (#1B2A4A) for titles and the thin top band, "
+            "deep-blue accent (#2D4A7A) for cards and navigation elements. "
+            "Dark red #B03A2E is reserved EXCLUSIVELY for key data emphasis (never decoration). "
+            "Restrained composition: thin top navy band, bottom footer with page number \"NN / TT\", "
+            "no gradient orbs, no playful decoration. Generous line spacing for projector readability. "
+            "总-分-总 structure: cover → outline → body sections → conclusions → acknowledgements."
+        ),
+        layout_rhythm=["anchor", "breathing", "dense"],
+        icons={"stroke": "#1B2A4A", "weight": "1.5"},
+    ),
 }
 
 

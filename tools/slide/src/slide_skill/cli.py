@@ -334,6 +334,8 @@ def main(argv: list[str] | None = None) -> int:
     p_init.add_argument("--overwrite", action="store_true")
     p_init.add_argument("--theme", default="dark-tech", help="Visual theme (dark-tech, light-corporate, warm-editorial, data-forward, vibrant-startup)")
     p_init.add_argument("--competition", default=None, help="Competition template (internet-plus, challenge-cup, math-modeling, innovation-training, thesis-defense, course-presentation)")
+    p_init.add_argument("--from-example", action="store_true",
+                        help="Start from the finished example pack for --competition: copies its source.md and speaker notes into the project")
 
     p_import = sub.add_parser("import-sources", help="Copy or move source files into a project")
     p_import.add_argument("project")
@@ -443,6 +445,17 @@ def main(argv: list[str] | None = None) -> int:
     p_duplicate.add_argument("input")
     p_duplicate.add_argument("output")
     p_duplicate.add_argument("--slide", type=int, required=True)
+
+    p_fill = sub.add_parser(
+        "template-fill",
+        help="Fill a mandated PPTX template from Markdown without redesigning it",
+    )
+    p_fill.add_argument("template", help="School/organization .pptx template")
+    p_fill.add_argument("--content", required=True, help="Thesis/content Markdown file")
+    p_fill.add_argument("-o", "--output", default=None,
+                        help="Output PPTX path (default: <template-stem>-filled.pptx in cwd)")
+    p_fill.add_argument("--map", default=None,
+                        help='JSON per-slide replacement overrides: {"3": {"old": "new"}}')
 
     p_plan = sub.add_parser("plan", help="Generate a structured slide plan from Markdown (review before generating)")
     p_plan.add_argument("source", help="Source Markdown file")
@@ -689,7 +702,19 @@ def main(argv: list[str] | None = None) -> int:
 
 def _dispatch(args: argparse.Namespace) -> int:
     if args.command == "init":
-        print(init_project(args.name, args.format, args.base, args.overwrite, competition=args.competition))
+        if getattr(args, "from_example", False) and not args.competition:
+            print("error: --from-example requires --competition <slug>. Run 'slide-skill competitions' for slugs.", file=sys.stderr)
+            return 1
+        project = init_project(args.name, args.format, args.base, args.overwrite, competition=args.competition)
+        print(project)
+        if getattr(args, "from_example", False):
+            from .competition import scaffold_from_example
+            info = scaffold_from_example(project, args.competition)
+            print(f"source:  {info['source']}  (示例内容，改成你自己的)")
+            if info["notes"]:
+                print(f"notes:   {info['notes']}  (演讲备注，导出时自动嵌入 PPTX)")
+            print("next:    1. 编辑 source.md，替换为你的内容")
+            print(f"         2. slide-skill quickstart {info['source']} --theme {info['theme']} --name {args.name} --mode fast")
     elif args.command == "import-sources":
         paths = import_sources(args.project, [Path(item) for item in args.sources], move=args.move)
         print("\n".join(str(path) for path in paths))
@@ -797,6 +822,19 @@ def _dispatch(args: argparse.Namespace) -> int:
         print(reorder_slides(args.input, args.output, _numbers(args.order)))
     elif args.command == "template-duplicate":
         print(duplicate_slide(args.input, args.output, args.slide))
+    elif args.command == "template-fill":
+        from .template_fill import fill_template
+
+        template = Path(args.template)
+        output = Path(args.output) if args.output else Path.cwd() / f"{template.stem}-filled.pptx"
+        try:
+            result = fill_template(template, args.content, output, mapping_json=args.map)
+        except (OSError, ValueError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 1
+        print(result.output)
+        print(result.report_path)
+        print(f"verdict: {result.verdict}")
     elif args.command == "plan":
         import json as _json
         from .content_planner import ContentConfig, plan_to_json, plan_to_markdown
@@ -1351,13 +1389,17 @@ def _dispatch(args: argparse.Namespace) -> int:
         print(f"            slide-skill finalize-svg {project} && slide-skill export {project}")
         return 0
     elif args.command == "competitions":
-        from .competition import list_competitions
+        from .competition import EXAMPLE_PACK_THEMES, list_competitions
         comps = list_competitions()
-        print(f"{'ID':<22} {'名称':<24} {'时限':<8} {'页数':<10} {'章节数'}")
-        print("-" * 85)
+        print(f"{'ID':<22} {'名称':<24} {'时限':<8} {'页数':<10} {'章节数':<8} {'示例包主题'}")
+        print("-" * 100)
         for c in comps:
             pages = f"{c.page_range[0]}-{c.page_range[1]}"
-            print(f"{c.name:<22} {c.name_zh:<24} {c.time_limit_minutes}min{' ':<4} {pages:<10} {len(c.sections)}")
+            theme = EXAMPLE_PACK_THEMES.get(c.name, "-")
+            print(f"{c.name:<22} {c.name_zh:<24} {c.time_limit_minutes}min{' ':<4} {pages:<10} {len(c.sections):<8} {theme}")
+        print()
+        print("每个竞赛都有成品示例包（source + 演讲备注 + SVG + deck.pptx + QA）：examples/competitions/<ID>/")
+        print("一条命令从示例包起步：slide-skill init <名称> --competition <ID> --from-example")
     elif args.command == "rehearse":
         from .rehearse import format_rehearsal_report, rehearse_project
         report = rehearse_project(args.project, time_limit_minutes=args.time_limit)

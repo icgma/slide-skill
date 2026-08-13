@@ -1,0 +1,58 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-09" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-09" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#2758E2" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#2758E2" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-09" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#4F80FF" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#4F80FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/></g>
+  <g id="decor-09">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-09)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-09)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#2758E2" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#2758E2" stroke-width="1" opacity="0.08"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-09" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2758E2" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#2758E2" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#2758E2" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-09)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#334155" text-anchor="end" opacity="0.7">09 / 10</text>
+  </g>
+  <g id="content-title-09">
+    <text x="36" y="64" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="54" font-weight="700" fill="#0F172A">讨论问题</text>
+    <rect x="36" y="76" width="72" height="3.5" rx="1.75" fill="#2758E2" opacity="0.8"/>
+  </g>
+  <g id="content-problem-09" data-theme-profile="default" data-scene-variant="risk-ledger">
+    <rect x="36" y="150" width="512" height="340" rx="24" fill="#F8FAFC" stroke="#2758E2" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <text x="70" y="232" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="14" font-weight="700" fill="#2758E2" letter-spacing="4">FRICTION</text>
+    <text x="70" y="322" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="52" font-weight="800" fill="#0F172A">讨论问题</text>
+    <text x="70" y="446" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#334155" opacity="0.8">3 mapped signals</text>
+    <rect x="640" y="150" width="563" height="96" rx="24" fill="#F8FAFC" fill-opacity="1" stroke="#1546D0" stroke-opacity="0.24" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <text x="660" y="184" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="800" fill="#1546D0">! 01</text>
+    <text x="660" y="222" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" font-weight="700" fill="#0F172A" data-fit-box="660,198,521,38" data-line-height="1.18"><tspan x="660" dy="0">如果由你设计目标函数，你会在&quot;用户时长&quot;之外加入什么指标？</tspan></text>
+    <rect x="640" y="264" width="563" height="96" rx="24" fill="#F8FAFC" fill-opacity="1" stroke="#2758E2" stroke-opacity="0.24" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <text x="660" y="298" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="800" fill="#2758E2">! 02</text>
+    <text x="660" y="336" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#0F172A" data-fit-box="660,312,521,38" data-line-height="1.18"><tspan x="660" dy="0">&quot;可关闭个性化推荐&quot;上线后使用率不足 4%，说明了什么？</tspan></text>
+    <rect x="640" y="378" width="563" height="96" rx="24" fill="#F8FAFC" fill-opacity="1" stroke="#396AF4" stroke-opacity="0.24" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <text x="660" y="412" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="800" fill="#3B6CF6">! 03</text>
+    <text x="660" y="450" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#0F172A" data-fit-box="660,426,521,38" data-line-height="1.18"><tspan x="660" dy="0">创作者为流量池数据优化前 3 秒，算不算被算法&quot;驯化&quot;？</tspan></text>
+  </g>
+</svg>

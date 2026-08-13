@@ -1,0 +1,154 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-06" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-06" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#375484" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#375484" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-06" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#5F7CAC" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#5F7CAC" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="proc-card-grad-06-0" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F4F6FA"/>
+      <stop offset="100%" stop-color="#F4F6FA" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-06-0">
+      <rect x="36" y="296" width="203" height="223" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-06-1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F4F6FA"/>
+      <stop offset="100%" stop-color="#F4F6FA" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-06-1">
+      <rect x="287" y="296" width="203" height="223" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-06-2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F4F6FA"/>
+      <stop offset="100%" stop-color="#F4F6FA" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-06-2">
+      <rect x="538" y="296" width="203" height="223" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-06-3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F4F6FA"/>
+      <stop offset="100%" stop-color="#F4F6FA" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-06-3">
+      <rect x="789" y="296" width="203" height="223" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-06-4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F4F6FA"/>
+      <stop offset="100%" stop-color="#F4F6FA" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-06-4">
+      <rect x="1040" y="296" width="203" height="223" rx="24"/>
+    </clipPath>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/></g>
+  <g id="decor-06">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-06)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-06)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#375484" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#375484" stroke-width="1" opacity="0.08"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-06" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#375484" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#375484" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#375484" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-06)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="21" fill="#44506B" text-anchor="end" opacity="0.7">06 / 16</text>
+  </g>
+  <g id="content-eyebrow-06">
+    <text x="36" y="60" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="21" font-weight="700" fill="#375484" letter-spacing="4">PROCESS &#x2192; 5 STEPS</text>
+  </g>
+  <g id="content-title-06">
+    <text x="36" y="110" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="64" font-weight="700" fill="#1B2A4A">研究内容与技术路线</text>
+  </g>
+  <g id="content-flow-06">
+    <g clip-path="url(#proc-card-clip-06-0)">
+      <rect x="36" y="296" width="203" height="223" rx="24" fill="url(#proc-card-grad-06-0)"/>
+      <rect x="36" y="296" width="4" height="223" fill="#375484"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="36" y="296" width="203" height="223" rx="24" fill="none" stroke="#375484" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-06)"/>
+    <!-- Inner border detail -->
+    <rect x="41" y="301" width="193" height="213" rx="20" fill="none" stroke="#375484" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="137" cy="340" r="20" fill="none" stroke="#375484" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="137" cy="340" r="14" fill="#375484"/>
+    <text x="137" y="345" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="26" font-weight="700" fill="#FFFFFF" text-anchor="middle">01</text>
+    <text x="137" y="424" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="20" fill="#1B2A4A" text-anchor="middle"><tspan x="137" dy="0">数据层:采集驿站</tspan><tspan x="137" dy="23">取件记录，完成</tspan><tspan x="137" dy="23">清洗、对齐与异</tspan><tspan x="137" dy="23">常剔除</tspan></text>
+    <line x1="251" y1="407" x2="275" y2="407" stroke="#375484" stroke-width="2.5" opacity="0.6"/>
+    <line x1="251" y1="407" x2="275" y2="407" stroke="#FFFFFF" stroke-width="1.2" stroke-dasharray="2,3" opacity="0.8"/>
+    <polygon points="275,402 297,407 275,412" fill="#375484" opacity="0.8"/>
+    <g clip-path="url(#proc-card-clip-06-1)">
+      <rect x="287" y="296" width="203" height="223" rx="24" fill="url(#proc-card-grad-06-1)"/>
+      <rect x="287" y="296" width="4" height="223" fill="#0F2C5C"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="287" y="296" width="203" height="223" rx="24" fill="none" stroke="#0F2C5C" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-06)"/>
+    <!-- Inner border detail -->
+    <rect x="292" y="301" width="193" height="213" rx="20" fill="none" stroke="#0F2C5C" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="388" cy="340" r="20" fill="none" stroke="#0F2C5C" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="388" cy="340" r="14" fill="#0F2C5C"/>
+    <text x="388" y="345" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="26" font-weight="700" fill="#FFFFFF" text-anchor="middle">02</text>
+    <text x="388" y="424" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="20" fill="#1B2A4A" text-anchor="middle"><tspan x="388" dy="0">特征层:构建星期</tspan><tspan x="388" dy="23">、节假日、天气</tspan><tspan x="388" dy="23">、促销事件四类</tspan><tspan x="388" dy="23">外部特征</tspan></text>
+    <line x1="502" y1="407" x2="526" y2="407" stroke="#0F2C5C" stroke-width="2.5" opacity="0.6"/>
+    <line x1="502" y1="407" x2="526" y2="407" stroke="#FFFFFF" stroke-width="1.2" stroke-dasharray="2,3" opacity="0.8"/>
+    <polygon points="526,402 548,407 526,412" fill="#0F2C5C" opacity="0.8"/>
+    <g clip-path="url(#proc-card-clip-06-2)">
+      <rect x="538" y="296" width="203" height="223" rx="24" fill="url(#proc-card-grad-06-2)"/>
+      <rect x="538" y="296" width="4" height="223" fill="#6986B6"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="538" y="296" width="203" height="223" rx="24" fill="none" stroke="#6986B6" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-06)"/>
+    <!-- Inner border detail -->
+    <rect x="543" y="301" width="193" height="213" rx="20" fill="none" stroke="#6986B6" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="639" cy="340" r="20" fill="none" stroke="#6986B6" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="639" cy="340" r="14" fill="#6986B6"/>
+    <text x="639" y="345" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="26" font-weight="700" fill="#1B2A4A" text-anchor="middle">03</text>
+    <text x="639" y="423" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="19" fill="#1B2A4A" text-anchor="middle"><tspan x="639" dy="0">模型层:搭建两层</tspan><tspan x="639" dy="22">LSTM 网络，以</tspan><tspan x="639" dy="22">14 天滑动窗口预</tspan><tspan x="639" dy="22">测次日取件量</tspan></text>
+    <line x1="753" y1="407" x2="777" y2="407" stroke="#6986B6" stroke-width="2.5" opacity="0.6"/>
+    <line x1="753" y1="407" x2="777" y2="407" stroke="#FFFFFF" stroke-width="1.2" stroke-dasharray="2,3" opacity="0.8"/>
+    <polygon points="777,402 799,407 777,412" fill="#6986B6" opacity="0.8"/>
+    <g clip-path="url(#proc-card-clip-06-3)">
+      <rect x="789" y="296" width="203" height="223" rx="24" fill="url(#proc-card-grad-06-3)"/>
+      <rect x="789" y="296" width="4" height="223" fill="#234070"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="789" y="296" width="203" height="223" rx="24" fill="none" stroke="#234070" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-06)"/>
+    <!-- Inner border detail -->
+    <rect x="794" y="301" width="193" height="213" rx="20" fill="none" stroke="#234070" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="890" cy="340" r="20" fill="none" stroke="#234070" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="890" cy="340" r="14" fill="#234070"/>
+    <text x="890" y="345" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="26" font-weight="700" fill="#FFFFFF" text-anchor="middle">04</text>
+    <text x="890" y="423" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="19" fill="#1B2A4A" text-anchor="middle"><tspan x="890" dy="0">评估层:与 ARIMA</tspan><tspan x="890" dy="22">、GRU、移动平均</tspan><tspan x="890" dy="22">基线对比，并做误</tspan><tspan x="890" dy="22">差归因分析</tspan></text>
+    <line x1="1004" y1="407" x2="1028" y2="407" stroke="#234070" stroke-width="2.5" opacity="0.6"/>
+    <line x1="1004" y1="407" x2="1028" y2="407" stroke="#FFFFFF" stroke-width="1.2" stroke-dasharray="2,3" opacity="0.8"/>
+    <polygon points="1028,402 1050,407 1028,412" fill="#234070" opacity="0.8"/>
+    <g clip-path="url(#proc-card-clip-06-4)">
+      <rect x="1040" y="296" width="203" height="223" rx="24" fill="url(#proc-card-grad-06-4)"/>
+      <rect x="1040" y="296" width="4" height="223" fill="#5572A2"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="1040" y="296" width="203" height="223" rx="24" fill="none" stroke="#5572A2" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-06)"/>
+    <!-- Inner border detail -->
+    <rect x="1045" y="301" width="193" height="213" rx="20" fill="none" stroke="#5572A2" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="1141" cy="340" r="20" fill="none" stroke="#5572A2" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="1141" cy="340" r="14" fill="#5572A2"/>
+    <text x="1141" y="345" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="26" font-weight="700" fill="#FFFFFF" text-anchor="middle">05</text>
+    <text x="1141" y="426" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="22" fill="#1B2A4A" text-anchor="middle"><tspan x="1141" dy="0">应用层:输出次</tspan><tspan x="1141" dy="25">日预测报表，支</tspan><tspan x="1141" dy="25">撑驿站排班决策</tspan></text>
+  </g>
+</svg>

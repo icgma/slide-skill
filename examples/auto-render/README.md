@@ -7,9 +7,11 @@
   slide-skill quickstart examples/sample.md --theme light-corporate
   ```
 
-  The same source ([`examples/sample.md`](../sample.md)) — a 14-slide
-  "AI-Powered Analytics Platform" deck — rendered through two different themes
-  using the pure-Python template engine in `tools/slide/src/slide_skill/svg_pipeline.py`.
+  The same source ([`examples/sample.md`](../sample.md)) — the
+  "AI-Powered Analytics Platform" deck, 8 slides at the time these renders were
+  committed (the sample has since grown to 14 sections) — rendered through two
+  different themes using the pure-Python template engine in
+  `tools/slide/src/slide_skill/svg_pipeline.py`.
 
   Compare against:
 

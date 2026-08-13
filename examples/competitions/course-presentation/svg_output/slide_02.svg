@@ -1,0 +1,123 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-02" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-02" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#1D4ED8" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#1D4ED8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-02" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#4576FF" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#4576FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="proc-card-grad-02-0" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#F8FAFC" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-02-0">
+      <rect x="36" y="204" width="580" height="165" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-02-1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#F8FAFC" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-02-1">
+      <rect x="664" y="204" width="580" height="165" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-02-2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#F8FAFC" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-02-2">
+      <rect x="36" y="417" width="580" height="165" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-02-3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#F8FAFC" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-02-3">
+      <rect x="664" y="417" width="580" height="165" rx="24"/>
+    </clipPath>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/></g>
+  <g id="decor-02">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-02)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-02)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#1D4ED8" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#1D4ED8" stroke-width="1" opacity="0.08"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-02" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1D4ED8" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#1D4ED8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#1D4ED8" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-02)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#334155" text-anchor="end" opacity="0.7">02 / 10</text>
+  </g>
+  <g id="content-eyebrow-02">
+    <text x="36" y="60" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" font-weight="700" fill="#1D4ED8" letter-spacing="4">PROCESS &#x2192; 4 STEPS</text>
+  </g>
+  <g id="content-title-02">
+    <text x="36" y="110" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="64" font-weight="700" fill="#0F172A">为什么研究推荐算法</text>
+  </g>
+  <g id="content-flow-02">
+    <g clip-path="url(#proc-card-clip-02-0)">
+      <rect x="36" y="204" width="580" height="165" rx="24" fill="url(#proc-card-grad-02-0)"/>
+      <rect x="36" y="204" width="4" height="165" fill="#1D4ED8"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="36" y="204" width="580" height="165" rx="24" fill="none" stroke="#1D4ED8" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-02)"/>
+    <!-- Inner border detail -->
+    <rect x="41" y="209" width="570" height="155" rx="20" fill="none" stroke="#1D4ED8" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="326" cy="244" r="20" fill="none" stroke="#1D4ED8" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="326" cy="244" r="14" fill="#1D4ED8"/>
+    <text x="326" y="249" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="26" font-weight="700" fill="#FFFFFF" text-anchor="middle">01</text>
+    <text x="326" y="308" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="32" fill="#0F172A" text-anchor="middle"><tspan x="326" dy="0">短视频人均单日使用时长已超过</tspan><tspan x="326" dy="37">150 分钟，位居各类应用之首</tspan></text>
+    <g clip-path="url(#proc-card-clip-02-1)">
+      <rect x="664" y="204" width="580" height="165" rx="24" fill="url(#proc-card-grad-02-1)"/>
+      <rect x="664" y="204" width="4" height="165" fill="#0026B0"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="664" y="204" width="580" height="165" rx="24" fill="none" stroke="#0026B0" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-02)"/>
+    <!-- Inner border detail -->
+    <rect x="669" y="209" width="570" height="155" rx="20" fill="none" stroke="#0026B0" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="954" cy="244" r="20" fill="none" stroke="#0026B0" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="954" cy="244" r="14" fill="#0026B0"/>
+    <text x="954" y="249" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="26" font-weight="700" fill="#FFFFFF" text-anchor="middle">02</text>
+    <text x="954" y="308" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="32" fill="#0F172A" text-anchor="middle"><tspan x="954" dy="0">&quot;刷到停不下来&quot;的体验背后，是一整</tspan><tspan x="954" dy="37">套工业级推荐系统在实时决策</tspan></text>
+    <g clip-path="url(#proc-card-clip-02-2)">
+      <rect x="36" y="417" width="580" height="165" rx="24" fill="url(#proc-card-grad-02-2)"/>
+      <rect x="36" y="417" width="4" height="165" fill="#4F80FF"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="36" y="417" width="580" height="165" rx="24" fill="none" stroke="#4F80FF" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-02)"/>
+    <!-- Inner border detail -->
+    <rect x="41" y="422" width="570" height="155" rx="20" fill="none" stroke="#4F80FF" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="326" cy="457" r="20" fill="none" stroke="#4F80FF" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="326" cy="457" r="14" fill="#4F80FF"/>
+    <text x="326" y="462" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="26" font-weight="700" fill="#0F172A" text-anchor="middle">03</text>
+    <text x="326" y="521" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="32" fill="#0F172A" text-anchor="middle"><tspan x="326" dy="0">理解推荐机制，是数字媒体从业者做</tspan><tspan x="326" dy="37">内容、做投放的基本功</tspan></text>
+    <g clip-path="url(#proc-card-clip-02-3)">
+      <rect x="664" y="417" width="580" height="165" rx="24" fill="url(#proc-card-grad-02-3)"/>
+      <rect x="664" y="417" width="4" height="165" fill="#093AC4"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="664" y="417" width="580" height="165" rx="24" fill="none" stroke="#093AC4" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-02)"/>
+    <!-- Inner border detail -->
+    <rect x="669" y="422" width="570" height="155" rx="20" fill="none" stroke="#093AC4" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="954" cy="457" r="20" fill="none" stroke="#093AC4" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="954" cy="457" r="14" fill="#093AC4"/>
+    <text x="954" y="462" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="26" font-weight="700" fill="#FFFFFF" text-anchor="middle">04</text>
+    <text x="954" y="521" font-family="Calibri, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="32" fill="#0F172A" text-anchor="middle"><tspan x="954" dy="0">汇报路线：机制拆解 → 真实案例 →</tspan><tspan x="954" dy="37">争议反思 → 课堂讨论</tspan></text>
+  </g>
+</svg>

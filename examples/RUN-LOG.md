@@ -9,8 +9,13 @@ least two themes using a representative sample Markdown deck.
 
 ## Source File
 
-`examples/sample.md` — 14-slide "AI-Powered Analytics Platform" deck with a
-variety of layout types: default, bullet-list, metric-highlight, and two-column.
+`examples/sample.md` — the "AI-Powered Analytics Platform" deck (8 slides at
+the time of this run) with a variety of layout types: default, bullet-list,
+metric-highlight, and two-column.
+
+> Note: `examples/sample.md` has since been expanded to 14 sections, so
+> re-running these commands today produces a 14-slide deck. The committed
+> artifacts below are the original 8-slide runs.
 
 ## Commands Executed
 
@@ -23,7 +28,7 @@ slide-skill validate-pptx projects/sample-dark-tech/exports/sample-dark-tech_*.p
 ```
 
 Results:
-- quickstart: **passed** (14 SVGs generated, exported to PPTX)
+- quickstart: **passed** (8 SVGs generated, exported to PPTX)
 - check-svg: **passed** — `status: passed`, no issues found
 - validate-pptx: **valid**
 - QA.md: `status: automated-passed` — PPTX Package ✓, SVG Gate ✓, Placeholder Scan ✓
@@ -37,7 +42,7 @@ slide-skill validate-pptx projects/sample-light-corporate/exports/sample-light-c
 ```
 
 Results:
-- quickstart: **passed** (14 SVGs generated, exported to PPTX)
+- quickstart: **passed** (8 SVGs generated, exported to PPTX)
 - check-svg: **passed** — `status: passed`, no issues found
 - validate-pptx: **valid**
 - QA.md: `status: automated-passed` — PPTX Package ✓, SVG Gate ✓, Placeholder Scan ✓
@@ -57,7 +62,7 @@ examples/
   RUN-LOG.md                         # this file
   sample-dark-tech/
     deck.pptx                        # exported presentation
-    svg_output/                      # 14 generated SVG slides
+    svg_output/                      # 8 generated SVG slides
     design_spec.md                   # design spec written by create_spec()
     SVG-QA.md                        # SVG quality gate report (passed)
     QA.md                            # full QA report (automated-passed)

@@ -1,0 +1,57 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-10" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-10" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-10" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#34B6F9" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#34B6F9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F1F5F9"/></g>
+  <g id="decor-10">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-10)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-10)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#0C8ED1" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#0C8ED1" stroke-width="1" opacity="0.08"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-10" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#0C8ED1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-10)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#475569" text-anchor="end" opacity="0.7">10 / 14</text>
+  </g>
+  <g id="content-title-10">
+    <text x="36" y="64" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="54" font-weight="700" fill="#0F172A">求解结果：全天调度方案</text>
+    <rect x="36" y="76" width="72" height="3.5" rx="1.75" fill="#0C8ED1" opacity="0.8"/>
+  </g>
+  <g id="content-solution-10" data-theme-profile="default" data-scene-variant="capability-grid">
+    <rect x="36" y="142" width="591" height="182" rx="24" fill="#FFFFFF" fill-opacity="1" stroke="#007CBF" stroke-opacity="0.24" stroke-width="1.5" filter="url(#card-shadow-10)"/>
+    <text x="56" y="176" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="800" fill="#007CBF">✓ 01</text>
+    <text x="56" y="214" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#0F172A" data-fit-box="56,190,549,124" data-line-height="1.18"><tspan x="56" dy="0">全天安排跨区调度 312 车次，集中于早晚高峰前两个窗口</tspan></text>
+    <rect x="653" y="142" width="591" height="182" rx="24" fill="#FFFFFF" fill-opacity="1" stroke="#0C8ED1" stroke-opacity="0.24" stroke-width="1.5" filter="url(#card-shadow-10)"/>
+    <text x="673" y="176" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="800" fill="#20A2E5">✓ 02</text>
+    <text x="673" y="214" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#0F172A" data-fit-box="673,190,549,124" data-line-height="1.18"><tspan x="673" dy="0">主流向：居住区 → 地铁站（早高峰前），商务区 → 居住区</tspan><tspan x="673" dy="23">（晚高峰前）</tspan></text>
+    <rect x="36" y="350" width="591" height="182" rx="24" fill="#FFFFFF" fill-opacity="1" stroke="#1EA0E3" stroke-opacity="0.24" stroke-width="1.5" filter="url(#card-shadow-10)"/>
+    <text x="56" y="384" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="800" fill="#20A2E5">✓ 03</text>
+    <text x="56" y="422" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#0F172A" data-fit-box="56,398,549,124" data-line-height="1.18"><tspan x="56" dy="0">单日调度成本由 1.24 万元降至 0.98 万元，下降 21.0%</tspan></text>
+    <rect x="653" y="350" width="591" height="182" rx="24" fill="#FFFFFF" fill-opacity="1" stroke="#30B2F5" stroke-opacity="0.24" stroke-width="1.5" filter="url(#card-shadow-10)"/>
+    <text x="673" y="384" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="800" fill="#20A2E5">✓ 04</text>
+    <text x="673" y="422" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#0F172A" data-fit-box="673,398,549,124" data-line-height="1.18"><tspan x="673" dy="0">调度车辆总行驶里程下降 21.8%</tspan></text>
+  </g>
+</svg>

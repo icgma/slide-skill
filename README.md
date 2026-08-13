@@ -34,6 +34,64 @@ clean, inspectable SVG intermediate.
 
   ---
 
+## 🎓 Built for students / 面向大学生
+
+Three high-pressure student scenarios, each backed by a **finished example committed in this repo** — open the artifact first, then reproduce it with one command.
+
+### 1 · Thesis defense on your school's mandated template
+
+Your school hands you a fixed `.pptx` template? Keep its design untouched — one command fills your thesis Markdown into the template's native pages (duplicating content pages as needed) and reports text-overflow and leftover-placeholder risks.
+
+Committed end-to-end example: [school template](examples/school-template/template.pptx) → [filled 17-slide deck](examples/school-template/filled-example.pptx), with a clean [FILL-REPORT](examples/school-template/FILL-REPORT.md).
+
+```bash
+slide-skill template-fill examples/school-template/template.pptx --content examples/thesis-sample.zh.md -o filled.pptx
+```
+
+### 2 · Competition roadshow decks
+
+Six finished, QA-passed competition packs live in [`examples/competitions/`](examples/competitions/README.md) — realistic Chinese content following each competition's judging structure, spoken-register speaker notes embedded in every `deck.pptx`, and a QA report per pack.
+
+| Competition | Theme | Slides | Deck | Reproduce |
+|---|---|---|---|---|
+| [互联网+ 创新创业大赛](examples/competitions/internet-plus/) | vibrant-startup | 17 | [deck.pptx](examples/competitions/internet-plus/deck.pptx) | `slide-skill quickstart examples/competitions/internet-plus/source.md --theme vibrant-startup --name comp-internet-plus --mode fast` |
+| [挑战杯](examples/competitions/challenge-cup/) | data-forward | 16 | [deck.pptx](examples/competitions/challenge-cup/deck.pptx) | `slide-skill quickstart examples/competitions/challenge-cup/source.md --theme data-forward --name comp-challenge-cup --mode fast` |
+| [数学建模竞赛](examples/competitions/math-modeling/) | data-forward | 14 | [deck.pptx](examples/competitions/math-modeling/deck.pptx) | `slide-skill quickstart examples/competitions/math-modeling/source.md --theme data-forward --name comp-math-modeling --mode fast` |
+| [大创（大学生创新创业训练计划）](examples/competitions/innovation-training/) | indigo-saas | 13 | [deck.pptx](examples/competitions/innovation-training/deck.pptx) | `slide-skill quickstart examples/competitions/innovation-training/source.md --theme indigo-saas --name comp-innovation-training --mode fast` |
+| [毕业论文答辩](examples/competitions/thesis-defense/) | academic-defense | 16 | [deck.pptx](examples/competitions/thesis-defense/deck.pptx) | `slide-skill quickstart examples/competitions/thesis-defense/source.md --theme academic-defense --name comp-thesis-defense --mode fast` |
+| [课程展示](examples/competitions/course-presentation/) | light-corporate | 10 | [deck.pptx](examples/competitions/course-presentation/deck.pptx) | `slide-skill quickstart examples/competitions/course-presentation/source.md --theme light-corporate --name comp-course-presentation --mode fast` |
+
+Start your own deck from any pack — the scaffold copies its source and speaker notes into a fresh project:
+
+```bash
+slide-skill init my-deck --competition internet-plus --from-example
+```
+
+### 3 · Deadline tonight — a 16-page defense deck in ~2 seconds
+
+[`examples/thesis-sample.zh.md`](examples/thesis-sample.zh.md) is a realistic LSTM thesis source. One command, no API key, ~2 seconds, QA passed — these PNGs are real rendered pages of the resulting deck:
+
+```bash
+slide-skill quickstart examples/thesis-sample.zh.md --theme academic-defense --mode fast
+```
+
+<table>
+<tr>
+<td width="25%"><img src="examples/thesis-sample/01-cover.png" alt="Thesis cover (academic-defense)" /></td>
+<td width="25%"><img src="examples/thesis-sample/02-outline.png" alt="Thesis outline" /></td>
+<td width="25%"><img src="examples/thesis-sample/10-metrics.png" alt="Thesis metrics" /></td>
+<td width="25%"><img src="examples/thesis-sample/13-conclusion.png" alt="Thesis conclusion" /></td>
+</tr>
+<tr>
+<td align="center"><sub>Cover</sub></td>
+<td align="center"><sub>Outline</sub></td>
+<td align="center"><sub>Key metrics</sub></td>
+<td align="center"><sub>Conclusion</sub></td>
+</tr>
+</table>
+
+  ---
+
   ## What it produces
 
 Real example slides — six layouts across five of the 32 built-in themes.
@@ -247,9 +305,11 @@ What landed in **v2.1** and still ships: native PowerPoint gradients (SVG `<line
   ## Pipeline output (real end-to-end run)
 
 The slides above are hand-crafted reference targets. Below is what the
-pipeline **actually produced** running `slide-skill quickstart` against
-[`examples/sample.md`](examples/sample.md) — an 8-slide
-"AI-Powered Analytics Platform" deck — once for each of two themes:
+pipeline **actually produced** running `slide-skill quickstart` against the
+"AI-Powered Analytics Platform" sample deck, once for each of two themes.
+(The committed runs are 8 slides; [`examples/sample.md`](examples/sample.md)
+has since grown to 14 sections, so rerunning today yields a longer deck with
+the same look.)
 
 | Theme | SVGs | PPTX | QA report | Visual sample |
 |---|---|---|---|---|
@@ -399,13 +459,30 @@ Notes are embedded in the PPTX automatically during export.
 
 ```bash
 slide-skill competitions                    # list templates
-slide-skill init <name> --competition internet-plus
+slide-skill init <name> --competition internet-plus --from-example
 slide-skill rehearse <project>              # timing analysis
 slide-skill draft-notes <project>           # generate notes draft
 ```
 
 Templates: `internet-plus` · `challenge-cup` · `math-modeling` ·
 `innovation-training` · `thesis-defense` · `course-presentation`
+
+Every template ships a **finished example pack** under
+[`examples/competitions/`](examples/competitions/README.md) — source, speaker
+notes, SVGs, editable `deck.pptx`, and QA report. `--from-example` scaffolds
+your project from the pack so you start by editing real content, not a blank
+outline. The full pack table is in the **Built for students** section above.
+
+### 校方模板保真填充 / Fill your school's template
+
+School template mandated for your defense? Keep its design untouched — one command
+fills your thesis Markdown into the template's native pages (duplicating/removing
+content pages as needed) and reports text-overflow and leftover-placeholder risks.
+End-to-end example: [`examples/school-template/`](examples/school-template/).
+
+```bash
+slide-skill template-fill school.pptx --content thesis.md -o filled.pptx
+```
 
 ---
 
@@ -451,4 +528,4 @@ needed — they are not meant to be read directly by agents.
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE) if present, or treat as MIT by default.
+MIT — see [`LICENSE`](LICENSE).

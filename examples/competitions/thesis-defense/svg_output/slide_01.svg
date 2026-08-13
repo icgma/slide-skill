@@ -1,0 +1,32 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-01" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/></g>
+  <g id="split-bg-01">
+    <rect x="640" y="0" width="640" height="720" fill="#F5F5F5"/>
+    <circle cx="960" cy="360" r="180" fill="none" stroke="#375484" stroke-width="2" opacity="0.15" stroke-dasharray="10 10"/>
+    <circle cx="960" cy="360" r="140" fill="#375484" opacity="0.05"/>
+  </g>
+  <g id="chrome-stripe">
+    <rect x="48" y="252" width="6" height="258" fill="#375484"/>
+  </g>
+  <g id="content-title-01">
+    <text x="68" y="324" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="72" font-weight="700" fill="#1B2A4A"><tspan x="68" dy="0">基于 LSTM 的校</tspan><tspan x="68" dy="86">园快递驿站取件</tspan><tspan x="68" dy="86">量预测研究</tspan></text>
+  </g>
+  <g id="content-body-01">
+    <rect x="68" y="516" width="40" height="2" fill="#C9D2E3" opacity="0.5"/>
+    <text x="68" y="546" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="28" fill="#44506B" opacity="0.85"><tspan x="68" dy="0">答辩人:王晓琳 | 指导教师:李建国 副教</tspan><tspan x="68" dy="35">授 | 信息管理与信息系统专业 | 2026</tspan><tspan x="68" dy="35">年 6 月</tspan></text>
+  </g>
+  <g id="content-right-card-01" filter="url(#card-shadow-01)">
+    <rect x="700" y="300" width="520" height="120" rx="12" fill="#F4F6FA" stroke="#375484" stroke-opacity="0.2"/>
+    <text x="730" y="350" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="26" fill="#44506B" font-weight="700" letter-spacing="1">PAGES DESIGNED</text>
+    <text x="730" y="395" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="60" font-weight="700" fill="#375484">16</text>
+  </g>
+</svg>

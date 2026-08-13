@@ -1,0 +1,84 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="row-grad-13" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F4F6FA"/>
+      <stop offset="100%" stop-color="#F4F6FA" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="card-shadow-13" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-13" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#2D4A7A" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#2D4A7A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-13" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#5572A2" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#5572A2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/></g>
+  <g id="decor-13">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-13)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-13)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#2D4A7A" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#2D4A7A" stroke-width="1" opacity="0.08"/>
+  </g>
+  <g id="decor-bar-13">
+    <rect x="1232" y="0" width="48" height="720" fill="#2D4A7A" opacity="0.04"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-13" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2D4A7A" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#2D4A7A" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#2D4A7A" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-13)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="21" fill="#44506B" text-anchor="end" opacity="0.7">13 / 16</text>
+  </g>
+  <g id="content-title-13">
+    <text x="36" y="64" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="64" font-weight="700" fill="#1B2A4A">结论</text>
+    <rect x="36" y="76" width="72" height="3.5" rx="1.75" fill="#2D4A7A" opacity="0.8"/>
+  </g>
+  <g id="content-body-13">
+    <rect x="36" y="104" width="1208" height="128" rx="24" fill="url(#row-grad-13)" stroke="#2D4A7A" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-13)"/>
+    <rect x="36" y="104" width="4" height="128" rx="2" fill="#2D4A7A" opacity="0.8"/>
+    <circle cx="68" cy="168" r="22" fill="none" stroke="#2D4A7A" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="168" r="15" fill="#2D4A7A" fill-opacity="0.12"/>
+    <text x="68" y="173" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="21" font-weight="700" fill="#2D4A7A" text-anchor="middle">01</text>
+    <circle cx="110" cy="144" r="4" fill="#2D4A7A" opacity="0.85"/>
+    <text x="124" y="150" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="36" fill="#1B2A4A"><tspan x="124" dy="0">构建了覆盖 22 个月、41.6 万条记录的校园驿站取件量数据集与特</tspan><tspan x="124" dy="52">征体系</tspan></text>
+    <path d="M 1220 162 L 1226 168 L 1220 174" fill="none" stroke="#2D4A7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="244" width="1208" height="128" rx="24" fill="url(#row-grad-13)" stroke="#0F2C5C" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-13)"/>
+    <rect x="36" y="244" width="4" height="128" rx="2" fill="#0F2C5C" opacity="0.8"/>
+    <circle cx="68" cy="308" r="22" fill="none" stroke="#0F2C5C" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="308" r="15" fill="#0F2C5C" fill-opacity="0.12"/>
+    <text x="68" y="313" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="21" font-weight="700" fill="#0F2C5C" text-anchor="middle">02</text>
+    <circle cx="110" cy="284" r="4" fill="#0F2C5C" opacity="0.85"/>
+    <text x="124" y="290" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="36" fill="#1B2A4A"><tspan x="124" dy="0">两层 LSTM 联合外部事件特征,测试集 R² 0.91,显著优于统计与机</tspan><tspan x="124" dy="52">器学习基线</tspan></text>
+    <path d="M 1220 302 L 1226 308 L 1220 314" fill="none" stroke="#0F2C5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="384" width="1208" height="128" rx="24" fill="url(#row-grad-13)" stroke="#5572A2" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-13)"/>
+    <rect x="36" y="384" width="4" height="128" rx="2" fill="#5572A2" opacity="0.8"/>
+    <circle cx="68" cy="448" r="22" fill="none" stroke="#5572A2" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="448" r="15" fill="#5572A2" fill-opacity="0.12"/>
+    <text x="68" y="453" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="21" font-weight="700" fill="#4B6898" text-anchor="middle">03</text>
+    <circle cx="110" cy="424" r="4" fill="#5572A2" opacity="0.85"/>
+    <text x="124" y="430" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="36" fill="#1B2A4A"><tspan x="124" dy="0"><tspan font-weight="700" fill="#4B6898">预测结果已支撑试点驿站排班</tspan><tspan fill="#C9D2E3" opacity="0.6">:</tspan>高峰日兼职班次提前一天确定,排队时</tspan><tspan x="124" dy="52">长明显缓解</tspan></text>
+    <path d="M 1220 442 L 1226 448 L 1220 454" fill="none" stroke="#5572A2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="524" width="1208" height="76" rx="24" fill="url(#row-grad-13)" stroke="#2D4A7A" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-13)"/>
+    <rect x="36" y="524" width="4" height="76" rx="2" fill="#2D4A7A" opacity="0.8"/>
+    <circle cx="68" cy="562" r="22" fill="none" stroke="#2D4A7A" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="562" r="15" fill="#2D4A7A" fill-opacity="0.12"/>
+    <text x="68" y="567" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="21" font-weight="700" fill="#2D4A7A" text-anchor="middle">04</text>
+    <circle cx="110" cy="564" r="4" fill="#2D4A7A" opacity="0.85"/>
+    <text x="124" y="570" font-family="'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', Arial, sans-serif" font-size="36" fill="#1B2A4A"><tspan x="124" dy="0">验证了深度时序模型在校园资源调度场景的工程可行性</tspan></text>
+    <path d="M 1220 556 L 1226 562 L 1220 568" fill="none" stroke="#2D4A7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+  </g>
+</svg>

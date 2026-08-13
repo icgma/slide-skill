@@ -1,0 +1,91 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="metric-grad-12" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.85"/>
+    </linearGradient>
+    <filter id="card-shadow-12" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="metric-num-grad-12-0" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#0C8ED1"/>
+    </linearGradient>
+    <linearGradient id="metric-num-grad-12-1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#006BAE"/>
+    </linearGradient>
+    <linearGradient id="metric-num-grad-12-2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#39BBFE"/>
+    </linearGradient>
+    <radialGradient id="orb-12" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-12" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#34B6F9" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#34B6F9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F1F5F9"/></g>
+  <g id="decor-12">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-12)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-12)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#0C8ED1" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#0C8ED1" stroke-width="1" opacity="0.08"/>
+  </g>
+  <g id="decor-bar-12">
+    <rect x="1244" y="0" width="36" height="720" fill="#0C8ED1" opacity="0.04"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-12" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#0C8ED1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-12)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#475569" text-anchor="end" opacity="0.7">12 / 14</text>
+  </g>
+  <g id="content-title-12">
+    <text x="36" y="64" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="64" font-weight="700" fill="#0F172A">灵敏度分析</text>
+    <rect x="36" y="76" width="72" height="3.5" rx="1.75" fill="#0C8ED1" opacity="0.8"/>
+  </g>
+  <g id="content-metric-12">
+    <rect x="36" y="144" width="386" height="338" rx="24" fill="url(#metric-grad-12)" stroke="#0C8ED1" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-12)"/>
+    <rect x="36" y="144" width="386" height="4" rx="2" fill="#0C8ED1" opacity="0.8"/>
+    <circle cx="229" cy="190" r="27" fill="none" stroke="#0C8ED1" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="229" cy="190" r="23" fill="#0C8ED1" opacity="0.1"/>
+    <text x="229" y="194" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#20A2E5" text-anchor="middle" letter-spacing="1" opacity="0.9">01</text>
+    <path d="M 56 454 Q 164 434 293 444 T 402 424" fill="none" stroke="#0C8ED1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <circle cx="402" cy="424" r="3" fill="#0C8ED1" opacity="0.7"/>
+    <text x="229" y="302" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="33" font-weight="700" fill="url(#metric-num-grad-12-0)" text-anchor="middle" data-fit-box="57,269,344,96" data-line-height="1.08"><tspan x="229" dy="0">7.1%-9.4% 区间，方</tspan><tspan x="229" dy="35">案稳健 需求扰动 ±20%</tspan></text>
+    <text x="229" y="454" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#475569" text-anchor="middle" opacity="0.9" data-fit-box="56,436,346,72" data-line-height="1.25"><tspan x="229" dy="0">高峰缺车率维持在</tspan></text>
+    <rect x="446" y="144" width="386" height="338" rx="24" fill="url(#metric-grad-12)" stroke="#006BAE" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-12)"/>
+    <rect x="446" y="144" width="386" height="4" rx="2" fill="#006BAE" opacity="0.8"/>
+    <circle cx="639" cy="190" r="27" fill="none" stroke="#006BAE" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="639" cy="190" r="23" fill="#006BAE" opacity="0.1"/>
+    <text x="639" y="194" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#006BAE" text-anchor="middle" letter-spacing="1" opacity="0.9">02</text>
+    <path d="M 466 454 Q 574 434 703 444 T 812 424" fill="none" stroke="#006BAE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <circle cx="812" cy="424" r="3" fill="#006BAE" opacity="0.7"/>
+    <text x="639" y="295" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="46" font-weight="700" fill="url(#metric-num-grad-12-1)" text-anchor="middle" data-fit-box="467,249,344,96" data-line-height="1.08"><tspan x="639" dy="0">20 辆增至</tspan><tspan x="639" dy="49">30 辆</tspan></text>
+    <text x="639" y="432" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#475569" text-anchor="middle" opacity="0.9" data-fit-box="466,414,346,72" data-line-height="1.25"><tspan x="639" dy="0">总成本再降 6.3%，边际收益递减 调度</tspan><tspan x="639" dy="22">车容量</tspan></text>
+    <rect x="856" y="144" width="386" height="338" rx="24" fill="url(#metric-grad-12)" stroke="#39BBFE" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-12)"/>
+    <rect x="856" y="144" width="386" height="4" rx="2" fill="#39BBFE" opacity="0.8"/>
+    <circle cx="1049" cy="190" r="27" fill="none" stroke="#39BBFE" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="1049" cy="190" r="23" fill="#39BBFE" opacity="0.1"/>
+    <text x="1049" y="194" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#20A2E5" text-anchor="middle" letter-spacing="1" opacity="0.9">03</text>
+    <path d="M 876 454 Q 984 434 1113 444 T 1222 424" fill="none" stroke="#39BBFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <circle cx="1222" cy="424" r="3" fill="#39BBFE" opacity="0.7"/>
+    <text x="1049" y="287" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="30" font-weight="700" fill="url(#metric-num-grad-12-2)" text-anchor="middle" data-fit-box="877,257,344,96" data-line-height="1.08"><tspan x="1049" dy="0">8 元区间内，最优调度总</tspan><tspan x="1049" dy="32">量变化不超过 5% 缺车惩</tspan><tspan x="1049" dy="32">罚系数</tspan></text>
+    <text x="1049" y="454" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#475569" text-anchor="middle" opacity="0.9" data-fit-box="876,436,346,72" data-line-height="1.25"><tspan x="1049" dy="0">α 在 3</tspan></text>
+  </g>
+</svg>

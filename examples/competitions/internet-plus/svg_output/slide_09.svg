@@ -1,0 +1,104 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="metric-grad-09" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FAFAFA"/>
+      <stop offset="100%" stop-color="#FAFAFA" stop-opacity="0.85"/>
+    </linearGradient>
+    <filter id="card-shadow-09" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="metric-num-grad-09-0" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#8644F7"/>
+    </linearGradient>
+    <linearGradient id="metric-num-grad-09-1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#6321D4"/>
+    </linearGradient>
+    <linearGradient id="metric-num-grad-09-2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#B371FF"/>
+    </linearGradient>
+    <linearGradient id="metric-num-grad-09-3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#7735E8"/>
+    </linearGradient>
+    <radialGradient id="orb-09" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#8644F7" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#8644F7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-09" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#AE6CFF" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#AE6CFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/></g>
+  <g id="decor-09">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-09)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-09)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#8644F7" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#8644F7" stroke-width="1" opacity="0.08"/>
+  </g>
+  <g id="decor-bar-09">
+    <rect x="1244" y="0" width="36" height="720" fill="#8644F7" opacity="0.04"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-09" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8644F7" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#8644F7" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#8644F7" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-09)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#6B7280" text-anchor="end" opacity="0.7">09 / 17</text>
+  </g>
+  <g id="content-title-09">
+    <text x="36" y="64" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="54" font-weight="700" fill="#111827">核心壁垒：算法、专利与数据飞轮</text>
+    <rect x="36" y="76" width="72" height="3.5" rx="1.75" fill="#8644F7" opacity="0.8"/>
+  </g>
+  <g id="content-metric-09">
+    <rect x="36" y="144" width="284" height="338" rx="24" fill="url(#metric-grad-09)" stroke="#8644F7" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <rect x="36" y="144" width="284" height="4" rx="2" fill="#8644F7" opacity="0.8"/>
+    <circle cx="178" cy="190" r="27" fill="none" stroke="#8644F7" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="178" cy="190" r="23" fill="#8644F7" opacity="0.1"/>
+    <text x="178" y="194" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#8644F7" text-anchor="middle" letter-spacing="1" opacity="0.9">01</text>
+    <path d="M 56 454 Q 130 434 225 444 T 300 424" fill="none" stroke="#8644F7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <circle cx="300" cy="424" r="3" fill="#8644F7" opacity="0.7"/>
+    <text x="178" y="297" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="42" font-weight="700" fill="url(#metric-num-grad-09-0)" text-anchor="middle" data-fit-box="57,255,242,96" data-line-height="1.08"><tspan x="178" dy="0">2 项，软件</tspan><tspan x="178" dy="45">著作权 4 项</tspan></text>
+    <text x="178" y="432" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#6B7280" text-anchor="middle" opacity="0.9" data-fit-box="56,414,244,72" data-line-height="1.25"><tspan x="178" dy="0">已授权实用新型专利 3 项，</tspan><tspan x="178" dy="22">受理发明专利</tspan></text>
+    <rect x="344" y="144" width="284" height="338" rx="24" fill="url(#metric-grad-09)" stroke="#6321D4" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <rect x="344" y="144" width="284" height="4" rx="2" fill="#6321D4" opacity="0.8"/>
+    <circle cx="486" cy="190" r="27" fill="none" stroke="#6321D4" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="486" cy="190" r="23" fill="#6321D4" opacity="0.1"/>
+    <text x="486" y="194" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#6321D4" text-anchor="middle" letter-spacing="1" opacity="0.9">02</text>
+    <path d="M 364 454 Q 438 434 533 444 T 608 424" fill="none" stroke="#6321D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <circle cx="608" cy="424" r="3" fill="#6321D4" opacity="0.7"/>
+    <text x="486" y="295" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="46" font-weight="700" fill="url(#metric-num-grad-09-1)" text-anchor="middle" data-fit-box="365,249,242,96" data-line-height="1.08"><tspan x="486" dy="0">11.6 个</tspan><tspan x="486" dy="49">百分点</tspan></text>
+    <text x="486" y="432" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#6B7280" text-anchor="middle" opacity="0.9" data-fit-box="364,414,244,72" data-line-height="1.25"><tspan x="486" dy="0">GreenSort 在低光照、污损、</tspan><tspan x="486" dy="22">遮挡场景准确率领先开源方案</tspan></text>
+    <rect x="652" y="144" width="284" height="338" rx="24" fill="url(#metric-grad-09)" stroke="#B371FF" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <rect x="652" y="144" width="284" height="4" rx="2" fill="#B371FF" opacity="0.8"/>
+    <circle cx="794" cy="190" r="27" fill="none" stroke="#B371FF" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="794" cy="190" r="23" fill="#B371FF" opacity="0.1"/>
+    <text x="794" y="194" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#9A58FF" text-anchor="middle" letter-spacing="1" opacity="0.9">03</text>
+    <path d="M 672 454 Q 746 434 841 444 T 916 424" fill="none" stroke="#B371FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <circle cx="916" cy="424" r="3" fill="#B371FF" opacity="0.7"/>
+    <text x="794" y="287" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="30" font-weight="700" fill="url(#metric-num-grad-09-2)" text-anchor="middle" data-fit-box="673,257,242,96" data-line-height="1.08"><tspan x="794" dy="0">380 万张真实投</tspan><tspan x="794" dy="32">放图像数据集，识</tspan><tspan x="794" dy="32">别越用越准</tspan></text>
+    <text x="794" y="454" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#6B7280" text-anchor="middle" opacity="0.9" data-fit-box="672,436,244,72" data-line-height="1.25"><tspan x="794" dy="0">累计</tspan></text>
+    <rect x="960" y="144" width="284" height="338" rx="24" fill="url(#metric-grad-09)" stroke="#7735E8" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <rect x="960" y="144" width="284" height="4" rx="2" fill="#7735E8" opacity="0.8"/>
+    <circle cx="1102" cy="190" r="27" fill="none" stroke="#7735E8" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="1102" cy="190" r="23" fill="#7735E8" opacity="0.1"/>
+    <text x="1102" y="194" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#7735E8" text-anchor="middle" letter-spacing="1" opacity="0.9">04</text>
+    <path d="M 980 454 Q 1054 434 1149 444 T 1224 424" fill="none" stroke="#7735E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <circle cx="1224" cy="424" r="3" fill="#7735E8" opacity="0.7"/>
+    <text x="1102" y="319" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="52" font-weight="700" fill="url(#metric-num-grad-09-3)" text-anchor="middle" data-fit-box="981,267,242,96" data-line-height="1.08"><tspan x="1102" dy="0">57%</tspan></text>
+    <text x="1102" y="432" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#6B7280" text-anchor="middle" opacity="0.9" data-fit-box="980,414,244,72" data-line-height="1.25"><tspan x="1102" dy="0">满溢预测误差 ±8%，清运&quot;跑</tspan><tspan x="1102" dy="22">空趟&quot;次数减少</tspan></text>
+  </g>
+</svg>

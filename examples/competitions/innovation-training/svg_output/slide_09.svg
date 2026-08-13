@@ -1,0 +1,92 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="row-grad-09" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="card-shadow-09" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-09" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#6D70FB" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#6D70FB" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-09" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#9598FF" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#9598FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F5F3FF"/></g>
+  <g id="decor-09">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-09)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-09)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#6D70FB" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#6D70FB" stroke-width="1" opacity="0.08"/>
+  </g>
+  <g id="decor-bar-09">
+    <rect x="1232" y="0" width="48" height="720" fill="#6D70FB" opacity="0.04"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-09" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6D70FB" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#6D70FB" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#6D70FB" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-09)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" fill="#4A4485" text-anchor="end" opacity="0.7">09 / 13</text>
+  </g>
+  <g id="content-title-09">
+    <text x="36" y="64" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="64" font-weight="700" fill="#1E1B4B">进度安排</text>
+    <rect x="36" y="76" width="72" height="3.5" rx="1.75" fill="#6D70FB" opacity="0.8"/>
+  </g>
+  <g id="content-body-09">
+    <rect x="36" y="104" width="1208" height="76" rx="24" fill="url(#row-grad-09)" stroke="#6D70FB" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <rect x="36" y="104" width="4" height="76" rx="2" fill="#6D70FB" opacity="0.8"/>
+    <circle cx="68" cy="142" r="22" fill="none" stroke="#6D70FB" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="142" r="15" fill="#6D70FB" fill-opacity="0.12"/>
+    <text x="68" y="147" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" font-weight="700" fill="#8184FF" text-anchor="middle">01</text>
+    <circle cx="110" cy="144" r="4" fill="#6D70FB" opacity="0.85"/>
+    <text x="124" y="150" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="36" fill="#1E1B4B"><tspan x="124" dy="0"><tspan font-weight="700" fill="#8184FF">2026 年 9</tspan><tspan fill="#E0E7FF" opacity="0.6">-</tspan>10 月：需求调研，语料库框架设计</tspan></text>
+    <path d="M 1220 136 L 1226 142 L 1220 148" fill="none" stroke="#6D70FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="192" width="1208" height="76" rx="24" fill="url(#row-grad-09)" stroke="#4F52DD" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <rect x="36" y="192" width="4" height="76" rx="2" fill="#4F52DD" opacity="0.8"/>
+    <circle cx="68" cy="230" r="22" fill="none" stroke="#4F52DD" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="230" r="15" fill="#4F52DD" fill-opacity="0.12"/>
+    <text x="68" y="235" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" font-weight="700" fill="#4F52DD" text-anchor="middle">02</text>
+    <circle cx="110" cy="232" r="4" fill="#4F52DD" opacity="0.85"/>
+    <text x="124" y="238" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="36" fill="#1E1B4B"><tspan x="124" dy="0"><tspan font-weight="700" fill="#4F52DD">2026 年 11</tspan><tspan fill="#E0E7FF" opacity="0.6">-</tspan>12 月：语料标注完成，模型第一轮微调</tspan></text>
+    <path d="M 1220 224 L 1226 230 L 1220 236" fill="none" stroke="#4F52DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="280" width="1208" height="76" rx="24" fill="url(#row-grad-09)" stroke="#9598FF" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <rect x="36" y="280" width="4" height="76" rx="2" fill="#9598FF" opacity="0.8"/>
+    <circle cx="68" cy="318" r="22" fill="none" stroke="#9598FF" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="318" r="15" fill="#9598FF" fill-opacity="0.12"/>
+    <text x="68" y="323" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" font-weight="700" fill="#8184FF" text-anchor="middle">03</text>
+    <circle cx="110" cy="320" r="4" fill="#9598FF" opacity="0.85"/>
+    <text x="124" y="326" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="36" fill="#1E1B4B"><tspan x="124" dy="0"><tspan font-weight="700" fill="#8184FF">2027 年 1</tspan><tspan fill="#E0E7FF" opacity="0.6">-</tspan>3 月：系统开发与内部测试</tspan></text>
+    <path d="M 1220 312 L 1226 318 L 1220 324" fill="none" stroke="#9598FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="368" width="1208" height="76" rx="24" fill="url(#row-grad-09)" stroke="#6D70FB" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <rect x="36" y="368" width="4" height="76" rx="2" fill="#6D70FB" opacity="0.8"/>
+    <circle cx="68" cy="406" r="22" fill="none" stroke="#6D70FB" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="406" r="15" fill="#6D70FB" fill-opacity="0.12"/>
+    <text x="68" y="411" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" font-weight="700" fill="#8184FF" text-anchor="middle">04</text>
+    <circle cx="110" cy="408" r="4" fill="#6D70FB" opacity="0.85"/>
+    <text x="124" y="414" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="36" fill="#1E1B4B"><tspan x="124" dy="0"><tspan font-weight="700" fill="#8184FF">2027 年 4</tspan><tspan fill="#E0E7FF" opacity="0.6">-</tspan>5 月：500 人灰度试点，收集前后测数据</tspan></text>
+    <path d="M 1220 400 L 1226 406 L 1220 412" fill="none" stroke="#6D70FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="456" width="1208" height="76" rx="24" fill="url(#row-grad-09)" stroke="#4F52DD" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-09)"/>
+    <rect x="36" y="456" width="4" height="76" rx="2" fill="#4F52DD" opacity="0.8"/>
+    <circle cx="68" cy="494" r="22" fill="none" stroke="#4F52DD" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="494" r="15" fill="#4F52DD" fill-opacity="0.12"/>
+    <text x="68" y="499" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" font-weight="700" fill="#4F52DD" text-anchor="middle">05</text>
+    <circle cx="110" cy="496" r="4" fill="#4F52DD" opacity="0.85"/>
+    <text x="124" y="502" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="36" fill="#1E1B4B"><tspan x="124" dy="0"><tspan font-weight="700" fill="#4F52DD">2027 年 6</tspan><tspan fill="#E0E7FF" opacity="0.6">-</tspan>8 月：效果评估、迭代优化、结题材料撰写</tspan></text>
+    <path d="M 1220 488 L 1226 494 L 1220 500" fill="none" stroke="#4F52DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+  </g>
+</svg>

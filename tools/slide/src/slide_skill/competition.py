@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import shutil
 from dataclasses import dataclass, field
+from pathlib import Path
 
 
 @dataclass(frozen=True)
@@ -150,6 +152,75 @@ COMPETITIONS: dict[str, CompetitionSpec] = {
         ),
     ),
 }
+
+
+# Theme used by each finished example pack under examples/competitions/<slug>/.
+EXAMPLE_PACK_THEMES: dict[str, str] = {
+    "internet-plus": "vibrant-startup",
+    "challenge-cup": "data-forward",
+    "math-modeling": "data-forward",
+    "innovation-training": "indigo-saas",
+    "thesis-defense": "academic-defense",
+    "course-presentation": "light-corporate",
+}
+
+
+def find_examples_dir() -> Path | None:
+    """Locate examples/competitions/ for editable-install and clone layouts.
+
+    Walks up from the installed package location first (covers editable
+    installs living inside the repo), then falls back to the current
+    working directory (covers running a wheel-installed CLI from a clone).
+    """
+    candidates = [parent / "examples" / "competitions" for parent in Path(__file__).resolve().parents]
+    candidates.append(Path.cwd() / "examples" / "competitions")
+    for candidate in candidates:
+        if candidate.is_dir():
+            return candidate
+    return None
+
+
+def scaffold_from_example(project_path: Path | str, slug: str) -> dict[str, str]:
+    """Copy a competition example pack's source.md + notes into a project.
+
+    Returns {"source": ..., "notes": ..., "theme": ...} with destination
+    paths as strings ("" for notes when the pack ships none).
+    """
+    get_competition(slug)  # raises ValueError with valid slugs for unknown names
+    examples = find_examples_dir()
+    if examples is None:
+        valid = ", ".join(sorted(COMPETITIONS))
+        raise FileNotFoundError(
+            "Competition example packs not found (expected examples/competitions/ "
+            f"in the slide-skill repository). Valid slugs: {valid}"
+        )
+    pack_source = examples / slug / "source.md"
+    if not pack_source.is_file():
+        available = ", ".join(sorted(
+            entry.name for entry in examples.iterdir() if (entry / "source.md").is_file()
+        )) or "none"
+        raise FileNotFoundError(
+            f"No example pack for '{slug}' under {examples}. Available packs: {available}"
+        )
+
+    project = Path(project_path)
+    dest_source = project / "sources" / "source.md"
+    dest_source.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(pack_source, dest_source)
+
+    dest_notes = ""
+    pack_notes = examples / slug / "notes" / "total.md"
+    if pack_notes.is_file():
+        notes_path = project / "notes" / "total.md"
+        notes_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(pack_notes, notes_path)
+        dest_notes = str(notes_path)
+
+    return {
+        "source": str(dest_source),
+        "notes": dest_notes,
+        "theme": EXAMPLE_PACK_THEMES.get(slug, "dark-tech"),
+    }
 
 
 def get_competition(name: str) -> CompetitionSpec:

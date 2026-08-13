@@ -1,0 +1,104 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="metric-grad-12" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.85"/>
+    </linearGradient>
+    <filter id="card-shadow-12" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="metric-num-grad-12-0" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#0C8ED1"/>
+    </linearGradient>
+    <linearGradient id="metric-num-grad-12-1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#006BAE"/>
+    </linearGradient>
+    <linearGradient id="metric-num-grad-12-2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#39BBFE"/>
+    </linearGradient>
+    <linearGradient id="metric-num-grad-12-3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#007FC2"/>
+    </linearGradient>
+    <radialGradient id="orb-12" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-12" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#34B6F9" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#34B6F9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F1F5F9"/></g>
+  <g id="decor-12">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-12)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-12)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#0C8ED1" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#0C8ED1" stroke-width="1" opacity="0.08"/>
+  </g>
+  <g id="decor-bar-12">
+    <rect x="1244" y="0" width="36" height="720" fill="#0C8ED1" opacity="0.04"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-12" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#0C8ED1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-12)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#475569" text-anchor="end" opacity="0.7">12 / 16</text>
+  </g>
+  <g id="content-title-12">
+    <text x="36" y="64" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="64" font-weight="700" fill="#0F172A">实验结果：整体精度</text>
+    <rect x="36" y="76" width="72" height="3.5" rx="1.75" fill="#0C8ED1" opacity="0.8"/>
+  </g>
+  <g id="content-metric-12">
+    <rect x="36" y="144" width="284" height="338" rx="24" fill="url(#metric-grad-12)" stroke="#0C8ED1" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-12)"/>
+    <rect x="36" y="144" width="284" height="4" rx="2" fill="#0C8ED1" opacity="0.8"/>
+    <circle cx="178" cy="190" r="27" fill="none" stroke="#0C8ED1" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="178" cy="190" r="23" fill="#0C8ED1" opacity="0.1"/>
+    <text x="178" y="194" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#20A2E5" text-anchor="middle" letter-spacing="1" opacity="0.9">01</text>
+    <path d="M 56 454 Q 130 434 225 444 T 300 424" fill="none" stroke="#0C8ED1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <circle cx="300" cy="424" r="3" fill="#0C8ED1" opacity="0.7"/>
+    <text x="178" y="319" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="52" font-weight="700" fill="url(#metric-num-grad-12-0)" text-anchor="middle" data-fit-box="57,267,242,96" data-line-height="1.08"><tspan x="178" dy="0">0.913</tspan></text>
+    <text x="178" y="454" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#475569" text-anchor="middle" opacity="0.9" data-fit-box="56,436,244,72" data-line-height="1.25"><tspan x="178" dy="0">本文融合模型测试集 AUC 达</tspan></text>
+    <rect x="344" y="144" width="284" height="338" rx="24" fill="url(#metric-grad-12)" stroke="#006BAE" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-12)"/>
+    <rect x="344" y="144" width="284" height="4" rx="2" fill="#006BAE" opacity="0.8"/>
+    <circle cx="486" cy="190" r="27" fill="none" stroke="#006BAE" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="486" cy="190" r="23" fill="#006BAE" opacity="0.1"/>
+    <text x="486" y="194" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#006BAE" text-anchor="middle" letter-spacing="1" opacity="0.9">02</text>
+    <path d="M 364 454 Q 438 434 533 444 T 608 424" fill="none" stroke="#006BAE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <circle cx="608" cy="424" r="3" fill="#006BAE" opacity="0.7"/>
+    <text x="486" y="287" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="30" font-weight="700" fill="url(#metric-num-grad-12-1)" text-anchor="middle" data-fit-box="365,257,242,96" data-line-height="1.08"><tspan x="486" dy="0">0.782，熵权指数</tspan><tspan x="486" dy="32">法 AUC 0.741</tspan><tspan x="486" dy="32">SCS</tspan></text>
+    <text x="486" y="454" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#475569" text-anchor="middle" opacity="0.9" data-fit-box="364,436,244,72" data-line-height="1.25"><tspan x="486" dy="0">CN 水文模型 AUC</tspan></text>
+    <rect x="652" y="144" width="284" height="338" rx="24" fill="url(#metric-grad-12)" stroke="#39BBFE" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-12)"/>
+    <rect x="652" y="144" width="284" height="4" rx="2" fill="#39BBFE" opacity="0.8"/>
+    <circle cx="794" cy="190" r="27" fill="none" stroke="#39BBFE" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="794" cy="190" r="23" fill="#39BBFE" opacity="0.1"/>
+    <text x="794" y="194" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#20A2E5" text-anchor="middle" letter-spacing="1" opacity="0.9">03</text>
+    <path d="M 672 454 Q 746 434 841 444 T 916 424" fill="none" stroke="#39BBFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <circle cx="916" cy="424" r="3" fill="#39BBFE" opacity="0.7"/>
+    <text x="794" y="287" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="30" font-weight="700" fill="url(#metric-num-grad-12-2)" text-anchor="middle" data-fit-box="673,257,242,96" data-line-height="1.08"><tspan x="794" dy="0">0.861，融合拓扑</tspan><tspan x="794" dy="32">通道后显著改善低</tspan><tspan x="794" dy="32">洼片区漏报</tspan></text>
+    <text x="794" y="454" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#475569" text-anchor="middle" opacity="0.9" data-fit-box="672,436,244,72" data-line-height="1.25"><tspan x="794" dy="0">单一 XGBoost AUC</tspan></text>
+    <rect x="960" y="144" width="284" height="338" rx="24" fill="url(#metric-grad-12)" stroke="#007FC2" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-12)"/>
+    <rect x="960" y="144" width="284" height="4" rx="2" fill="#007FC2" opacity="0.8"/>
+    <circle cx="1102" cy="190" r="27" fill="none" stroke="#007FC2" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="1102" cy="190" r="23" fill="#007FC2" opacity="0.1"/>
+    <text x="1102" y="194" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#20A2E5" text-anchor="middle" letter-spacing="1" opacity="0.9">04</text>
+    <path d="M 980 454 Q 1054 434 1149 444 T 1224 424" fill="none" stroke="#007FC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <circle cx="1224" cy="424" r="3" fill="#007FC2" opacity="0.7"/>
+    <text x="1102" y="287" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="30" font-weight="700" fill="url(#metric-num-grad-12-3)" text-anchor="middle" data-fit-box="981,257,242,96" data-line-height="1.08"><tspan x="1102" dy="0">87.4%，误报率较</tspan><tspan x="1102" dy="32">单一模型下降</tspan><tspan x="1102" dy="32">23.5%</tspan></text>
+    <text x="1102" y="454" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#475569" text-anchor="middle" opacity="0.9" data-fit-box="980,436,244,72" data-line-height="1.25"><tspan x="1102" dy="0">高风险网格识别召回率</tspan></text>
+  </g>
+</svg>

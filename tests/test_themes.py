@@ -34,6 +34,8 @@ class ThemeSpecTest(unittest.TestCase):
             "retro-terminal",
             "botanical-herbarium",
             "celestial-glass",
+            # Phase 52 — Chinese academic defense theme
+            "academic-defense",
         }
         self.assertTrue(expected.issubset(set(THEMES.keys())))
 
@@ -111,6 +113,63 @@ class ThemeSpecTest(unittest.TestCase):
         t = get_theme("dark-tech")
         self.assertIsInstance(t, ThemeSpec)
         self.assertEqual(t.name, "dark-tech")
+
+
+class AcademicDefenseThemeTest(unittest.TestCase):
+    """Phase 52 — academic-defense theme contract (ACAD-01)."""
+
+    def test_registered(self) -> None:
+        self.assertIn("academic-defense", THEMES)
+        t = get_theme("academic-defense")
+        self.assertEqual(t.name, "academic-defense")
+        self.assertEqual(t.source, "builtin")
+
+    def test_palette_exact_navy_values(self) -> None:
+        t = get_theme("academic-defense")
+        self.assertEqual(t.palette["background"], "#FFFFFF")
+        self.assertEqual(t.palette["surface"], "#F4F6FA")
+        self.assertEqual(t.palette["text"], "#1B2A4A")
+        self.assertEqual(t.palette["body"], "#44506B")
+        self.assertEqual(t.palette["accent"], "#2D4A7A")
+        self.assertEqual(t.palette["muted"], "#C9D2E3")
+
+    def test_font_stack_is_yahei_first(self) -> None:
+        t = get_theme("academic-defense")
+        self.assertTrue(
+            t.font_family.startswith("'Microsoft YaHei'"),
+            f"font stack must lead with Microsoft YaHei: {t.font_family}",
+        )
+        typo = t.typography
+        self.assertEqual(typo.title_family, "Microsoft YaHei")
+        self.assertEqual(typo.body_family, t.font_family)
+
+    def test_extended_palette_derives_all_roles(self) -> None:
+        from slide_skill.themes import EXTENDED_COLOR_ROLES
+        t = get_theme("academic-defense")
+        extended = t.extended_palette
+        for role in EXTENDED_COLOR_ROLES:
+            with self.subTest(role=role):
+                self.assertIn(role, extended)
+                self.assertTrue(extended[role].startswith("#"))
+
+    def test_design_hints_encode_academic_conventions(self) -> None:
+        t = get_theme("academic-defense")
+        self.assertIn("#B03A2E", t.design_hints)  # dark red for key data only
+        self.assertIn("总-分-总", t.design_hints)
+        self.assertEqual(t.icons, {"stroke": "#1B2A4A", "weight": "1.5"})
+        self.assertEqual(t.layout_rhythm, ["anchor", "breathing", "dense"])
+
+    def test_cli_themes_lists_academic_defense(self) -> None:
+        import contextlib
+        import io
+
+        from slide_skill.cli import main
+
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            result = main(["themes"])
+        self.assertIn(result, (0, None))
+        self.assertIn("academic-defense", buf.getvalue())
 
 
 if __name__ == "__main__":

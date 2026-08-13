@@ -1,0 +1,62 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-07" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-07" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-07" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#34B6F9" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#34B6F9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F1F5F9"/></g>
+  <g id="decor-07">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-07)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-07)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#0C8ED1" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#0C8ED1" stroke-width="1" opacity="0.08"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-07" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#0C8ED1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-07)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#475569" text-anchor="end" opacity="0.7">07 / 14</text>
+  </g>
+  <g id="content-title-07">
+    <text x="36" y="64" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="54" font-weight="700" fill="#0F172A">模型二：调度优化整数规划</text>
+    <rect x="36" y="76" width="72" height="3.5" rx="1.75" fill="#0C8ED1" opacity="0.8"/>
+  </g>
+  <g id="content-roadmap-07" data-theme-profile="default" data-scene-variant="horizontal-rail">
+    <line x1="148" y1="330" x2="1132" y2="330" stroke="#0C8ED1" stroke-width="2" opacity="0.65"/>
+    <circle cx="148" cy="330" r="10" fill="#007EC1" stroke="#F1F5F9" stroke-width="3"/>
+    <rect x="36" y="168" width="224" height="118" rx="24" fill="#FFFFFF" stroke="#007EC1" stroke-opacity="0.26" stroke-width="1.5"/>
+    <text x="148" y="206" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" font-weight="800" fill="#20A2E5" text-anchor="middle">决策变量</text>
+    <text x="148" y="240" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle" data-fit-box="50,222,196,56" data-line-height="1.16"><tspan x="148" dy="0">x_ijt 为时段 t 由区域 i</tspan><tspan x="148" dy="17">调往区域 j 的单车数（非负</tspan><tspan x="148" dy="17">整数）</tspan></text>
+    <circle cx="476" cy="330" r="10" fill="#0C8ED1" stroke="#F1F5F9" stroke-width="3"/>
+    <rect x="364" y="374" width="224" height="118" rx="24" fill="#FFFFFF" stroke="#0C8ED1" stroke-opacity="0.26" stroke-width="1.5"/>
+    <text x="476" y="412" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" font-weight="800" fill="#20A2E5" text-anchor="middle">目标函数</text>
+    <text x="476" y="446" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="700" fill="#0F172A" text-anchor="middle" data-fit-box="378,428,196,56" data-line-height="1.16"><tspan x="476" dy="0">调度成本与缺车损失加权和</tspan><tspan x="476" dy="18">最小化</tspan></text>
+    <circle cx="804" cy="330" r="10" fill="#1C9EE1" stroke="#F1F5F9" stroke-width="3"/>
+    <rect x="692" y="168" width="224" height="118" rx="24" fill="#FFFFFF" stroke="#1C9EE1" stroke-opacity="0.26" stroke-width="1.5"/>
+    <text x="804" y="206" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" font-weight="800" fill="#20A2E5" text-anchor="middle">库存平衡约束</text>
+    <text x="804" y="240" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle" data-fit-box="706,222,196,56" data-line-height="1.16"><tspan x="804" dy="0">下期库存 = 本期库存 − 骑</tspan><tspan x="804" dy="17">出 + 骑入 + 调入 − 调出</tspan></text>
+    <circle cx="1132" cy="330" r="10" fill="#2CAEF1" stroke="#F1F5F9" stroke-width="3"/>
+    <rect x="1020" y="374" width="224" height="118" rx="24" fill="#FFFFFF" stroke="#2CAEF1" stroke-opacity="0.26" stroke-width="1.5"/>
+    <text x="1132" y="412" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" font-weight="800" fill="#20A2E5" text-anchor="middle">能力约束</text>
+    <text x="1132" y="446" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="700" fill="#0F172A" text-anchor="middle" data-fit-box="1034,428,196,56" data-line-height="1.16"><tspan x="1132" dy="0">车队 8 辆调度车，单程装</tspan><tspan x="1132" dy="18">载不超过 20 辆</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,61 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-02" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-02" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-02" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#A462FF" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#A462FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/></g>
+  <g id="decor-02">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-02)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-02)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#7C3AED" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#7C3AED" stroke-width="1" opacity="0.08"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-02" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#7C3AED" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-02)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#6B7280" text-anchor="end" opacity="0.7">02 / 17</text>
+  </g>
+  <g id="content-title-02">
+    <text x="36" y="64" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="54" font-weight="700" fill="#111827">痛点：分类落地难在&quot;最后一百米&quot;</text>
+    <rect x="36" y="76" width="72" height="3.5" rx="1.75" fill="#7C3AED" opacity="0.8"/>
+  </g>
+  <g id="content-problem-02" data-theme-profile="default" data-scene-variant="risk-ledger">
+    <rect x="36" y="150" width="512" height="340" rx="24" fill="#FAFAFA" stroke="#7C3AED" stroke-opacity="0.2" stroke-width="1.5" filter="url(#card-shadow-02)"/>
+    <text x="70" y="232" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="14" font-weight="700" fill="#7C3AED" letter-spacing="4">FRICTION</text>
+    <text x="70" y="322" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="52" font-weight="800" fill="#111827">痛点：分类落地难在&quot;最后一百米&quot;</text>
+    <text x="70" y="446" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#6B7280" opacity="0.8">4 mapped signals</text>
+    <rect x="640" y="150" width="563" height="96" rx="24" fill="#FAFAFA" fill-opacity="1" stroke="#6A28DB" stroke-opacity="0.24" stroke-width="1.5" filter="url(#card-shadow-02)"/>
+    <text x="660" y="184" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="800" fill="#6A28DB">! 01</text>
+    <text x="660" y="222" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#111827" data-fit-box="660,198,521,38" data-line-height="1.18"><tspan x="660" dy="0">297 个地级市推行强制分类，社区端仍依赖人工督导</tspan></text>
+    <rect x="640" y="264" width="563" height="96" rx="24" fill="#FAFAFA" fill-opacity="1" stroke="#7C3AED" stroke-opacity="0.24" stroke-width="1.5" filter="url(#card-shadow-02)"/>
+    <text x="660" y="298" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="800" fill="#7C3AED">! 02</text>
+    <text x="660" y="336" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="19" font-weight="700" fill="#111827" data-fit-box="660,312,521,38" data-line-height="1.18"><tspan x="660" dy="0">撤桶并点后高峰投放排队、误投率高，居民参与热情快速回落</tspan></text>
+    <rect x="640" y="378" width="563" height="96" rx="24" fill="#FAFAFA" fill-opacity="1" stroke="#8E4CFF" stroke-opacity="0.24" stroke-width="1.5" filter="url(#card-shadow-02)"/>
+    <text x="660" y="412" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="800" fill="#9A58FF">! 03</text>
+    <text x="660" y="450" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#111827" data-fit-box="660,426,521,38" data-line-height="1.18"><tspan x="660" dy="0">某区抽样：厨余分出纯净度仅 62%，远低于 90% 的要求</tspan></text>
+    <rect x="640" y="492" width="563" height="96" rx="24" fill="#FAFAFA" fill-opacity="1" stroke="#A05EFF" stroke-opacity="0.24" stroke-width="1.5" filter="url(#card-shadow-02)"/>
+    <text x="660" y="526" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="800" fill="#9A58FF">! 04</text>
+    <text x="660" y="564" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" font-weight="700" fill="#111827" data-fit-box="660,540,521,38" data-line-height="1.18"><tspan x="660" dy="0">人工督导成本高企：单小区每月督导支出约 9,000 元</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,123 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-03" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-03" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-03" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#34B6F9" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#34B6F9" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="proc-card-grad-03-0" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-03-0">
+      <rect x="36" y="204" width="580" height="165" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-03-1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-03-1">
+      <rect x="664" y="204" width="580" height="165" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-03-2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-03-2">
+      <rect x="36" y="417" width="580" height="165" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-03-3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-03-3">
+      <rect x="664" y="417" width="580" height="165" rx="24"/>
+    </clipPath>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F1F5F9"/></g>
+  <g id="decor-03">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-03)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-03)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#0C8ED1" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#0C8ED1" stroke-width="1" opacity="0.08"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-03" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#0C8ED1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-03)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#475569" text-anchor="end" opacity="0.7">03 / 14</text>
+  </g>
+  <g id="content-eyebrow-03">
+    <text x="36" y="60" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" font-weight="700" fill="#0C8ED1" letter-spacing="4">PROCESS &#x2192; 4 STEPS</text>
+  </g>
+  <g id="content-title-03">
+    <text x="36" y="110" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="64" font-weight="700" fill="#0F172A">模型假设</text>
+  </g>
+  <g id="content-flow-03">
+    <g clip-path="url(#proc-card-clip-03-0)">
+      <rect x="36" y="204" width="580" height="165" rx="24" fill="url(#proc-card-grad-03-0)"/>
+      <rect x="36" y="204" width="4" height="165" fill="#0C8ED1"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="36" y="204" width="580" height="165" rx="24" fill="none" stroke="#0C8ED1" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-03)"/>
+    <!-- Inner border detail -->
+    <rect x="41" y="209" width="570" height="155" rx="20" fill="none" stroke="#0C8ED1" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="326" cy="244" r="20" fill="none" stroke="#0C8ED1" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="326" cy="244" r="14" fill="#0C8ED1"/>
+    <text x="326" y="249" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="26" font-weight="700" fill="#0F172A" text-anchor="middle">01</text>
+    <text x="326" y="308" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="32" fill="#0F172A" text-anchor="middle"><tspan x="326" dy="0">单车跨区迁移仅由订单骑行产生，忽</tspan><tspan x="326" dy="37">略用户私自挪动</tspan></text>
+    <g clip-path="url(#proc-card-clip-03-1)">
+      <rect x="664" y="204" width="580" height="165" rx="24" fill="url(#proc-card-grad-03-1)"/>
+      <rect x="664" y="204" width="4" height="165" fill="#0066A9"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="664" y="204" width="580" height="165" rx="24" fill="none" stroke="#0066A9" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-03)"/>
+    <!-- Inner border detail -->
+    <rect x="669" y="209" width="570" height="155" rx="20" fill="none" stroke="#0066A9" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="954" cy="244" r="20" fill="none" stroke="#0066A9" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="954" cy="244" r="14" fill="#0066A9"/>
+    <text x="954" y="249" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="26" font-weight="700" fill="#F1F5F9" text-anchor="middle">02</text>
+    <text x="954" y="308" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="32" fill="#0F172A" text-anchor="middle"><tspan x="954" dy="0">调度作业在相邻时段间隙完成，不影</tspan><tspan x="954" dy="37">响当期骑行需求</tspan></text>
+    <g clip-path="url(#proc-card-clip-03-2)">
+      <rect x="36" y="417" width="580" height="165" rx="24" fill="url(#proc-card-grad-03-2)"/>
+      <rect x="36" y="417" width="4" height="165" fill="#3EC0FF"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="36" y="417" width="580" height="165" rx="24" fill="none" stroke="#3EC0FF" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-03)"/>
+    <!-- Inner border detail -->
+    <rect x="41" y="422" width="570" height="155" rx="20" fill="none" stroke="#3EC0FF" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="326" cy="457" r="20" fill="none" stroke="#3EC0FF" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="326" cy="457" r="14" fill="#3EC0FF"/>
+    <text x="326" y="462" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="26" font-weight="700" fill="#0F172A" text-anchor="middle">03</text>
+    <text x="326" y="521" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="32" fill="#0F172A" text-anchor="middle"><tspan x="326" dy="0">调度车单程装载不超过额定容量</tspan><tspan x="326" dy="37">20 辆，装卸时间计入固定成本</tspan></text>
+    <g clip-path="url(#proc-card-clip-03-3)">
+      <rect x="664" y="417" width="580" height="165" rx="24" fill="url(#proc-card-grad-03-3)"/>
+      <rect x="664" y="417" width="4" height="165" fill="#007ABD"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="664" y="417" width="580" height="165" rx="24" fill="none" stroke="#007ABD" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-03)"/>
+    <!-- Inner border detail -->
+    <rect x="669" y="422" width="570" height="155" rx="20" fill="none" stroke="#007ABD" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="954" cy="457" r="20" fill="none" stroke="#007ABD" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="954" cy="457" r="14" fill="#007ABD"/>
+    <text x="954" y="462" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="26" font-weight="700" fill="#F1F5F9" text-anchor="middle">04</text>
+    <text x="954" y="521" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="32" fill="#0F172A" text-anchor="middle"><tspan x="954" dy="0">预测期内天气、节假日等外部条件与</tspan><tspan x="954" dy="37">历史同期分布一致</tspan></text>
+  </g>
+</svg>

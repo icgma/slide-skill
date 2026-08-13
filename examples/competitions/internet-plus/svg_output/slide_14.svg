@@ -1,0 +1,121 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-14" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur"/>
+      <feOffset in="blur" dx="0" dy="3" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.16" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-14" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-14" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#A462FF" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#A462FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="team-card-grad-14-0" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAFAFA" stop-opacity="1.0"/>
+      <stop offset="100%" stop-color="#F0F0F0" stop-opacity="1.0"/>
+    </linearGradient>
+    <clipPath id="team-card-clip-14-0">
+      <rect x="90" y="180" width="251" height="360" rx="16" />
+    </clipPath>
+    <linearGradient id="team-card-grad-14-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAFAFA" stop-opacity="1.0"/>
+      <stop offset="100%" stop-color="#F0F0F0" stop-opacity="1.0"/>
+    </linearGradient>
+    <clipPath id="team-card-clip-14-1">
+      <rect x="373" y="180" width="251" height="360" rx="16" />
+    </clipPath>
+    <linearGradient id="team-card-grad-14-2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAFAFA" stop-opacity="1.0"/>
+      <stop offset="100%" stop-color="#F0F0F0" stop-opacity="1.0"/>
+    </linearGradient>
+    <clipPath id="team-card-clip-14-2">
+      <rect x="656" y="180" width="251" height="360" rx="16" />
+    </clipPath>
+    <linearGradient id="team-card-grad-14-3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAFAFA" stop-opacity="1.0"/>
+      <stop offset="100%" stop-color="#F0F0F0" stop-opacity="1.0"/>
+    </linearGradient>
+    <clipPath id="team-card-clip-14-3">
+      <rect x="939" y="180" width="251" height="360" rx="16" />
+    </clipPath>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/></g>
+  <g id="decor-14">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-14)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-14)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#7C3AED" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#7C3AED" stroke-width="1" opacity="0.08"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-14" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#7C3AED" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-14)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#6B7280" text-anchor="end" opacity="0.7">14 / 17</text>
+  </g>
+  <g id="content-title-14">
+    <text x="36" y="54" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="52" font-weight="700" fill="#111827">团队：产业、技术与运营互补</text>
+    <rect x="36" y="66" width="100" height="4" rx="2" fill="#7C3AED"/>
+  </g>
+  <g id="content-team-14">
+    <g clip-path="url(#team-card-clip-14-0)">
+      <rect x="90" y="180" width="251" height="360" fill="url(#team-card-grad-14-0)"/>
+      <rect x="90" y="180" width="251" height="5" fill="#5E1CCF" opacity="0.85"/>
+    </g>
+    <rect x="90" y="180" width="251" height="360" rx="16" fill="none" stroke="#5E1CCF" stroke-opacity="0.35" stroke-width="1.5" filter="url(#card-shadow-14)"/>
+    <circle cx="215" cy="280" r="58" fill="none" stroke="#5E1CCF" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="3 3"/>
+    <circle cx="215" cy="280" r="54" fill="none" stroke="#5E1CCF" stroke-opacity="0.15" stroke-width="1"/>
+    <circle cx="215" cy="280" r="46" fill="#5E1CCF" fill-opacity="0.12" stroke="#5E1CCF" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="215" cy="280" r="38" fill="#5E1CCF" fill-opacity="0.08"/>
+    <text x="215" y="290" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="28" font-weight="700" fill="#5E1CCF" text-anchor="middle">陈</text>
+    <text x="215" y="370" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="22" font-weight="600" fill="#111827" text-anchor="middle">陈昊（CEO）</text>
+    <text x="215" y="400" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="17" font-weight="500" fill="#111827" text-anchor="middle" opacity="0.75"><tspan x="215" dy="0">环境工程硕士，前省再生资</tspan><tspan x="215" dy="22">源集团区域运营总监，5 年</tspan><tspan x="215" dy="22">行业资源</tspan></text>
+    <g clip-path="url(#team-card-clip-14-1)">
+      <rect x="373" y="180" width="251" height="360" fill="url(#team-card-grad-14-1)"/>
+      <rect x="373" y="180" width="251" height="5" fill="#6D2BDE" opacity="0.85"/>
+    </g>
+    <rect x="373" y="180" width="251" height="360" rx="16" fill="none" stroke="#6D2BDE" stroke-opacity="0.35" stroke-width="1.5" filter="url(#card-shadow-14)"/>
+    <circle cx="498" cy="280" r="58" fill="none" stroke="#6D2BDE" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="3 3"/>
+    <circle cx="498" cy="280" r="54" fill="none" stroke="#6D2BDE" stroke-opacity="0.15" stroke-width="1"/>
+    <circle cx="498" cy="280" r="46" fill="#6D2BDE" fill-opacity="0.12" stroke="#6D2BDE" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="498" cy="280" r="38" fill="#6D2BDE" fill-opacity="0.08"/>
+    <text x="498" y="290" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="28" font-weight="700" fill="#6D2BDE" text-anchor="middle">林</text>
+    <text x="498" y="370" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="22" font-weight="600" fill="#111827" text-anchor="middle">林雨薇（CTO）</text>
+    <text x="498" y="400" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="500" fill="#111827" text-anchor="middle" opacity="0.75"><tspan x="498" dy="0">计算机视觉方向博士在读，发</tspan><tspan x="498" dy="20">表 CCF-B 论文 3 篇，主导</tspan><tspan x="498" dy="20">GreenSort</tspan></text>
+    <g clip-path="url(#team-card-clip-14-2)">
+      <rect x="656" y="180" width="251" height="360" fill="url(#team-card-grad-14-2)"/>
+      <rect x="656" y="180" width="251" height="5" fill="#7C3AED" opacity="0.85"/>
+    </g>
+    <rect x="656" y="180" width="251" height="360" rx="16" fill="none" stroke="#7C3AED" stroke-opacity="0.35" stroke-width="1.5" filter="url(#card-shadow-14)"/>
+    <circle cx="781" cy="280" r="58" fill="none" stroke="#7C3AED" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="3 3"/>
+    <circle cx="781" cy="280" r="54" fill="none" stroke="#7C3AED" stroke-opacity="0.15" stroke-width="1"/>
+    <circle cx="781" cy="280" r="46" fill="#7C3AED" fill-opacity="0.12" stroke="#7C3AED" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="781" cy="280" r="38" fill="#7C3AED" fill-opacity="0.08"/>
+    <text x="781" y="290" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="28" font-weight="700" fill="#7C3AED" text-anchor="middle">王</text>
+    <text x="781" y="370" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="22" font-weight="600" fill="#111827" text-anchor="middle">王志强（COO）</text>
+    <text x="781" y="400" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="17" font-weight="500" fill="#111827" text-anchor="middle" opacity="0.75"><tspan x="781" dy="0">连锁零售运营出身，带过</tspan><tspan x="781" dy="22">40 人地推团队，负责社</tspan><tspan x="781" dy="22">区拓展</tspan></text>
+    <g clip-path="url(#team-card-clip-14-3)">
+      <rect x="939" y="180" width="251" height="360" fill="url(#team-card-grad-14-3)"/>
+      <rect x="939" y="180" width="251" height="5" fill="#8B49FC" opacity="0.85"/>
+    </g>
+    <rect x="939" y="180" width="251" height="360" rx="16" fill="none" stroke="#8B49FC" stroke-opacity="0.35" stroke-width="1.5" filter="url(#card-shadow-14)"/>
+    <circle cx="1064" cy="280" r="58" fill="none" stroke="#8B49FC" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="3 3"/>
+    <circle cx="1064" cy="280" r="54" fill="none" stroke="#8B49FC" stroke-opacity="0.15" stroke-width="1"/>
+    <circle cx="1064" cy="280" r="46" fill="#8B49FC" fill-opacity="0.12" stroke="#8B49FC" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="1064" cy="280" r="38" fill="#8B49FC" fill-opacity="0.08"/>
+    <text x="1064" y="290" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="28" font-weight="700" fill="#8B49FC" text-anchor="middle">指</text>
+    <text x="1064" y="370" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="22" font-weight="600" fill="#111827" text-anchor="middle">指导教师</text>
+    <text x="1064" y="400" font-family="Inter, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="17" font-weight="500" fill="#111827" text-anchor="middle" opacity="0.75"><tspan x="1064" dy="0">张明远教授，固废资源化利</tspan><tspan x="1064" dy="22">用方向，国家重点研发计划</tspan><tspan x="1064" dy="22">课题负责人</tspan></text>
+  </g>
+</svg>

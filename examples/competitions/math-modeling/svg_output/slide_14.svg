@@ -1,0 +1,68 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="close-card-grad-14" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="close-border-14" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0C8ED1"/>
+      <stop offset="100%" stop-color="#34B6F9"/>
+    </linearGradient>
+    <filter id="card-shadow-14" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-14" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-14" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#34B6F9" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#34B6F9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F1F5F9"/></g>
+  <g id="decor-14">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-14)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-14)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#0C8ED1" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#0C8ED1" stroke-width="1" opacity="0.08"/>
+  </g>
+  <g id="decor-closing-geom-14" opacity="0.65">
+    <circle cx="8%" cy="50%" r="160" stroke="#0C8ED1" stroke-width="1.2" stroke-dasharray="6,6" fill="none" opacity="0.15"/>
+    <circle cx="92%" cy="50%" r="160" stroke="#0C8ED1" stroke-width="1.2" stroke-dasharray="6,6" fill="none" opacity="0.15"/>
+    <path d="M137 506 H1144" stroke="#0C8ED1" stroke-opacity="0.24" stroke-width="1.5"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-14" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#0C8ED1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0C8ED1" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-14)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#475569" text-anchor="end" opacity="0.7">14 / 14</text>
+  </g>
+  <g id="content-closing-14" data-theme-profile="default" data-scene-variant="center-card">
+  <g id="content-card-14" filter="url(#card-shadow-14)">
+    <rect x="103" y="180" width="1075" height="360" rx="24" fill="url(#close-card-grad-14)" stroke="url(#close-border-14)" stroke-width="2"/>
+    <rect x="111" y="188" width="1059" height="344" rx="20" fill="none" stroke="#0C8ED1" stroke-opacity="0.18" stroke-width="1.2"/>
+  </g>
+  <g id="content-eyebrow-14">
+    <rect x="580" y="212" width="120" height="24" rx="12" fill="#0C8ED1" fill-opacity="0.10" stroke="#0C8ED1" stroke-opacity="0.25" stroke-width="1"/>
+    <text x="640" y="228" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="19" font-weight="700" fill="#0C8ED1" letter-spacing="3" text-anchor="middle">THANK YOU</text>
+  </g>
+  <g id="content-title-14">
+    <text x="640" y="325" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="62" font-weight="700" fill="#0F172A" text-anchor="middle" data-fit-box="151,250,979,88" data-line-height="1.12"><tspan x="640" dy="0">总结</tspan></text>
+  </g>
+  <g id="content-body-14">
+    <text x="640" y="380" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="22" fill="#475569" text-anchor="middle" data-fit-box="192,358,896,132" data-line-height="1.25"><tspan x="640" dy="0">构建&quot;GBRT 需求预测 + 整数规划调度 + 遗传算法求解&quot;完整建模链条</tspan><tspan x="640" dy="27">高峰缺车率由 18.6% 降至 7.9%，调度成本下降 21.0%</tspan><tspan x="640" dy="27">灵敏度分析验证方案在需求波动下依然稳健</tspan><tspan x="640" dy="27">感谢评委老师，敬请批评指正！</tspan></text>
+  </g>
+  </g>
+</svg>

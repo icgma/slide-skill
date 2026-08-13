@@ -1,0 +1,29 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-01" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F1F5F9"/></g>
+  <g id="decor-geometry-01">
+    <circle cx="1280" cy="720" r="576" fill="#0C8ED1" opacity="0.04"/>
+    <circle cx="1280" cy="720" r="540" stroke="#0C8ED1" stroke-width="2" fill="none" opacity="0.1"/>
+  </g>
+  <g id="chrome-stripe">
+    <rect x="48" y="0" width="12" height="251" fill="#0C8ED1" opacity="0.9"/>
+  </g>
+  <g id="content-title-01">
+    <text x="48" y="396" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="93" font-weight="900" fill="#0F172A" letter-spacing="-1"><tspan x="48" dy="0">城市共享单车区域调度优</tspan><tspan x="48" dy="106">化模型</tspan></text>
+  </g>
+  <g id="content-body-01">
+    <text x="48" y="624" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="48" fill="#475569" opacity="0.9"><tspan x="48" dy="0">全国大学生数学建模竞赛 | B 题：共享单车调度优化</tspan><tspan x="48" dy="60">| 参赛队号 A2609</tspan></text>
+  </g>
+  <g id="content-footer-01">
+    <rect x="48" y="660" width="40" height="4" fill="#0C8ED1"/>
+    <text x="108" y="668" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#475569" letter-spacing="2" font-weight="700">01 / PRESENTATION</text>
+  </g>
+</svg>

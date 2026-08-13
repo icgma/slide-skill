@@ -1,0 +1,84 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="row-grad-15" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="card-shadow-15" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-15" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#0284C7" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-15" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#2AACEF" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#2AACEF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F1F5F9"/></g>
+  <g id="decor-15">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-15)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-15)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#0284C7" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#0284C7" stroke-width="1" opacity="0.08"/>
+  </g>
+  <g id="decor-bar-15">
+    <rect x="1232" y="0" width="48" height="720" fill="#0284C7" opacity="0.04"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-15" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#0284C7" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-15)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" fill="#475569" text-anchor="end" opacity="0.7">15 / 16</text>
+  </g>
+  <g id="content-title-15">
+    <text x="36" y="64" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="64" font-weight="700" fill="#0F172A">结论与展望</text>
+    <rect x="36" y="76" width="72" height="3.5" rx="1.75" fill="#0284C7" opacity="0.8"/>
+  </g>
+  <g id="content-body-15">
+    <rect x="36" y="104" width="1208" height="128" rx="24" fill="url(#row-grad-15)" stroke="#0284C7" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-15)"/>
+    <rect x="36" y="104" width="4" height="128" rx="2" fill="#0284C7" opacity="0.8"/>
+    <circle cx="68" cy="168" r="22" fill="none" stroke="#0284C7" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="168" r="15" fill="#0284C7" fill-opacity="0.12"/>
+    <text x="68" y="173" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" font-weight="700" fill="#20A2E5" text-anchor="middle">01</text>
+    <circle cx="110" cy="144" r="4" fill="#0284C7" opacity="0.85"/>
+    <text x="124" y="150" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="36" fill="#0F172A"><tspan x="124" dy="0">多源融合与拓扑建模显著提升街区尺度内涝风险评估精度（AUC</tspan><tspan x="124" dy="52">0.913）</tspan></text>
+    <path d="M 1220 162 L 1226 168 L 1220 174" fill="none" stroke="#0284C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="244" width="1208" height="76" rx="24" fill="url(#row-grad-15)" stroke="#0066A9" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-15)"/>
+    <rect x="36" y="244" width="4" height="76" rx="2" fill="#0066A9" opacity="0.8"/>
+    <circle cx="68" cy="282" r="22" fill="none" stroke="#0066A9" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="282" r="15" fill="#0066A9" fill-opacity="0.12"/>
+    <text x="68" y="287" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" font-weight="700" fill="#0066A9" text-anchor="middle">02</text>
+    <circle cx="110" cy="284" r="4" fill="#0066A9" opacity="0.85"/>
+    <text x="124" y="290" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="36" fill="#0F172A"><tspan x="124" dy="0">方法已接入 Z 市防汛调度平台，试运行一个完整汛期</tspan></text>
+    <path d="M 1220 276 L 1226 282 L 1220 288" fill="none" stroke="#0066A9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="332" width="1208" height="76" rx="24" fill="url(#row-grad-15)" stroke="#2AACEF" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-15)"/>
+    <rect x="36" y="332" width="4" height="76" rx="2" fill="#2AACEF" opacity="0.8"/>
+    <circle cx="68" cy="370" r="22" fill="none" stroke="#2AACEF" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="370" r="15" fill="#2AACEF" fill-opacity="0.12"/>
+    <text x="68" y="375" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" font-weight="700" fill="#20A2E5" text-anchor="middle">03</text>
+    <circle cx="110" cy="372" r="4" fill="#2AACEF" opacity="0.85"/>
+    <text x="124" y="378" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="36" fill="#0F172A"><tspan x="124" dy="0"><tspan font-weight="700" fill="#20A2E5">局限</tspan><tspan fill="#E2E8F0" opacity="0.6">：</tspan>跨城市泛化能力待验证，极端罕见事件样本不足</tspan></text>
+    <path d="M 1220 364 L 1226 370 L 1220 376" fill="none" stroke="#2AACEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <rect x="36" y="420" width="1208" height="76" rx="24" fill="url(#row-grad-15)" stroke="#0284C7" stroke-opacity="0.25" stroke-width="1.5" filter="url(#card-shadow-15)"/>
+    <rect x="36" y="420" width="4" height="76" rx="2" fill="#0284C7" opacity="0.8"/>
+    <circle cx="68" cy="458" r="22" fill="none" stroke="#0284C7" stroke-width="1.5" stroke-opacity="0.25"/>
+    <circle cx="68" cy="458" r="15" fill="#0284C7" fill-opacity="0.12"/>
+    <text x="68" y="463" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="21" font-weight="700" fill="#20A2E5" text-anchor="middle">04</text>
+    <circle cx="110" cy="460" r="4" fill="#0284C7" opacity="0.85"/>
+    <text x="124" y="466" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="36" fill="#0F172A"><tspan x="124" dy="0"><tspan font-weight="700" fill="#20A2E5">展望</tspan><tspan fill="#E2E8F0" opacity="0.6">：</tspan>耦合短临降雨预报，扩展至内涝-交通联动影响评估</tspan></text>
+    <path d="M 1220 452 L 1226 458 L 1220 464" fill="none" stroke="#0284C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+  </g>
+</svg>

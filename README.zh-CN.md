@@ -33,6 +33,64 @@
 
   ---
 
+## 🎓 面向大学生
+
+三个最赶时间的学生场景，每一个都对应仓库里**已提交的成品示例**——先打开成品看效果，再用一条命令复现。
+
+### 1 · 用学校指定模板做毕业答辩
+
+学校强制要求统一模板？模板设计一点不动——一条命令把论文 Markdown 填进模板原生页面（内容页不够会自动复制补齐），并输出文字溢出与占位符残留的风险报告。
+
+已提交的端到端示例：[校方模板](examples/school-template/template.pptx) → [填充后的 17 页成品](examples/school-template/filled-example.pptx)，附[零问题 FILL-REPORT](examples/school-template/FILL-REPORT.md)。
+
+```bash
+slide-skill template-fill examples/school-template/template.pptx --content examples/thesis-sample.zh.md -o filled.pptx
+```
+
+### 2 · 比赛路演 PPT
+
+六大竞赛各有一个**完整成品包**，都在 [`examples/competitions/`](examples/competitions/README.md)：真实感中文内容按各竞赛评审结构撰写，每份 `deck.pptx` 里嵌入口语化演讲备注，并附 QA 报告。
+
+| 竞赛 | 主题 | 页数 | 成品 | 复现命令 |
+|---|---|---|---|---|
+| [互联网+ 创新创业大赛](examples/competitions/internet-plus/) | vibrant-startup | 17 | [deck.pptx](examples/competitions/internet-plus/deck.pptx) | `slide-skill quickstart examples/competitions/internet-plus/source.md --theme vibrant-startup --name comp-internet-plus --mode fast` |
+| [挑战杯](examples/competitions/challenge-cup/) | data-forward | 16 | [deck.pptx](examples/competitions/challenge-cup/deck.pptx) | `slide-skill quickstart examples/competitions/challenge-cup/source.md --theme data-forward --name comp-challenge-cup --mode fast` |
+| [数学建模竞赛](examples/competitions/math-modeling/) | data-forward | 14 | [deck.pptx](examples/competitions/math-modeling/deck.pptx) | `slide-skill quickstart examples/competitions/math-modeling/source.md --theme data-forward --name comp-math-modeling --mode fast` |
+| [大创（创新创业训练计划）](examples/competitions/innovation-training/) | indigo-saas | 13 | [deck.pptx](examples/competitions/innovation-training/deck.pptx) | `slide-skill quickstart examples/competitions/innovation-training/source.md --theme indigo-saas --name comp-innovation-training --mode fast` |
+| [毕业论文答辩](examples/competitions/thesis-defense/) | academic-defense | 16 | [deck.pptx](examples/competitions/thesis-defense/deck.pptx) | `slide-skill quickstart examples/competitions/thesis-defense/source.md --theme academic-defense --name comp-thesis-defense --mode fast` |
+| [课程展示](examples/competitions/course-presentation/) | light-corporate | 10 | [deck.pptx](examples/competitions/course-presentation/deck.pptx) | `slide-skill quickstart examples/competitions/course-presentation/source.md --theme light-corporate --name comp-course-presentation --mode fast` |
+
+想以某个包为底稿做自己的比赛 PPT——脚手架会把它的源内容和演讲备注复制进新项目：
+
+```bash
+slide-skill init 我的项目 --competition internet-plus --from-example
+```
+
+### 3 · 今晚就要交 —— 约 2 秒出一份 16 页答辩稿
+
+[`examples/thesis-sample.zh.md`](examples/thesis-sample.zh.md) 是一份真实感 LSTM 论文源稿。一条命令、零 API key、约 2 秒、QA 通过——下面的 PNG 就是生成成品的真实渲染页：
+
+```bash
+slide-skill quickstart examples/thesis-sample.zh.md --theme academic-defense --mode fast
+```
+
+<table>
+<tr>
+<td width="25%"><img src="examples/thesis-sample/01-cover.png" alt="答辩封面（academic-defense 主题）" /></td>
+<td width="25%"><img src="examples/thesis-sample/02-outline.png" alt="答辩目录页" /></td>
+<td width="25%"><img src="examples/thesis-sample/10-metrics.png" alt="核心指标页" /></td>
+<td width="25%"><img src="examples/thesis-sample/13-conclusion.png" alt="结论页" /></td>
+</tr>
+<tr>
+<td align="center"><sub>封面</sub></td>
+<td align="center"><sub>目录</sub></td>
+<td align="center"><sub>核心指标</sub></td>
+<td align="center"><sub>结论</sub></td>
+</tr>
+</table>
+
+  ---
+
   ## 实际产出
 
 下面是真实的示例幻灯片 —— 六种版式，取自 32 套内置主题中的五套。GitHub 直接渲染 SVG，
@@ -244,8 +302,9 @@ v5.0 主线是把 AI 生产链做扎实，并让无 key 路径成为一等公民
   ## 流水线产出（真实端到端运行）
 
 上面那些幻灯片是手工精修的参考标杆。下面是流水线**实际跑出来**的成果 ——
-对 [`examples/sample.md`](examples/sample.md)（一份 8 页"AI 驱动的分析平台"演示稿）
-分别用两套主题运行 `slide-skill quickstart`：
+对"AI 驱动的分析平台"示例源稿分别用两套主题运行 `slide-skill quickstart`。
+（已提交的两次运行各为 8 页；[`examples/sample.md`](examples/sample.md) 此后扩充到了
+14 个小节，今天重跑会得到页数更多、观感相同的成品。）
 
 | 主题 | SVG | PPTX | QA 报告 | 视觉样例 |
 |---|---|---|---|---|
@@ -392,13 +451,28 @@ slide-skill formats   # 列出全部画布尺寸
 
 ```bash
 slide-skill competitions                    # 列出所有竞赛模板
-slide-skill init <name> --competition internet-plus
+slide-skill init <name> --competition internet-plus --from-example
 slide-skill rehearse <project>              # 时长分析
 slide-skill draft-notes <project>           # 自动起草演讲备注
 ```
 
 内置模板：`internet-plus`（互联网+） · `challenge-cup`（挑战杯） · `math-modeling`（数模） ·
 `innovation-training`（大创） · `thesis-defense`（论文答辩） · `course-presentation`（课堂展示）
+
+每个模板都配有**完整成品示例包**，见 [`examples/competitions/`](examples/competitions/README.md)：
+源内容、演讲备注、SVG、可编辑 `deck.pptx`、QA 报告一应俱全。`--from-example`
+会以示例包为底稿创建项目——从改真实内容开始，而不是从空白大纲开始。
+完整的包清单见上方"面向大学生"一节。
+
+### 校方模板保真填充
+
+学校强制答辩模板？模板设计一点不动——一条命令把论文 Markdown 填进模板原生页面
+（按需复制/删除内容页），并报告文字溢出与占位符残留风险。
+端到端示例见 [`examples/school-template/`](examples/school-template/)。
+
+```bash
+slide-skill template-fill school.pptx --content thesis.md -o filled.pptx
+```
 
 ---
 
@@ -442,4 +516,4 @@ Agent skill 文档分两处：
 
 ## 许可
 
-MIT —— 见 [`LICENSE`](LICENSE)，或默认按 MIT 处理。
+MIT —— 见 [`LICENSE`](LICENSE)。

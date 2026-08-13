@@ -1,0 +1,32 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-01" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F1F5F9"/></g>
+  <g id="split-bg-01">
+    <rect x="640" y="0" width="640" height="720" fill="#E7EBEF"/>
+    <circle cx="960" cy="360" r="180" fill="none" stroke="#0C8ED1" stroke-width="2" opacity="0.15" stroke-dasharray="10 10"/>
+    <circle cx="960" cy="360" r="140" fill="#0C8ED1" opacity="0.05"/>
+  </g>
+  <g id="chrome-stripe">
+    <rect x="48" y="252" width="6" height="258" fill="#0C8ED1"/>
+  </g>
+  <g id="content-title-01">
+    <text x="68" y="324" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="72" font-weight="700" fill="#0F172A"><tspan x="68" dy="0">基于多源数据融</tspan><tspan x="68" dy="86">合的城市内涝风</tspan><tspan x="68" dy="86">险评估研究</tspan></text>
+  </g>
+  <g id="content-body-01">
+    <rect x="68" y="516" width="40" height="2" fill="#E2E8F0" opacity="0.5"/>
+    <text x="68" y="546" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="28" fill="#475569" opacity="0.85"><tspan x="68" dy="0">「挑战杯」全国大学生课外学术科技作品</tspan><tspan x="68" dy="35">竞赛 | 自然科学类学术论文 | 城市水安</tspan><tspan x="68" dy="35">全研究小组</tspan></text>
+  </g>
+  <g id="content-right-card-01" filter="url(#card-shadow-01)">
+    <rect x="700" y="300" width="520" height="120" rx="12" fill="#FFFFFF" stroke="#0C8ED1" stroke-opacity="0.2"/>
+    <text x="730" y="350" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="26" fill="#475569" font-weight="700" letter-spacing="1">PAGES DESIGNED</text>
+    <text x="730" y="395" font-family="Roboto, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="60" font-weight="700" fill="#0C8ED1">16</text>
+  </g>
+</svg>

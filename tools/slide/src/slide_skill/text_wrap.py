@@ -20,6 +20,8 @@ def _tokenize_for_wrap(text: str) -> list[str]:
     CJK characters become individual tokens (can break between any two).
     Latin/digit runs stay together as one token (never break mid-word).
     Whitespace is attached to the preceding token where possible.
+    Number+unit pairs ("6.5 小时", "89％", "2400 位") merge into one
+    unbreakable cluster so a line never ends with a bare number.
     """
     tokens: list[str] = []
     buf = ""
@@ -44,12 +46,62 @@ def _tokenize_for_wrap(text: str) -> list[str]:
                 buf += ch
     if buf:
         tokens.append(buf)
-    return tokens
+    return _merge_number_unit(tokens)
+
+
+# A Latin/digit token that is purely a number run (optionally followed by
+# whitespace), e.g. "6.5 ", "2400 ", "89", "0.91".
+_NUMBER_RUN = re.compile(r"^\d[\d.,]*[ \t]*$")
+
+# Common two-character CJK measure words that must stay attached to their
+# number as a whole ("6.5 小时" must not become "6.5 小 / 时").
+_TWO_CHAR_UNITS = frozenset({
+    "小时", "分钟", "公里", "千米", "毫米", "厘米",
+    "千克", "公斤", "万元", "亿元", "个月", "年级",
+})
+
+
+def _merge_number_unit(tokens: list[str]) -> list[str]:
+    """Merge digit-run tokens with their immediate CJK unit suffix.
+
+    A digit sequence plus its unit ("6.5 小时", "89％", "2400 位") is an
+    unbreakable cluster — a wrap must never separate the number from the
+    unit that gives it meaning.
+    """
+    merged: list[str] = []
+    i = 0
+    while i < len(tokens):
+        tok = tokens[i]
+        nxt = tokens[i + 1] if i + 1 < len(tokens) else ""
+        is_unit_char = len(nxt) == 1 and (
+            nxt == "％"
+            or (
+                _is_cjk(nxt)
+                and nxt not in _KINSOKU_NO_START
+                and nxt not in _KINSOKU_NO_END
+            )
+        )
+        if _NUMBER_RUN.match(tok) and is_unit_char:
+            cluster = tok + nxt
+            i += 2
+            # Extend to the full two-char unit word where known (小时, 分钟…)
+            if (
+                i < len(tokens)
+                and len(tokens[i]) == 1
+                and nxt + tokens[i] in _TWO_CHAR_UNITS
+            ):
+                cluster += tokens[i]
+                i += 1
+            merged.append(cluster)
+        else:
+            merged.append(tok)
+            i += 1
+    return merged
 
 # CJK line-breaking (kinsoku) character classes.
 # Leading-forbidden: characters that must not begin a line (closing marks).
 _KINSOKU_NO_START = set(
-    "，。、；：！？”’）》」』】〉〕｝］%‰°·…—–～！？，。；：、）】》」』"
+    "，。、；：！？”’）》」』】〉〕｝］%％‰°·…—–～！？，。；：、）】》」』"
     ",.;:!?)]}%"
 )
 # Trailing-forbidden: characters that must not end a line (opening marks).
@@ -109,22 +161,55 @@ def _apply_kinsoku(lines: list[str], max_width_px: int, font_size: int) -> list[
                 if guard > 8:
                     break
 
+    def _is_orphan_tail(line: str) -> bool:
+        # An orphan tail is a stranded final line: 1-2 bare CJK chars, or a
+        # single CJK char carrying only trailing punctuation ("例。").
+        if not line:
+            return False
+        core = line
+        trailing = ""
+        while core and core[-1] in _KINSOKU_NO_START:
+            trailing = core[-1] + trailing
+            core = core[:-1]
+        if not core or not all(_is_cjk(c) for c in core):
+            return False
+        return len(core) == 1 or (len(core) == 2 and not trailing)
+
+    def _rebalance_orphan_tail() -> None:
+        # Fix stranded final lines ("…文稿样 / 例。") by merging the tail up
+        # when the previous line has slack, or by moving the break earlier
+        # (pulling CJK chars down) so the final line reads as a word.
+        if len(lines) < 2:
+            return
+        guard = 0
+        while _is_orphan_tail(lines[-1]) and guard < 8:
+            guard += 1
+            prev, last = lines[-2], lines[-1]
+            merged = prev + last
+            if _fits(merged):
+                lines[-2] = merged
+                del lines[-1]
+                if len(lines) < 2:
+                    return
+                continue
+            pull = prev[-1]
+            if (
+                not _is_cjk(pull)
+                or pull in _KINSOKU_NO_START
+                or len(prev) < 3
+                or not _fits(pull + last)
+            ):
+                break
+            lines[-2] = prev[:-1]
+            lines[-1] = pull + last
+        # Pulling chars down may leave the previous line ending on an
+        # opening mark — re-run the directional fixes to restore kinsoku.
+        _fix_leading()
+        _fix_trailing()
+
     _fix_leading()
     _fix_trailing()
-
-    # Avoid an orphaned final line holding a single CJK char by pulling one
-    # character down from the previous line (追い込み).
-    if (
-        len(lines[-1]) == 1
-        and _is_cjk(lines[-1])
-        and len(lines[-2]) >= 3
-        and _is_cjk(lines[-2][-1])
-    ):
-        candidate = lines[-2][-1] + lines[-1]
-        if _fits(candidate):
-            lines[-1] = candidate
-            lines[-2] = lines[-2][:-1]
-            _fix_leading()  # pulling down may expose a new leading mark
+    _rebalance_orphan_tail()
 
     return [ln for ln in lines if ln != ""] or lines
 

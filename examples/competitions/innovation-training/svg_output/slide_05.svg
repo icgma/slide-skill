@@ -1,0 +1,110 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="card-shadow-05" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.10" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="orb-05" cx="85%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#6D70FB" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#6D70FB" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2-05" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#9598FF" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#9598FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="proc-card-grad-05-0" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-05-0">
+      <rect x="36" y="296" width="370" height="223" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-05-1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-05-1">
+      <rect x="454" y="296" width="370" height="223" rx="24"/>
+    </clipPath>
+    <linearGradient id="proc-card-grad-05-2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+    </linearGradient>
+    <clipPath id="proc-card-clip-05-2">
+      <rect x="872" y="296" width="370" height="223" rx="24"/>
+    </clipPath>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#F5F3FF"/></g>
+  <g id="decor-05">
+    <ellipse cx="1240" cy="30" rx="400" ry="280" fill="url(#orb-05)"/>
+    <ellipse cx="60" cy="690" rx="280" ry="200" fill="url(#orb2-05)"/>
+    <line x1="1280" y1="0" x2="1080" y2="180" stroke="#6D70FB" stroke-width="2" opacity="0.12"/>
+    <line x1="1280" y1="0" x2="1140" y2="120" stroke="#6D70FB" stroke-width="1" opacity="0.08"/>
+  </g>
+  <defs>
+    <linearGradient id="accent-fade-05" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6D70FB" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#6D70FB" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#6D70FB" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="12" height="720" fill="url(#accent-fade-05)" />
+  </g>
+  <g id="chrome-footer">
+    <text x="1208" y="672" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" fill="#4A4485" text-anchor="end" opacity="0.7">05 / 13</text>
+  </g>
+  <g id="content-eyebrow-05">
+    <text x="36" y="60" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="21" font-weight="700" fill="#6D70FB" letter-spacing="4">PROCESS &#x2192; 3 STEPS</text>
+  </g>
+  <g id="content-title-05">
+    <text x="36" y="110" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="64" font-weight="700" fill="#1E1B4B">核心创新点</text>
+  </g>
+  <g id="content-flow-05">
+    <g clip-path="url(#proc-card-clip-05-0)">
+      <rect x="36" y="296" width="370" height="223" rx="24" fill="url(#proc-card-grad-05-0)"/>
+      <rect x="36" y="296" width="4" height="223" fill="#6D70FB"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="36" y="296" width="370" height="223" rx="24" fill="none" stroke="#6D70FB" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-05)"/>
+    <!-- Inner border detail -->
+    <rect x="41" y="301" width="360" height="213" rx="20" fill="none" stroke="#6D70FB" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="221" cy="340" r="20" fill="none" stroke="#6D70FB" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="221" cy="340" r="14" fill="#6D70FB"/>
+    <text x="221" y="345" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="26" font-weight="700" fill="#1E1B4B" text-anchor="middle">01</text>
+    <text x="221" y="430" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="26" fill="#1E1B4B" text-anchor="middle"><tspan x="221" dy="0">场景语料创新：构建考试</tspan><tspan x="221" dy="30">周、宿舍关系、就业焦虑等</tspan><tspan x="221" dy="30">8 类校园情境对话语料库</tspan></text>
+    <line x1="418" y1="407" x2="442" y2="407" stroke="#6D70FB" stroke-width="2.5" opacity="0.6"/>
+    <line x1="418" y1="407" x2="442" y2="407" stroke="#F5F3FF" stroke-width="1.2" stroke-dasharray="2,3" opacity="0.8"/>
+    <polygon points="442,402 464,407 442,412" fill="#6D70FB" opacity="0.8"/>
+    <g clip-path="url(#proc-card-clip-05-1)">
+      <rect x="454" y="296" width="370" height="223" rx="24" fill="url(#proc-card-grad-05-1)"/>
+      <rect x="454" y="296" width="4" height="223" fill="#4548D3"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="454" y="296" width="370" height="223" rx="24" fill="none" stroke="#4548D3" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-05)"/>
+    <!-- Inner border detail -->
+    <rect x="459" y="301" width="360" height="213" rx="20" fill="none" stroke="#4548D3" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="639" cy="340" r="20" fill="none" stroke="#4548D3" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="639" cy="340" r="14" fill="#4548D3"/>
+    <text x="639" y="345" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="26" font-weight="700" fill="#F5F3FF" text-anchor="middle">02</text>
+    <text x="639" y="427" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="23" fill="#1E1B4B" text-anchor="middle"><tspan x="639" dy="0">安全机制创新：三级风险分层（</tspan><tspan x="639" dy="27">日常倾诉 / 持续低落 / 危机</tspan><tspan x="639" dy="27">信号），高风险自动转介人工</tspan></text>
+    <line x1="836" y1="407" x2="860" y2="407" stroke="#4548D3" stroke-width="2.5" opacity="0.6"/>
+    <line x1="836" y1="407" x2="860" y2="407" stroke="#F5F3FF" stroke-width="1.2" stroke-dasharray="2,3" opacity="0.8"/>
+    <polygon points="860,402 882,407 860,412" fill="#4548D3" opacity="0.8"/>
+    <g clip-path="url(#proc-card-clip-05-2)">
+      <rect x="872" y="296" width="370" height="223" rx="24" fill="url(#proc-card-grad-05-2)"/>
+      <rect x="872" y="296" width="4" height="223" fill="#9FA2FF"/>
+    </g>
+    <!-- Outline & shadow container (avoids clipped stroke & shadow) -->
+    <rect x="872" y="296" width="370" height="223" rx="24" fill="none" stroke="#9FA2FF" stroke-opacity="0.18" stroke-width="1.5" filter="url(#card-shadow-05)"/>
+    <!-- Inner border detail -->
+    <rect x="877" y="301" width="360" height="213" rx="20" fill="none" stroke="#9FA2FF" stroke-opacity="0.08" stroke-width="1"/>
+    <circle cx="1057" cy="340" r="20" fill="none" stroke="#9FA2FF" stroke-opacity="0.25" stroke-width="1.2"/>
+    <circle cx="1057" cy="340" r="14" fill="#9FA2FF"/>
+    <text x="1057" y="345" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="26" font-weight="700" fill="#1E1B4B" text-anchor="middle">03</text>
+    <text x="1057" y="431" font-family="Poppins, Inter, Calibri, 'PingFang SC', 'Noto Sans SC', sans-serif" font-size="27" fill="#1E1B4B" text-anchor="middle"><tspan x="1057" dy="0">隐私架构创新：对话端侧</tspan><tspan x="1057" dy="31">脱敏加校内私有化部署，</tspan><tspan x="1057" dy="31">数据不出校</tspan></text>
+  </g>
+</svg>
