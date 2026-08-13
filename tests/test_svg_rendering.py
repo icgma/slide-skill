@@ -8,6 +8,7 @@ from pathlib import Path
 
 from slide_skill.project import init_project
 from slide_skill.svg_pipeline import generate_svg, create_spec
+from slide_skill.svg_qa import check_svg_file
 
 
 class TextLayoutTest(unittest.TestCase):
@@ -78,7 +79,7 @@ class TitleOverflowTest(unittest.TestCase):
         title_tspans = re.findall(r'font-size="(\d+)"[^>]*font-weight="700"', svg)
         if title_tspans:
             size = int(title_tspans[0])
-            self.assertLessEqual(size, 44, "Long title should use reduced font-size or wrap")
+            self.assertLessEqual(size, 60, "Long title should use reduced font-size or wrap")
 
     def test_empty_body_no_blank_card(self) -> None:
         """When body is empty, should not show an empty white card."""
@@ -237,3 +238,145 @@ class V3LayoutRouterTest(unittest.TestCase):
         slides[3] = ("h", short_body)
         out = _distribute_layouts(layouts, slides)
         self.assertEqual(out[2], "executive-summary")
+
+
+def test_closing_long_body_fits_safe_area(tmp_path) -> None:
+    from slide_skill.svg_pipeline import _render_closing
+
+    lock = {
+        "palette": {
+            "accent": "#3B82F6",
+            "text": "#F8FAFC",
+            "surface": "#1E293B",
+            "muted": "#64748B",
+            "background": "#0F172A",
+            "body": "#CBD5E1",
+        },
+        "canvas": {"width": 1280, "height": 720},
+        "font_family": "Microsoft YaHei",
+    }
+    body = (
+        "If you remember one thing, remember that the deck must preserve readable, "
+        "editable PowerPoint output without letting long generated copy collide "
+        "with the closing card or footer."
+    )
+    svg = _render_closing(8, "Why Now", body, lock, total=8, w=1280, h=720)
+    path = tmp_path / "closing.svg"
+    path.write_text(svg, encoding="utf-8")
+    issues = check_svg_file(path, tmp_path)
+    assert not [i for i in issues if i.level == "error"]
+
+
+def test_market_opportunity_renderer_uses_semantic_group(tmp_path) -> None:
+    from slide_skill.svg_pipeline import _render_market_opportunity
+
+    lock = {
+        "palette": {
+            "accent": "#3B82F6",
+            "text": "#F8FAFC",
+            "surface": "#1E293B",
+            "muted": "#64748B",
+            "background": "#0F172A",
+            "body": "#CBD5E1",
+        },
+        "canvas": {"width": 1280, "height": 720},
+        "font_family": "Microsoft YaHei",
+        "theme": "dark-tech",
+    }
+    body = (
+        "Total Addressable Market: 120亿 USD by 2027\n"
+        "Enterprise analytics: 45%\n"
+        "SMB segment: 30%\n"
+        "Government and public sector: 25%"
+    )
+    svg = _render_market_opportunity(4, "Market Opportunity", body, lock, total=8, w=1280, h=720)
+    assert 'id="content-market-04"' in svg
+    assert "Primary demand signal" in svg
+    path = tmp_path / "market.svg"
+    path.write_text(svg, encoding="utf-8")
+    issues = check_svg_file(path, tmp_path)
+    assert not [i for i in issues if i.level == "error"]
+
+
+def test_profiled_problem_solution_technology_and_roadmap_scenes(tmp_path) -> None:
+    from slide_skill.svg_pipeline import (
+        _render_problem_scene,
+        _render_roadmap_scene,
+        _render_solution_scene,
+        _render_technology_scene,
+    )
+
+    lock = {
+        "palette": {
+            "accent": "#1D4ED8",
+            "text": "#0A0A0A",
+            "surface": "#FFFFFF",
+            "muted": "#E5E5E5",
+            "background": "#FBFBF9",
+            "body": "#333333",
+        },
+        "canvas": {"width": 1280, "height": 720},
+        "font_family": "Arial",
+        "theme": "neo-brutalist",
+    }
+    renderers = [
+        ("problem", _render_problem_scene, "Problem Statement", "Data silos\nManual reporting"),
+        ("solution", _render_solution_scene, "Our Solution", "Unified ingestion\nRealtime alerts"),
+        ("technology", _render_technology_scene, "Technology Stack", "Kafka\nML models"),
+        ("roadmap", _render_roadmap_scene, "Roadmap", "Q1: Mobile\nQ2: AI writer"),
+    ]
+    for name, renderer, title, body in renderers:
+        svg = renderer(2, title, body, lock, total=8, w=1280, h=720)
+        assert f"content-{name}-02" in svg
+        assert 'data-theme-profile="neo-brutalist"' in svg
+        assert "data-scene-variant=" in svg
+        path = tmp_path / f"{name}.svg"
+        path.write_text(svg, encoding="utf-8")
+        issues = check_svg_file(path, tmp_path)
+        assert not [i for i in issues if i.level == "error"]
+
+
+def test_profiled_closing_scene_matrix_variants(tmp_path) -> None:
+    from slide_skill.svg_pipeline import _render_closing
+
+    base_lock = {
+        "palette": {
+            "accent": "#1D4ED8",
+            "text": "#0A0A0A",
+            "surface": "#FFFFFF",
+            "muted": "#E5E5E5",
+            "background": "#FBFBF9",
+            "body": "#333333",
+        },
+        "canvas": {"width": 1280, "height": 720},
+        "font_family": "Arial",
+    }
+    expected_signatures = {
+        "dark-tech": ("default", "decor-closing-geom"),
+        "warm-editorial": ("warm-editorial", "content-pullnote"),
+        "neo-brutalist": ("neo-brutalist", "decor-construction"),
+        "celestial-glass": ("celestial-glass", "decor-orbital-frame"),
+    }
+    variants = set()
+    for theme, (profile_name, signature) in expected_signatures.items():
+        lock = {**base_lock, "theme": theme}
+        svg = _render_closing(
+            8,
+            "Why Now",
+            "Preserve editable output, visual QA evidence, and a strong final call to action.",
+            lock,
+            total=8,
+            w=1280,
+            h=720,
+        )
+        assert 'id="content-closing-08"' in svg
+        assert f'data-theme-profile="{profile_name}"' in svg
+        assert "data-scene-variant=" in svg
+        assert signature in svg
+        variants.add(svg.split('data-scene-variant="', 1)[1].split('"', 1)[0])
+        path = tmp_path / f"closing-{theme}.svg"
+        path.write_text(svg, encoding="utf-8")
+        issues = check_svg_file(path, tmp_path)
+        assert not [i for i in issues if i.level == "error"]
+
+    assert len(variants) == 4

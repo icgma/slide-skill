@@ -10,8 +10,8 @@ clean, inspectable SVG intermediate.
 
 [English README](README.md) · [中文 README](README.zh-CN.md)
 
-[![version](https://img.shields.io/badge/version-3.0.0-3B82F6)](pyproject.toml)
-[![tests](https://img.shields.io/badge/tests-460%20passing-22C55E)](tests/)
+[![version](https://img.shields.io/badge/version-5.0.0a1-3B82F6)](pyproject.toml)
+[![tests](https://img.shields.io/badge/tests-900%2B%20passing-22C55E)](tests/)
 [![python](https://img.shields.io/badge/python-3.11%2B-FFD43B)](pyproject.toml)
 [![output](https://img.shields.io/badge/output-editable%20PPTX-D04A02)](examples/sample-dark-tech/deck.pptx)
 [![license](https://img.shields.io/badge/license-MIT-lightgrey)](#license)
@@ -24,7 +24,7 @@ clean, inspectable SVG intermediate.
 
   ### Live preview — actual PPTX rendered through LibreOffice
 
-  <video src="https://github.com/Yuuqq/slide-skill/raw/master/examples/auto-render/dark-tech/preview.mp4" controls autoplay loop muted playsinline width="720" poster="examples/auto-render/dark-tech/slide_01.png">
+  <video src="https://github.com/icgma/slide-skill/raw/master/examples/auto-render/dark-tech/preview.mp4" controls autoplay loop muted playsinline width="720" poster="examples/auto-render/dark-tech/slide_01.png">
     Your browser does not support the video tag — <a href="examples/auto-render/dark-tech/preview.mp4">download the MP4</a> or view the <a href="examples/auto-render/dark-tech/preview.gif">animated GIF</a>.
   </video>
 
@@ -36,8 +36,9 @@ clean, inspectable SVG intermediate.
 
   ## What it produces
 
-Real example slides — five themes, six layouts. GitHub renders SVG inline,
-so what you see below is the actual artifact, not a screenshot.
+Real example slides — six layouts across five of the 32 built-in themes.
+GitHub renders SVG inline, so what you see below is the actual artifact,
+not a screenshot.
 
 <table>
 <tr>
@@ -81,7 +82,7 @@ blob you can't inspect, or render slides as bitmaps that no one can edit.
 |---|---|---|
 | Hard to inspect intermediate output | Binary `.pptx` only | Hand-readable SVG you can `cat` and diff |
 | LLMs produce a wall of bullets | Fixed prompt → flat list | Layout-aware: cover, metric, two-column, quote… |
-| Themes all look the same | One template | 5 themes with full palette + type + layout specs |
+| Themes all look the same | One template | 32 themes with full palette + type + layout specs |
 | Visual QA is "open and look" | Manual | `check-svg`, `validate-pptx`, machine-readable `QA.md` |
 | Gradients become flat colours in PPTX | Bitmap fallback | True `<a:gradFill>` rendered natively (v2.1) |
 | AI authoring is one giant prompt | All-in-one | Strategist + Executor multi-role workflow |
@@ -99,6 +100,8 @@ slide-skill quickstart your-notes.md --theme dark-tech
 # Open exports/*.pptx in PowerPoint, Keynote, or Google Slides — fully editable.
 ```
 
+Default mode is auto — with `OPENAI_API_KEY` set it uses AI-authored slides; without a key it falls back to the deterministic `fast` renderer (~2 seconds, no API key needed).
+
 Want more control? Use the multi-step pipeline:
 
 ```bash
@@ -114,32 +117,19 @@ slide-skill export projects/my-deck
 
 ---
 
-## What's new in v3.0
+## What's new in v5.0 (in progress)
 
-- 🧠 **Intelligent content planning** — New `content_planner` module understands your source material and automatically picks the best layout per slide. Detects vocabulary lists, dialogues, metrics, process flows, and more from plain markdown.
-- 🎓 **Teaching domain** — Specialized layouts for language education: `vocab-card` (1-4 large Chinese words with pinyin + translation), `sentence-example` (with annotations), `dialogue` (A/B conversation bubbles). Auto-sizing Chinese characters (shorter words get larger fonts).
-- 📚 **Course domain** — Academic presentation layouts: `learning-objectives`, `key-concept`, `case-study`, `discussion`. Structured for classroom delivery.
-- 🏆 **Competition domain** — Pitch deck layouts for student competitions (互联网+, 挑战杯): `team-grid`, `metrics-dashboard`, `timeline`, `comparison-matrix`. Maps to standard competition judging criteria.
-- 🌐 **Domain-aware configuration** — Each domain has sensible defaults: teaching caps at 4 items/slide for clarity, competitions enforce time limits, courses balance density. Configure via `ContentConfig(domain="teaching")`.
-- 📊 **460 passing tests** — Comprehensive test coverage including 61 new tests for the v3.0 content planning layer.
+The v5.0 arc hardens the AI production chain and makes the no-key path first-class. Shipped so far, each behind tests:
 
-What landed in **v2.1** and still ships:
+- **No-key default that never crashes** — `--mode auto` uses AI generation when an API key is configured and falls back to the deterministic `fast` renderer otherwise. The AI gate is non-interactive: CI pipelines and agent shells never hang on a hidden prompt.
+- **Provider response gate** — truncated or malformed LLM responses are caught at the adapter (completion-status check) instead of surfacing as corrupt SVG; per-role token budgets with escalation stop silent mid-slide cutoffs.
+- **Closed-world content fidelity** — bidirectional checks reject slides whose visible text is not sourced from your material: no invented numbers, no dropped bullets.
+- **Namespace-safe validated repairs** — auto-repair only applies XML-validated, namespace-preserving patches; rejected repairs are traced, never silently merged.
+- **Trustworthy QA geometry** — dx-aware tspan flow measurement eliminates false overlap warnings; ghost (zero-render) elements are ERROR-level; when Chrome is available, browser `getBBox` measurements arbitrate verdicts and every repair triggers a mandatory re-render check.
 
-- 🎨 **Native PowerPoint gradients** — `<linearGradient>` and `<radialGradient>`
-  in your SVG now render as true DrawingML `<a:gradFill>` in the exported
-  PPTX (multi-stop, with correct angle math), not a flat mid-point colour.
-  Open the `.pptx` in PowerPoint and the gradient is fully editable.
+What landed in **v3.0** and still ships: intelligent content planning (`content_planner` picks the best layout per slide from plain markdown) plus teaching, course, and competition domain layouts with domain-aware density defaults.
 
-- 🎯 **Polished auto-renderer** — pure-Python templates now produce hero typography, gradient orbs, numbered bullet markers, and accent edges. The default `quickstart` flow looks presentable without any LLM in the loop.
-
-What landed in **v2.0** and still ships:
-
-- **5 design themes** — `dark-tech` · `light-corporate` · `warm-editorial` · `data-forward` · `vibrant-startup`
-- **Multi-role workflow** — Strategist plans, Executor authors SVG
-- **Per-project design guide** — `design_guide.md` generated from spec lock with full SVG examples
-- **Permissive SVG QA** — gradients, opacity, filters, transforms, classes, styles all allowed; only scripts, animations, and DOM event handlers are banned
-- **AI SVG authoring prompt** — `slide-skill generate-guide` writes a complete brief for the Executor role
-- **170 passing tests** — including end-to-end pipeline runs against two themes
+What landed in **v2.1** and still ships: native PowerPoint gradients (SVG `<linearGradient>`/`<radialGradient>` exported as editable DrawingML `<a:gradFill>`) and the polished pure-Python auto-renderer (hero typography, gradient orbs, numbered bullet markers).
 
 ---
 
@@ -147,7 +137,7 @@ What landed in **v2.0** and still ships:
 
   Slide Skill ships two execution paths. Pick based on whether you have an LLM in the loop:
 
-  | | **Auto mode** (default `quickstart`) | **LLM Executor mode** |
+  | | **Fast mode** (`--mode fast`; auto fallback without a key) | **LLM Executor mode** |
   |---|---|---|
   | Setup | `pip install -e .` — that's it | + LLM API key (OpenAI / Claude / local) |
   | Time to first PPTX | ~2 seconds | ~30–90 seconds |
@@ -157,7 +147,7 @@ What landed in **v2.0** and still ships:
   | Best for | Drafts, internal docs, recurring reports, CI pipelines | Pitch decks, conference talks, design-critical work |
   | Edit afterwards | Yes — fully editable PPTX | Yes — fully editable PPTX |
 
-  **Auto mode samples** (zero API key, real `quickstart` output):
+  **Fast mode samples** (zero API key, real `quickstart` output):
 
   <table>
   <tr>
@@ -196,7 +186,7 @@ What landed in **v2.0** and still ships:
 
     ## 🌏 中文 / CJK support
 
-    All five themes now ship with a CJK font fallback chain (Microsoft YaHei → PingFang SC → Noto Sans SC → Source Han Sans SC). Chinese, Japanese, Korean input renders natively in PowerPoint, Keynote, Google Slides, and (with `noto-fonts-cjk` installed) LibreOffice.
+    Every theme except the two monospace terminal ones (`industrial-blueprint`, `retro-terminal`) ships with a CJK font fallback chain (Microsoft YaHei → PingFang SC → Noto Sans SC → Source Han Sans SC). Chinese, Japanese, Korean input renders natively in PowerPoint, Keynote, Google Slides, and (with `noto-fonts-cjk` installed) LibreOffice.
 
     A ready-to-run Chinese sample lives at [`examples/sample.zh-CN.md`](examples/sample.zh-CN.md):
 
@@ -208,7 +198,7 @@ What landed in **v2.0** and still ships:
 
     <div align="center">
 
-    <video src="https://github.com/Yuuqq/slide-skill/raw/master/examples/auto-render/zh-CN/preview-zh.mp4" controls autoplay loop muted playsinline width="720" poster="examples/auto-render/zh-CN/slide_03.png">
+    <video src="https://github.com/icgma/slide-skill/raw/master/examples/auto-render/zh-CN/preview-zh.mp4" controls autoplay loop muted playsinline width="720" poster="examples/auto-render/zh-CN/slide_03.png">
       Your browser doesn't support inline video — <a href="examples/auto-render/zh-CN/preview-zh.mp4">download MP4</a> or view <a href="examples/auto-render/zh-CN/preview-zh.gif">animated GIF</a>.
     </video>
 
@@ -232,21 +222,23 @@ What landed in **v2.0** and still ships:
     **Claude Code** (`~/.claude/skills/`):
 
     ```bash
-    git clone https://github.com/Yuuqq/slide-skill.git ~/.claude/skills/slide-skill
+    git clone https://github.com/icgma/slide-skill.git ~/.claude/skills/slide-skill
     ```
 
     **Replit Agent** (`.local/skills/` in your project):
 
     ```bash
-    git clone https://github.com/Yuuqq/slide-skill.git .local/skills/slide-skill
+    git clone https://github.com/icgma/slide-skill.git .local/skills/slide-skill
     ```
 
-    **Cursor / other agents**: copy [`SKILL.md`](SKILL.md) into your rules/skills directory, install the package (`pip install -e tools/slide`), and the agent will know to call `slide-skill quickstart <input.md> --theme <theme>` for any slide-related request.
+    **Cursor / other agents** (project-local `.cursor/skills/`): copy [`SKILL.md`](SKILL.md) into `.cursor/skills/slide-skill/`, install the package from the repository root (`pip install -e .`), and the agent will know to call `slide-skill quickstart <input.md> --theme <theme>` for any slide-related request.
+
+    The two supported manual install targets are `~/.claude/skills/slide-skill/` and `.cursor/skills/`. `npx skills add` (skills-marketplace) install support lands together with the public repository release — until then, use the manual targets above.
 
     The skill file documents:
     - When to activate (English + Chinese trigger phrases)
     - The single command that does 90% of the work
-    - How to choose between the 5 themes
+    - How to choose between the 32 themes
     - Markdown authoring conventions (headings, bullets, **bold numbers** for metrics, `### A / ### B` for comparisons)
     - The decision flow the agent should follow
 
@@ -435,21 +427,25 @@ slide-skill narrate <project> --engine mimo --voice-design "gentle female voice"
 ## Development
 
 ```bash
-# Run the test suite (170 tests, 50 subtests)
-pytest tests/ -v
+# Run the test suite (900+ tests)
+pytest tests/ -q
 
 # Lint / type-check helpers (if configured)
 python -m slide_skill.cli --help
 ```
 
-The `skills/slide/` directory contains the agent skill documentation:
+The agent skill documentation lives in two places:
 
-- `SKILL.md` — main skill entry point for AI agents
-- `guides/intake.md` — source conversion and project setup
-- `guides/svg-pipeline.md` — design guide, SVG rules, finalization
-- `guides/export.md` — PPTX export and validation
-- `guides/editing.md` — template operations
-- `guides/qa.md` — QA loop and artifact expectations
+- **`SKILL.md`** (repository root) — the canonical, self-contained skill
+  entry point for AI agents. This is what the Claude Code / Replit /
+  Cursor install steps load.
+- `skills/slide/SKILL.md` — a redirect shim kept only so pre-existing
+  deep links and package manifests resolve; it points back to the root.
+
+Detailed runtime prompt templates (SVG standards, executor briefs, image
+layouts, palettes, renderings) are bundled inside the Python package at
+`tools/slide/src/slide_skill/references/` and are injected by the CLI as
+needed — they are not meant to be read directly by agents.
 
 ---
 

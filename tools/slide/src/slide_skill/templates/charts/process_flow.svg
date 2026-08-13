@@ -1,0 +1,61 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="content-title">
+    <text x="96" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}">Process Flow</text>
+    <rect x="96" y="82" width="60" height="3" fill="{accent}" />
+  </g>
+  <g id="content-body">
+    <!-- Step 1 -->
+    <g id="step-1" data-anim-order="1">
+      <circle cx="200" cy="360" r="60" fill="{surface}" stroke="{accent}" stroke-width="3" />
+      <text x="200" y="350" font-family="{font}" font-size="28" font-weight="700" fill="{accent}" text-anchor="middle">01</text>
+      <text x="200" y="380" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Step</text>
+      <text x="200" y="450" font-family="{font}" font-size="16" font-weight="600" fill="{text}" text-anchor="middle">Research</text>
+    </g>
+    <!-- Arrow 1→2 -->
+    <line x1="270" y1="360" x2="350" y2="360" stroke="{border}" stroke-width="2" />
+    <polygon points="350,352 370,360 350,368" fill="{accent}" />
+    <!-- Step 2 -->
+    <g id="step-2" data-anim-order="2">
+      <circle cx="440" cy="360" r="60" fill="{surface}" stroke="{accent}" stroke-width="3" />
+      <text x="440" y="350" font-family="{font}" font-size="28" font-weight="700" fill="{accent}" text-anchor="middle">02</text>
+      <text x="440" y="380" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Step</text>
+      <text x="440" y="450" font-family="{font}" font-size="16" font-weight="600" fill="{text}" text-anchor="middle">Design</text>
+    </g>
+    <!-- Arrow 2→3 -->
+    <line x1="510" y1="360" x2="590" y2="360" stroke="{border}" stroke-width="2" />
+    <polygon points="590,352 610,360 590,368" fill="{accent}" />
+    <!-- Step 3 -->
+    <g id="step-3" data-anim-order="3">
+      <circle cx="680" cy="360" r="60" fill="{surface}" stroke="{secondary_accent}" stroke-width="3" />
+      <text x="680" y="350" font-family="{font}" font-size="28" font-weight="700" fill="{secondary_accent}" text-anchor="middle">03</text>
+      <text x="680" y="380" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Step</text>
+      <text x="680" y="450" font-family="{font}" font-size="16" font-weight="600" fill="{text}" text-anchor="middle">Build</text>
+    </g>
+    <!-- Arrow 3→4 -->
+    <line x1="750" y1="360" x2="830" y2="360" stroke="{border}" stroke-width="2" />
+    <polygon points="830,352 850,360 830,368" fill="{accent}" />
+    <!-- Step 4 -->
+    <g id="step-4" data-anim-order="4">
+      <circle cx="920" cy="360" r="60" fill="{surface}" stroke="{accent}" stroke-width="3" />
+      <text x="920" y="350" font-family="{font}" font-size="28" font-weight="700" fill="{accent}" text-anchor="middle">04</text>
+      <text x="920" y="380" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Step</text>
+      <text x="920" y="450" font-family="{font}" font-size="16" font-weight="600" fill="{text}" text-anchor="middle">Test</text>
+    </g>
+    <!-- Arrow 4→5 -->
+    <line x1="990" y1="360" x2="1070" y2="360" stroke="{border}" stroke-width="2" />
+    <polygon points="1070,352 1090,360 1070,368" fill="{accent}" />
+    <!-- Step 5 -->
+    <g id="step-5" data-anim-order="5">
+      <circle cx="1120" cy="360" r="48" fill="{accent}" />
+      <text x="1120" y="350" font-family="{font}" font-size="24" font-weight="700" fill="{background}" text-anchor="middle">05</text>
+      <text x="1120" y="375" font-family="{font}" font-size="12" fill="{background}" text-anchor="middle">Step</text>
+      <text x="1120" y="436" font-family="{font}" font-size="16" font-weight="600" fill="{text}" text-anchor="middle">Launch</text>
+    </g>
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

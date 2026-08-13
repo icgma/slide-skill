@@ -32,6 +32,33 @@
 
 ## 第一章 · 架构概览
 
+## 使用场景
+
+| 场景 | 输入 | 输出 |
+|---|---|---|
+| 产品周会 | 需求、指标、风险 | 汇报材料 |
+| 课程培训 | 讲义、案例、练习 | 教学课件 |
+| 路演答辩 | 商业计划书 | 结构化路演稿 |
+| 项目复盘 | Markdown 纪要 | 管理简报 |
+
+## 设计原则
+
+> 好看的默认结果来自稳定的设计约束:先锁定主题色、字体和版式节奏,再让每页围绕一个清晰信息层级展开。
+
+## 工作流概览
+
+1. 输入文档:Markdown / PDF / DOCX / PPTX / 网页资料
+2. 内容规划:自动切片、选择布局、生成讲者备注
+3. 视觉生成:基于主题生成 SVG 页面
+4. 质量检查:文本提取、结构校验、截图复核
+
+## 质量闸门
+
+- 100% PPTX 包结构可打开
+- 0 个占位符残留
+- 0 个文本溢出错误
+- 0 个高严重度视觉 warning
+
 ## 渲染管道
 
 - Markdown → 智能切片(LLM 可选)
@@ -39,9 +66,32 @@
 - SVG → 原生 DrawingML(渐变、形状、文字均可在 PowerPoint 内编辑)
 - 全程 ~2 秒,零 API key 也能跑通
 
+## 主题系统
+
+| 主题 | 适合场景 | 视觉倾向 |
+|---|---|---|
+| dark-tech | 技术汇报 | 深色、系统感、强对比 |
+| light-corporate | 管理层汇报 | 浅色、清爽、稳健 |
+| warm-editorial | 课程和观点 | 温暖、叙事、杂志感 |
+| data-forward | 经营分析 | 指标优先、结构明确 |
+
+## 交付物
+
+- `.pptx`:可打开、可编辑、可继续美化的 PowerPoint 文件
+- `svg_final/`:每页 SVG 源,用于复核和二次生成
+- `qa/QA.md`:文本、结构、占位符和导出检查
+- `qa/rendered/`:渲染截图,用于人工或视觉模型审查
+
+## 发展规划
+
+- Q1 2026:根据内容密度动态切换版式
+- Q2 2026:自动生成图标、示意图和背景视觉
+- Q3 2026:把可读性、美观度纳入默认 QA
+- Q4 2026:支持局部重写、局部替换和批注修复
+
 ## 立即开始
 
 - 安装:`pip install -e tools/slide`
 - 快速体验:`slide-skill quickstart examples/sample.zh-CN.md --theme dark-tech`
 - 切换主题:`--theme light-corporate / warm-editorial / data-forward / vibrant-startup`
-- 反馈与共建:github.com/Yuuqq/slide-skill
+- 反馈与共建:github.com/icgma/slide-skill

@@ -1,17 +1,26 @@
-"""Per-deck design guide generator for slide-skill v2.0.
+"""Per-deck design guide generator for slide-skill v4.0.
 
 The design guide is a Markdown document placed in the project directory.
 It gives the AI agent (Executor role) exact visual specifications for
 writing SVG slide pages: palette, typography, layout templates, chrome
 coordinates, and SVG authoring rules.
+
+v4.0 additions:
+- Expanded palette (12 colour roles) and typography (4 font families)
+- Page rhythm section
+- References to external executor documents
 """
 
 from __future__ import annotations
 
+import shutil
 from pathlib import Path
 
 from .themes import get_theme, ThemeSpec
 from .util import ensure_dir
+
+# Path to the bundled reference documents
+_REFERENCES_DIR = Path(__file__).parent / "references"
 
 
 def build_design_guide(
@@ -21,8 +30,8 @@ def build_design_guide(
 ) -> Path:
     """Write design_guide.md into the project directory.
 
-    The guide tells the Executor role exactly how to write each slide SVG.
-    Returns the path to the written guide file.
+    Also copies executor reference documents into the project's
+    ``references/`` subdirectory.  Returns the path to the written guide.
     """
     project = Path(project_path)
     ensure_dir(project)
@@ -30,18 +39,72 @@ def build_design_guide(
     content = _render_guide(theme)
     guide_path = project / "design_guide.md"
     guide_path.write_text(content, encoding="utf-8")
+
+    # v4.0: copy executor reference documents
+    copy_references(project)
+
     return guide_path
 
 
+def copy_references(project_path: Path | str) -> Path:
+    """Copy bundled executor reference documents into a project.
+
+    Creates ``{project}/references/`` and copies all ``.md`` files from
+    the package's ``references/`` directory, including subdirectories
+    (image-palettes, image-renderings).
+
+    Also copies template SVGs from ``templates/`` into the project.
+
+    Returns the references dir.
+    """
+    project = Path(project_path)
+    dest = project / "references"
+    ensure_dir(dest)
+
+    if _REFERENCES_DIR.is_dir():
+        # Copy top-level .md files
+        for src_file in sorted(_REFERENCES_DIR.glob("*.md")):
+            dst_file = dest / src_file.name
+            shutil.copy2(src_file, dst_file)
+        # Copy subdirectories (image-palettes, image-renderings)
+        for subdir in sorted(_REFERENCES_DIR.iterdir()):
+            if subdir.is_dir():
+                dest_sub = dest / subdir.name
+                ensure_dir(dest_sub)
+                for src_file in sorted(subdir.glob("*.md")):
+                    shutil.copy2(src_file, dest_sub / src_file.name)
+
+    # Copy templates
+    templates_src = Path(__file__).parent / "templates"
+    if templates_src.is_dir():
+        templates_dest = project / "templates"
+        ensure_dir(templates_dest)
+        for src_file in templates_src.rglob("*"):
+            if src_file.is_file():
+                rel = src_file.relative_to(templates_src)
+                dst = templates_dest / rel
+                ensure_dir(dst.parent)
+                shutil.copy2(src_file, dst)
+
+    return dest
+
+
 def _render_guide(theme: ThemeSpec) -> str:
-    p = theme.palette
+    p = theme.extended_palette  # v4.0: 12 color roles
+    typo = theme.typography     # v4.0: role-based families
     font = theme.font_family
     bg = p["background"]
+    bg2 = p["bg_secondary"]
     surf = p["surface"]
     text_c = p["text"]
+    text2 = p["text_secondary"]
+    text3 = p["text_tertiary"]
     body_c = p["body"]
     accent = p["accent"]
+    accent2 = p["secondary_accent"]
+    accent_t = p["accent_tint"]
     muted = p["muted"]
+    border = p["border"]
 
     lines = [
         f"# Design Guide — Theme: {theme.name}",
@@ -57,16 +120,22 @@ def _render_guide(theme: ThemeSpec) -> str:
         "",
         "---",
         "",
-        "## 2. Colour Palette",
+        "## 2. Colour Palette (12 roles)",
         "",
-        "| Role       | Hex           | Usage                            |",
-        "|------------|---------------|----------------------------------|",
-        f"| background | `{bg}`   | Slide background fill            |",
-        f"| surface    | `{surf}` | Card panels, footer bar          |",
-        f"| text       | `{text_c}` | Headings and primary text      |",
-        f"| body       | `{body_c}` | Body copy, captions            |",
-        f"| accent     | `{accent}` | Accent stripe, bullets, links  |",
-        f"| muted      | `{muted}` | Alternating rows, rules        |",
+        "| Role             | Hex           | Usage                                |",
+        "|------------------|---------------|--------------------------------------|",
+        f"| background       | `{bg}`   | Slide background fill                |",
+        f"| bg_secondary     | `{bg2}`  | Alternate background, hover state    |",
+        f"| surface          | `{surf}` | Card panels, footer bar              |",
+        f"| text             | `{text_c}` | Headings, primary text             |",
+        f"| text_secondary   | `{text2}` | Body copy, captions                |",
+        f"| text_tertiary    | `{text3}` | Muted labels, footnotes            |",
+        f"| body             | `{body_c}` | Body copy (alias of text_secondary)|",
+        f"| accent           | `{accent}` | Accent stripe, bullets, links, CTA |",
+        f"| secondary_accent | `{accent2}` | Supporting accent, chart series 2  |",
+        f"| accent_tint      | `{accent_t}` | Accent at ~12% opacity for fills |",
+        f"| muted            | `{muted}` | Alternating rows, rule lines       |",
+        f"| border           | `{border}` | Card borders, dividers             |",
         "",
         "Always use these exact hex codes. Never introduce colours not in this table.",
         "",
@@ -74,23 +143,48 @@ def _render_guide(theme: ThemeSpec) -> str:
         "",
         "## 3. Typography",
         "",
-        "| Element         | font-size | font-weight | fill         |",
-        "|-----------------|-----------|-------------|--------------|",
-        f"| Main title      | 44–64px   | 700         | `{text_c}`  |",
-        f"| Section heading | 48–56px   | 700         | `{text_c}`  |",
-        f"| Subtitle        | 24–28px   | 400         | `{body_c}`  |",
-        f"| Body paragraph  | 18–22px   | 400         | `{body_c}`  |",
-        f"| Bullet item     | 20–22px   | 400         | `{body_c}`  |",
-        f"| Metric value    | 56–80px   | 700         | `{accent}`  |",
-        f"| Metric label    | 16–20px   | 400         | `{body_c}`  |",
-        f"| Footer text     | 12px      | 400         | `{muted}`   |",
+        f"**Title family:** `{typo.title_family}`",
+        f"**Body family:** `{typo.body_family}`",
+        f"**Emphasis family:** `{typo.emphasis_family}`",
+        f"**Code family:** `{typo.code_family}`",
         "",
-        f"Font family: `{font}`",
+        "### Size Ramp",
+        "",
+        "| Element         | font-size | font-weight | fill           | family    |",
+        "|-----------------|-----------|-------------|----------------|-----------|",
+        f"| Hero title      | {typo.size_ramp.get('hero', 72)}px   | 700         | `{text_c}`    | title     |",
+        f"| Section heading | {typo.size_ramp.get('h1', 60)}px   | 700         | `{text_c}`    | title     |",
+        f"| Subheading      | {typo.size_ramp.get('h2', 48)}px   | 600         | `{text_c}`    | title     |",
+        f"| Body large      | {typo.size_ramp.get('body_lg', 28)}px   | 400         | `{body_c}`    | body      |",
+        f"| Body text       | {typo.size_ramp.get('body', 24)}px   | 400         | `{body_c}`    | body      |",
+        f"| Metric value    | {typo.size_ramp.get('hero', 72)}px   | 700         | `{accent}`    | emphasis  |",
+        f"| Caption         | {typo.size_ramp.get('caption', 16)}px   | 400         | `{text2}`    | body      |",
+        f"| Overline        | {typo.size_ramp.get('overline', 14)}px   | 600         | `{accent}`    | body      |",
+        f"| Footer text     | {typo.size_ramp.get('footnote', 12)}px   | 400         | `{muted}`     | body      |",
+        f"| Code / data     | {typo.size_ramp.get('body', 24)}px   | 400         | `{text_c}`    | code      |",
         "",
         "**Title font-size rules:**",
         "- 1–15 chars → 56–64px",
         "- 16–25 chars → 44–48px",
         "- 26+ chars → 36–40px (or split across two `<text>` elements)",
+        "",
+        "---",
+        "",
+        "## 3.5. Page Rhythm",
+        "",
+        "Each slide has a **rhythm** assignment that controls visual density:",
+        "",
+        "| Rhythm    | Visual Strategy                                   |",
+        "|-----------|---------------------------------------------------|",
+        "| anchor    | High visual weight. Hero elements, big numbers.   |",
+        "| breathing | Light density. Generous whitespace, visual rest.   |",
+        "| dense     | Information-rich. Multi-item lists, tables.        |",
+        "",
+        "**Rules:**",
+        "- Never have 3+ consecutive slides with the same rhythm.",
+        "- Cover and closing slides are always `anchor`.",
+        "- Section dividers are always `breathing`.",
+        "- Data-heavy slides (6+ items) should be `dense`.",
         "",
         "---",
         "",
@@ -358,6 +452,39 @@ def _render_guide(theme: ThemeSpec) -> str:
         "- [ ] No banned tags or on* event-handler attributes",
         "- [ ] Only local `url(#id)` references in fill/stroke",
         "- [ ] Palette colours match Section 2 exactly",
+        "- [ ] Font families match Section 3 typography roles",
+        "- [ ] Page rhythm visually matches assignment (anchor/breathing/dense)",
+        "",
+        "---",
+        "",
+        "## 11. Executor Reference Documents",
+        "",
+        "For detailed guidance beyond this design guide, read these reference files",
+        "in the `references/` directory:",
+        "",
+        "| Document | Purpose | When to Read |",
+        "|----------|---------|-------------|",
+        "| `executor-base.md` | Spec lock protocol, generation rhythm, card patterns, text handling | Before starting ANY page |",
+        "| `executor-general.md` | Creative/versatile style guidelines, image integration, composition | For business/marketing decks |",
+        "| `executor-academic.md` | Formal/scholarly style, table design, citation formatting | For academic/research decks |",
+        "| `shared-standards.md` | SVG tag rules, PPTX compatibility, font safety, gradient limits | When unsure about a tag/attribute |",
+        "| `image-layout-patterns.md` | 72+ image-layout composition patterns | When placing images on slides |",
+        "| `image-layout-spec.md` | Pixel-precise coordinates for each layout pattern | When calculating image positions |",
+        "| `image-base.md` | AI image generation best practices, prompt templates | When generating images |",
+        "",
+        "**Template Libraries** (in `templates/` directory):",
+        "",
+        "| Library | Contents | When to Use |",
+        "|---------|----------|-------------|",
+        "| `templates/charts/` | 17 chart/visualization SVG templates | When creating data slides |",
+        "| `templates/layouts/general/` | 8 general-purpose layout templates | For business/marketing decks |",
+        "| `templates/layouts/academic/` | 8 formal/scholarly layout templates | For academic/research decks |",
+        "| `templates/layouts/creative/` | 8 bold/editorial layout templates | For creative/portfolio decks |",
+        "",
+        "> **Start with `executor-base.md`** — it contains the essential workflow.",
+        "> Then read the style-specific guide that matches your deck's audience.",
+        "> Consult `shared-standards.md` for any technical SVG questions.",
+        "> Use `image-layout-patterns.md` and `image-base.md` for image-rich slides.",
     ]
 
     return "\n".join(lines) + "\n"

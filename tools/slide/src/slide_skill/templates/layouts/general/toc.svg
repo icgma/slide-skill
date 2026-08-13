@@ -1,0 +1,26 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="content-title-NN">
+    <text x="640" y="120" font-family="{font}" font-size="44" font-weight="700" fill="{text}" text-anchor="middle">Agenda</text>
+    <rect x="590" y="134" width="100" height="4" fill="{accent}" />
+  </g>
+  <g id="content-body-NN">
+    <rect x="240" y="180" width="800" height="64" rx="12" fill="{surface}" />
+    <text x="280" y="220" font-family="{font}" font-size="22" fill="{accent}" font-weight="700">01</text>
+    <text x="330" y="220" font-family="{font}" font-size="22" fill="{text}">Introduction &amp; Background</text>
+    <rect x="240" y="260" width="800" height="64" rx="12" fill="{bg_secondary}" />
+    <text x="280" y="300" font-family="{font}" font-size="22" fill="{accent}" font-weight="700">02</text>
+    <text x="330" y="300" font-family="{font}" font-size="22" fill="{text}">Analysis &amp; Findings</text>
+    <rect x="240" y="340" width="800" height="64" rx="12" fill="{surface}" />
+    <text x="280" y="380" font-family="{font}" font-size="22" fill="{accent}" font-weight="700">03</text>
+    <text x="330" y="380" font-family="{font}" font-size="22" fill="{text}">Recommendations</text>
+    <rect x="240" y="420" width="800" height="64" rx="12" fill="{bg_secondary}" />
+    <text x="280" y="460" font-family="{font}" font-size="22" fill="{accent}" font-weight="700">04</text>
+    <text x="330" y="460" font-family="{font}" font-size="22" fill="{text}">Next Steps &amp; Q&amp;A</text>
+  </g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

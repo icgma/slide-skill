@@ -1,0 +1,45 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="content-title">
+    <text x="96" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}">Distribution</text>
+    <rect x="96" y="82" width="60" height="3" fill="{accent}" />
+  </g>
+  <g id="content-body">
+    <!-- Pie chart circle, center at 480,380 radius 220 -->
+    <!-- Segment 1: 40% (0-144°) -->
+    <g id="slice-1" data-anim-order="1">
+      <path d="M480,380 L480,160 A220,220 0 0,1 668,231 Z" fill="{accent}" />
+    </g>
+    <!-- Segment 2: 25% (144-234°) -->
+    <g id="slice-2" data-anim-order="2">
+      <path d="M480,380 L668,231 A220,220 0 0,1 633,557 Z" fill="{secondary_accent}" />
+    </g>
+    <!-- Segment 3: 20% (234-306°) -->
+    <g id="slice-3" data-anim-order="3">
+      <path d="M480,380 L633,557 A220,220 0 0,1 369,574 Z" fill="{accent}" fill-opacity="0.6" />
+    </g>
+    <!-- Segment 4: 15% (306-360°) -->
+    <g id="slice-4" data-anim-order="4">
+      <path d="M480,380 L369,574 A220,220 0 0,1 480,160 Z" fill="{muted}" />
+    </g>
+    <!-- Center label -->
+    <circle cx="480" cy="380" r="60" fill="{background}" />
+    <text x="480" y="386" font-family="{font}" font-size="20" font-weight="700" fill="{text}" text-anchor="middle">Total</text>
+    <!-- Legend -->
+    <g id="legend">
+      <rect x="780" y="200" width="16" height="16" rx="3" fill="{accent}" />
+      <text x="806" y="214" font-family="{font}" font-size="16" fill="{text_secondary}">Category A — 40%</text>
+      <rect x="780" y="240" width="16" height="16" rx="3" fill="{secondary_accent}" />
+      <text x="806" y="254" font-family="{font}" font-size="16" fill="{text_secondary}">Category B — 25%</text>
+      <rect x="780" y="280" width="16" height="16" rx="3" fill="{accent}" fill-opacity="0.6" />
+      <text x="806" y="294" font-family="{font}" font-size="16" fill="{text_secondary}">Category C — 20%</text>
+      <rect x="780" y="320" width="16" height="16" rx="3" fill="{muted}" />
+      <text x="806" y="334" font-family="{font}" font-size="16" fill="{text_secondary}">Category D — 15%</text>
+    </g>
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

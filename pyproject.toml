@@ -4,12 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "slide-skill"
-version = "3.0.0"
+version = "5.0.0a1"
 description = "SVG-first slide generation toolkit with intelligent content planning and domain-specific layouts"
 requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+readme = "README.md"
 dependencies = [
     "edge-tts>=7.2.8",
     "lxml>=6.1.0",
+    "matplotlib>=3.7.0",
     "openai>=2.33.0",
     "python-pptx>=1.0.2",
     "svgpathtools>=1.7.2",

@@ -1,0 +1,107 @@
+{
+  "version": "1.0",
+  "styles": {
+    "general": [
+      {
+        "id": "cover",
+        "file": "cover.svg"
+      },
+      {
+        "id": "chapter",
+        "file": "chapter.svg"
+      },
+      {
+        "id": "content_bullets",
+        "file": "content_bullets.svg"
+      },
+      {
+        "id": "content_two_column",
+        "file": "content_two_column.svg"
+      },
+      {
+        "id": "content_image_left",
+        "file": "content_image_left.svg"
+      },
+      {
+        "id": "content_metrics",
+        "file": "content_metrics.svg"
+      },
+      {
+        "id": "toc",
+        "file": "toc.svg"
+      },
+      {
+        "id": "ending",
+        "file": "ending.svg"
+      }
+    ],
+    "academic": [
+      {
+        "id": "cover",
+        "file": "cover.svg"
+      },
+      {
+        "id": "chapter",
+        "file": "chapter.svg"
+      },
+      {
+        "id": "content_bullets",
+        "file": "content_bullets.svg"
+      },
+      {
+        "id": "content_two_column",
+        "file": "content_two_column.svg"
+      },
+      {
+        "id": "content_data",
+        "file": "content_data.svg"
+      },
+      {
+        "id": "content_figure",
+        "file": "content_figure.svg"
+      },
+      {
+        "id": "toc",
+        "file": "toc.svg"
+      },
+      {
+        "id": "ending",
+        "file": "ending.svg"
+      }
+    ],
+    "creative": [
+      {
+        "id": "cover",
+        "file": "cover.svg"
+      },
+      {
+        "id": "chapter",
+        "file": "chapter.svg"
+      },
+      {
+        "id": "content_editorial",
+        "file": "content_editorial.svg"
+      },
+      {
+        "id": "content_cards",
+        "file": "content_cards.svg"
+      },
+      {
+        "id": "content_big_quote",
+        "file": "content_big_quote.svg"
+      },
+      {
+        "id": "content_gallery",
+        "file": "content_gallery.svg"
+      },
+      {
+        "id": "toc",
+        "file": "toc.svg"
+      },
+      {
+        "id": "ending",
+        "file": "ending.svg"
+      }
+    ]
+  }
+}

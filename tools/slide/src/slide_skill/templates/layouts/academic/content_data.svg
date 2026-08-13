@@ -1,0 +1,19 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="content-title-NN">
+    <text x="96" y="80" font-family="{font}" font-size="36" font-weight="700" fill="{text}">Results: Table N</text>
+    <line x1="96" y1="92" x2="360" y2="92" stroke="{accent}" stroke-width="2" />
+  </g>
+  <g id="content-body-NN">
+    <rect x="80" y="110" width="1120" height="540" rx="8" fill="{surface}" stroke="{border}" stroke-width="1" />
+    <text x="640" y="360" font-family="{font}" font-size="18" fill="{text_tertiary}" text-anchor="middle">[Data table / chart area]</text>
+  </g>
+  <g id="content-note">
+    <text x="96" y="670" font-family="{font}" font-size="12" fill="{text_tertiary}">Note: N = sample size. *p &lt; .05, **p &lt; .01, ***p &lt; .001</text>
+  </g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

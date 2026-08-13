@@ -1,0 +1,20 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="content-title-NN">
+    <text x="96" y="100" font-family="{font}" font-size="40" font-weight="700" fill="{text}">Outline</text>
+    <line x1="96" y1="112" x2="260" y2="112" stroke="{accent}" stroke-width="2" />
+  </g>
+  <g id="content-body-NN">
+    <text x="120" y="180" font-family="{font}" font-size="22" fill="{text}">1. Introduction</text>
+    <text x="120" y="230" font-family="{font}" font-size="22" fill="{text}">2. Literature Review</text>
+    <text x="120" y="280" font-family="{font}" font-size="22" fill="{text}">3. Methodology</text>
+    <text x="120" y="330" font-family="{font}" font-size="22" fill="{text}">4. Results</text>
+    <text x="120" y="380" font-family="{font}" font-size="22" fill="{text}">5. Discussion</text>
+    <text x="120" y="430" font-family="{font}" font-size="22" fill="{text}">6. Conclusions</text>
+  </g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

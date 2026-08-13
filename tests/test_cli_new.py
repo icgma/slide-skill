@@ -1,6 +1,7 @@
 import tempfile
 from pathlib import Path
 import pytest
+import slide_skill.cli as cli
 from slide_skill.cli import main
 
 def test_competitions_command(capsys):
@@ -55,3 +56,84 @@ def test_rehearse_no_notes():
         proj_dir = Path(temp_dir) / "testproj"
         # rehearsal should succeed and return 0 even if there are no notes
         assert main(["rehearse", str(proj_dir)]) == 0
+
+
+def test_quickstart_ai_uses_strict_quality_by_default(tmp_path, monkeypatch):
+    source = tmp_path / "source.md"
+    source.write_text("# Demo\n\n## Point\n\n- Clear text\n", encoding="utf-8")
+    calls = []
+
+    def fake_generate_svg_with_ai(project, plans, **kwargs):
+        calls.append(kwargs)
+        svg_dir = Path(project) / "svg_output"
+        svg_dir.mkdir(parents=True, exist_ok=True)
+        (svg_dir / "slide_01.svg").write_text(
+            '<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">\n'
+            '  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#0F172A"/></g>\n'
+            '  <g id="content-body-01"><text x="100" y="100" font-family="Arial" font-size="44" fill="#F1F5F9">Demo</text></g>\n'
+            "</svg>\n",
+            encoding="utf-8",
+        )
+        return [svg_dir / "slide_01.svg"]
+
+    monkeypatch.setattr(cli, "_require_ai_access", lambda args: True)
+    monkeypatch.setattr("slide_skill.ai_executor.generate_svg_with_ai", fake_generate_svg_with_ai)
+    monkeypatch.setattr(cli, "export_project", lambda project, output=None, stage="final": Path(project) / "exports" / "deck.pptx")
+    monkeypatch.setattr(cli, "run_qa", lambda *args, **kwargs: (True, Path(args[0]) / "qa" / "QA.md"))
+
+    assert main([
+        "quickstart",
+        str(source),
+        "--name",
+        "strict-default",
+        "--base",
+        str(tmp_path / "projects"),
+        "--mode",
+        "ai",
+        "--planner",
+        "deterministic",
+    ]) == 0
+
+    assert calls
+    assert calls[0]["strict_quality"] is True
+
+
+def test_quickstart_ai_lenient_quality_opt_out(tmp_path, monkeypatch):
+    source = tmp_path / "source.md"
+    source.write_text("# Demo\n\n## Point\n\n- Clear text\n", encoding="utf-8")
+    calls = []
+
+    def fake_generate_svg_with_ai(project, plans, **kwargs):
+        calls.append(kwargs)
+        svg_dir = Path(project) / "svg_output"
+        svg_dir.mkdir(parents=True, exist_ok=True)
+        (svg_dir / "slide_01.svg").write_text(
+            '<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">\n'
+            '  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#0F172A"/></g>\n'
+            '  <g id="content-body-01"><text x="100" y="100" font-family="Arial" font-size="44" fill="#F1F5F9">Demo</text></g>\n'
+            "</svg>\n",
+            encoding="utf-8",
+        )
+        return [svg_dir / "slide_01.svg"]
+
+    monkeypatch.setattr(cli, "_require_ai_access", lambda args: True)
+    monkeypatch.setattr("slide_skill.ai_executor.generate_svg_with_ai", fake_generate_svg_with_ai)
+    monkeypatch.setattr(cli, "export_project", lambda project, output=None, stage="final": Path(project) / "exports" / "deck.pptx")
+    monkeypatch.setattr(cli, "run_qa", lambda *args, **kwargs: (True, Path(args[0]) / "qa" / "QA.md"))
+
+    assert main([
+        "quickstart",
+        str(source),
+        "--name",
+        "lenient-opt-out",
+        "--base",
+        str(tmp_path / "projects"),
+        "--mode",
+        "ai",
+        "--planner",
+        "deterministic",
+        "--lenient-quality",
+    ]) == 0
+
+    assert calls
+    assert calls[0]["strict_quality"] is False

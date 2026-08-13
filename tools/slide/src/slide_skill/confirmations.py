@@ -19,6 +19,19 @@ DEFAULT_CONFIRMATION_ITEMS = [
     "confirmation",
 ]
 
+# v4.0 Eight Confirmations — design pre-flight checklist.
+# Used by generate_design_confirmations() in content_planner.py.
+EIGHT_CONFIRMATION_KEYS = [
+    "format",           # canvas format (16:9, etc.)
+    "page_count",       # planned number of slides
+    "style",            # theme/style name
+    "color_scheme",     # palette summary
+    "typography",       # font families
+    "image_style",      # palette + rendering approach
+    "rhythm_pattern",   # distribution of anchor/breathing/dense
+    "outline",          # slide titles and layouts
+]
+
 COMPETITION_EXTRA_ITEMS = {
     "internet-plus": ["time_limit", "evaluation_criteria"],
     "challenge-cup": ["time_limit", "evaluation_criteria"],

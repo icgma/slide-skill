@@ -1,0 +1,58 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="{background}" />
+  </g>
+
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="6" height="720" fill="{accent}" />
+  </g>
+
+  <g id="content-title">
+    <text x="96" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}">Key Metrics</text>
+    <rect x="96" y="82" width="60" height="3" fill="{accent}" />
+  </g>
+
+  <g id="content-body">
+    <!-- KPI Card 1 -->
+    <g id="kpi-1" data-anim-order="1">
+      <rect x="80" y="120" width="256" height="280" rx="16" fill="{surface}" />
+      <text x="208" y="220" font-family="{font}" font-size="56" font-weight="700" fill="{accent}" text-anchor="middle">85%</text>
+      <text x="208" y="260" font-family="{font}" font-size="18" fill="{text_secondary}" text-anchor="middle">Metric Label</text>
+      <text x="208" y="290" font-family="{font}" font-size="14" fill="{text_tertiary}" text-anchor="middle">+12% vs last quarter</text>
+      <!-- Trend indicator -->
+      <polygon points="188,330 208,310 228,330" fill="{accent}" fill-opacity="0.6" />
+    </g>
+
+    <!-- KPI Card 2 -->
+    <g id="kpi-2" data-anim-order="2">
+      <rect x="368" y="120" width="256" height="280" rx="16" fill="{surface}" />
+      <text x="496" y="220" font-family="{font}" font-size="56" font-weight="700" fill="{accent}" text-anchor="middle">2.4K</text>
+      <text x="496" y="260" font-family="{font}" font-size="18" fill="{text_secondary}" text-anchor="middle">Metric Label</text>
+      <text x="496" y="290" font-family="{font}" font-size="14" fill="{text_tertiary}" text-anchor="middle">+340 this month</text>
+      <polygon points="476,330 496,310 516,330" fill="{accent}" fill-opacity="0.6" />
+    </g>
+
+    <!-- KPI Card 3 -->
+    <g id="kpi-3" data-anim-order="3">
+      <rect x="656" y="120" width="256" height="280" rx="16" fill="{surface}" />
+      <text x="784" y="220" font-family="{font}" font-size="56" font-weight="700" fill="{secondary_accent}" text-anchor="middle">$1.2M</text>
+      <text x="784" y="260" font-family="{font}" font-size="18" fill="{text_secondary}" text-anchor="middle">Metric Label</text>
+      <text x="784" y="290" font-family="{font}" font-size="14" fill="{text_tertiary}" text-anchor="middle">-5% vs target</text>
+      <polygon points="764,310 784,330 804,310" fill="{secondary_accent}" fill-opacity="0.6" />
+    </g>
+
+    <!-- KPI Card 4 -->
+    <g id="kpi-4" data-anim-order="4">
+      <rect x="944" y="120" width="256" height="280" rx="16" fill="{surface}" />
+      <text x="1072" y="220" font-family="{font}" font-size="56" font-weight="700" fill="{accent}" text-anchor="middle">98.7</text>
+      <text x="1072" y="260" font-family="{font}" font-size="18" fill="{text_secondary}" text-anchor="middle">Metric Label</text>
+      <text x="1072" y="290" font-family="{font}" font-size="14" fill="{text_tertiary}" text-anchor="middle">Industry avg: 85.2</text>
+      <polygon points="1052,330 1072,310 1092,330" fill="{accent}" fill-opacity="0.6" />
+    </g>
+  </g>
+
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

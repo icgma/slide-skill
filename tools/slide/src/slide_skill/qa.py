@@ -3,16 +3,19 @@
 from __future__ import annotations
 
 import re
+import json
 from pathlib import Path
 
 from .exporter import pptx_text, validate_pptx
 from .project import load_project
-from .svg_pipeline import check_project_svg
+from .svg_qa import check_project_svg
 from .util import ensure_dir
 
 PLACEHOLDER_RE = re.compile(r"\b(lorem|ipsum|placeholder|xxxx|todo|sample text)\b", re.IGNORECASE)
 VISUAL_REVIEW = "VISUAL-REVIEW.md"
+VISUAL_FEEDBACK = "visual-feedback.json"
 FIX_VERIFY = "FIX-VERIFY.md"
+_VISUAL_SEVERITY_RANK = {"ok": 0, "minor": 1, "major": 2, "critical": 3}
 
 
 def run_snapshot_qa(
@@ -44,6 +47,7 @@ def run_qa(
     pptx_path: Path | str | None = None,
     require_visual: bool = False,
     require_fix_verify: bool = False,
+    strict_svg_quality: bool = False,
 ) -> tuple[bool, Path]:
     project = Path(project_path)
     load_project(project)
@@ -56,13 +60,17 @@ def run_qa(
         deck = Path(pptx_path)
 
     ok_pptx, pptx_errors = validate_pptx(deck)
-    ok_svg, svg_issues = check_project_svg(project, stage="final")
+    ok_svg, svg_issues = check_project_svg(project, stage="final", quality=strict_svg_quality)
+    svg_blocking = [
+        issue for issue in svg_issues
+        if issue.level == "error" or (strict_svg_quality and issue.level == "warning")
+    ]
     text = pptx_text(deck)
     placeholders = PLACEHOLDER_RE.findall(text)
     visual_ok, visual_lines = _visual_evidence(project, require_visual)
     fix_ok, fix_lines = _fix_verify_evidence(project, require_fix_verify)
 
-    ok = ok_pptx and ok_svg and not placeholders and visual_ok and fix_ok
+    ok = ok_pptx and ok_svg and not svg_blocking and not placeholders and visual_ok and fix_ok
     complete_evidence = _has_visual_evidence(project) and _has_fix_verify(project)
     status = "passed" if ok and complete_evidence else "automated-passed" if ok else "failed"
     report = ensure_dir(project / "qa") / "QA.md"
@@ -106,7 +114,8 @@ def _visual_evidence(project: Path, required: bool) -> tuple[bool, list[str]]:
     rendered = _rendered_images(project)
     review = project / "qa" / VISUAL_REVIEW
     if rendered and review.exists():
-        return True, [f"- Passed with {len(rendered)} rendered image(s) and `{review}`."]
+        feedback_ok, feedback_lines = _visual_feedback_evidence(project)
+        return feedback_ok, [f"- Passed with {len(rendered)} rendered image(s) and `{review}`."] + feedback_lines
     missing: list[str] = []
     if not rendered:
         missing.append("rendered slide images in `qa/rendered/`")
@@ -114,6 +123,38 @@ def _visual_evidence(project: Path, required: bool) -> tuple[bool, list[str]]:
         missing.append(f"`qa/{VISUAL_REVIEW}`")
     prefix = "- Missing required" if required else "- Not required for automated QA; missing"
     return (not required), [f"{prefix}: {', '.join(missing)}."]
+
+
+def _visual_feedback_evidence(project: Path) -> tuple[bool, list[str]]:
+    feedback = project / "qa" / VISUAL_FEEDBACK
+    if not feedback.exists():
+        return True, []
+    try:
+        payload = json.loads(feedback.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return False, [f"- Failed: `qa/{VISUAL_FEEDBACK}` is invalid JSON ({exc.msg})."]
+    severities = []
+    for item in payload.get("slides", []):
+        if isinstance(item, dict):
+            severities.append(str(item.get("severity", "minor")).lower())
+    max_severity = _max_visual_feedback_severity(severities)
+    if not max_severity:
+        return True, [f"- AI visual feedback found in `qa/{VISUAL_FEEDBACK}` but no slide severities were recorded."]
+    line = f"- AI visual feedback max severity: {max_severity}."
+    if _VISUAL_SEVERITY_RANK.get(max_severity, 1) >= _VISUAL_SEVERITY_RANK["major"]:
+        return False, [f"{line} Run `slide-skill repair-feedback` or `slide-skill iterate-ai` before final QA."]
+    return True, [line]
+
+
+def _max_visual_feedback_severity(severities: list[str]) -> str:
+    highest = ""
+    highest_rank = -1
+    for severity in severities:
+        rank = _VISUAL_SEVERITY_RANK.get(severity, _VISUAL_SEVERITY_RANK["minor"])
+        if rank > highest_rank:
+            highest = severity if severity in _VISUAL_SEVERITY_RANK else "minor"
+            highest_rank = rank
+    return highest
 
 
 def _fix_verify_evidence(project: Path, required: bool) -> tuple[bool, list[str]]:

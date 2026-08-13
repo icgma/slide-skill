@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import shutil
 import subprocess
+import time
 from pathlib import Path
 
 from .util import ensure_dir
@@ -46,6 +47,7 @@ def render_environment_report() -> str:
 # still preventing indefinite hangs from a wedged LibreOffice / pdftoppm.
 SOFFICE_TIMEOUT_SECONDS = 180
 PDFTOPPM_TIMEOUT_SECONDS = 120
+CHROME_TIMEOUT_SECONDS = 60
 
 
 def _run_with_timeout(cmd: list[str], *, timeout: int, label: str) -> None:
@@ -56,6 +58,8 @@ def _run_with_timeout(cmd: list[str], *, timeout: int, label: str) -> None:
             check=True,
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             timeout=timeout,
         )
     except subprocess.TimeoutExpired as exc:
@@ -104,6 +108,43 @@ def render_pptx(pptx_path: Path | str, output_dir: Path | str, dpi: int = 150) -
     return sorted(out_dir.glob("slide-*.jpg"))
 
 
+def render_svg_previews(project_path: Path | str, output_dir: Path | str, stage: str = "final") -> list[Path]:
+    """Render project SVG pages to PNG screenshots using a local headless browser."""
+    project = Path(project_path)
+    source_dir = project / ("svg_final" if stage == "final" else "svg_output")
+    if not source_dir.exists():
+        raise FileNotFoundError(f"No SVG directory found: {source_dir}")
+    svg_files = sorted(source_dir.glob("*.svg"))
+    if not svg_files:
+        raise FileNotFoundError(f"No SVG pages found in {source_dir}")
+    browser = _find_browser()
+    if not browser:
+        raise RuntimeError("No headless browser found for SVG preview rendering.")
+    out_dir = ensure_dir(Path(output_dir))
+    html_dir = ensure_dir(out_dir / "_svg-preview-html")
+    rendered: list[Path] = []
+    for index, svg in enumerate(svg_files, start=1):
+        html = html_dir / f"slide-{index:02d}.html"
+        png = out_dir / f"slide-{index:02d}.png"
+        _write_svg_screenshot_html(svg, html)
+        _run_with_timeout(
+            [
+                browser,
+                "--headless=new",
+                "--disable-gpu",
+                "--no-sandbox",
+                f"--screenshot={png.resolve()}",
+                "--window-size=1280,720",
+                html.resolve().as_uri(),
+            ],
+            timeout=CHROME_TIMEOUT_SECONDS,
+            label="headless browser SVG screenshot",
+        )
+        _wait_for_output(png)
+        rendered.append(png)
+    return rendered
+
+
 def snapshot_pptx(pptx_path: Path | str, output_dir: Path | str, dpi: int = 150) -> list[Path]:
     """Render PPTX to per-slide PNGs with deterministic naming (slide-01.png, etc.)."""
     import re
@@ -120,6 +161,36 @@ def snapshot_pptx(pptx_path: Path | str, output_dir: Path | str, dpi: int = 150)
             result.append(new_path)
 
     return sorted(result)
+
+
+def _write_svg_screenshot_html(svg_file: Path, html_file: Path) -> None:
+    svg = svg_file.read_text(encoding="utf-8")
+    html_file.write_text(
+        "<!doctype html><meta charset=\"utf-8\">"
+        "<style>html,body{margin:0;width:1280px;height:720px;overflow:hidden;background:#000}"
+        "svg{width:1280px;height:720px;display:block}</style>"
+        f"{svg}",
+        encoding="utf-8",
+    )
+
+
+def _wait_for_output(path: Path, timeout: float = 2.0) -> None:
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        if path.exists() and path.stat().st_size > 0:
+            return
+        time.sleep(0.05)
+    if not path.exists() or path.stat().st_size <= 0:
+        raise RuntimeError(f"Expected rendered image was not created: {path}")
+
+
+def _find_browser() -> str | None:
+    # Browser discovery lives in chrome_geometry.find_chrome (single source
+    # of truth shared with the geometry gate and the repair render gate).
+    # Lazy import so monkeypatched chrome_geometry.find_chrome is honored.
+    from .chrome_geometry import find_chrome
+
+    return find_chrome()
 
 
 def _find_soffice() -> str | None:

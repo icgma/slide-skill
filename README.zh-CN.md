@@ -9,8 +9,8 @@
 
 [English README](README.md) · 中文 README
 
-[![version](https://img.shields.io/badge/version-2.2.0-3B82F6)](pyproject.toml)
-[![tests](https://img.shields.io/badge/tests-343%20passing-22C55E)](tests/)
+[![version](https://img.shields.io/badge/version-5.0.0a1-3B82F6)](pyproject.toml)
+[![tests](https://img.shields.io/badge/tests-900%2B%20passing-22C55E)](tests/)
 [![python](https://img.shields.io/badge/python-3.11%2B-FFD43B)](pyproject.toml)
 [![output](https://img.shields.io/badge/output-editable%20PPTX-D04A02)](examples/sample-dark-tech/deck.pptx)
 [![license](https://img.shields.io/badge/license-MIT-lightgrey)](#许可)
@@ -23,7 +23,7 @@
 
   ### 实拍预览 —— 真实 PPTX 经 LibreOffice 渲染录制
 
-  <video src="https://github.com/Yuuqq/slide-skill/raw/master/examples/auto-render/dark-tech/preview.mp4" controls autoplay loop muted playsinline width="720" poster="examples/auto-render/dark-tech/slide_01.png">
+  <video src="https://github.com/icgma/slide-skill/raw/master/examples/auto-render/dark-tech/preview.mp4" controls autoplay loop muted playsinline width="720" poster="examples/auto-render/dark-tech/slide_01.png">
     你的浏览器不支持视频标签 —— <a href="examples/auto-render/dark-tech/preview.mp4">下载 MP4</a> 或查看 <a href="examples/auto-render/dark-tech/preview.gif">动图 GIF</a>。
   </video>
 
@@ -35,7 +35,7 @@
 
   ## 实际产出
 
-下面是真实的示例幻灯片 —— 五种主题、六种版式。GitHub 直接渲染 SVG，
+下面是真实的示例幻灯片 —— 六种版式，取自 32 套内置主题中的五套。GitHub 直接渲染 SVG，
 所以你看到的就是真正的产物，不是截图。
 
 <table>
@@ -79,7 +79,7 @@ PowerPoint 是商业与学术的通用语言，但从纯文本生成 PPT 一直�
 |---|---|---|
 | 中间产物难以检查 | 只有二进制 `.pptx` | 人类可读的 SVG，能 `cat` 能 diff |
 | LLM 直接产出一堵子弹墙 | 一个固定 prompt → 平铺列表 | 版式感知：封面、数据高亮、双栏、引言…… |
-| 所有主题长得一样 | 一套模板 | 5 套主题，每套都有完整的色板 + 字体 + 版式规范 |
+| 所有主题长得一样 | 一套模板 | 32 套主题，每套都有完整的色板 + 字体 + 版式规范 |
 | 视觉 QA 全靠"打开看一眼" | 人工 | `check-svg`、`validate-pptx`、机器可读的 `QA.md` |
 | 渐变在 PPTX 里变成纯色 | 位图回退 | 真正的 `<a:gradFill>` 原生渲染（v2.1） |
 | AI 创作只有一个大 prompt | 全在一个 prompt 里 | 策略师 + 执行者多角色协作 |
@@ -97,6 +97,8 @@ slide-skill quickstart your-notes.md --theme dark-tech
 # 在 PowerPoint、Keynote 或 Google Slides 里打开 exports/*.pptx —— 完全可编辑。
 ```
 
+默认 `--mode auto`：配置了 `OPENAI_API_KEY` 时走 AI 生成；没有 key 时自动回退到确定性的 `fast` 渲染器（约 2 秒，无需任何 API key）。
+
 想要更细粒度的控制？用多步骤流水线：
 
 ```bash
@@ -112,23 +114,19 @@ slide-skill export projects/my-deck
 
 ---
 
-## v2.1 新特性
+## v5.0 新进展（进行中）
 
-- 🎨 **PowerPoint 原生渐变** —— SVG 里的 `<linearGradient>` 和 `<radialGradient>`
-  现在会被翻译成真正的 DrawingML `<a:gradFill>`（多色标 + 正确的角度计算），
-  而不是退化成中间色。在 PowerPoint 里打开 `.pptx`，渐变完全可以继续编辑。
+v5.0 主线是把 AI 生产链做扎实，并让无 key 路径成为一等公民。以下能力均已落地并有测试覆盖：
 
-- 🎯 **更精致的自动渲染** —— 纯 Python 模板现在能产出大字号标题、渐变光晕、
-  带编号的列表标记和强调线条。默认的 `quickstart` 流程**不用任何 LLM** 就能直接拿出手。
+- **无 key 默认路径不再崩溃** —— `--mode auto` 在配置了 API key 时走 AI 生成，否则自动回退到确定性的 `fast` 渲染器；AI 闸门完全非交互，CI 与 agent 终端不会再卡在隐藏的输入提示上。
+- **Provider 响应闸门** —— 截断或格式异常的 LLM 响应在适配层（完成状态检查）就被拦下，不会再变成损坏的 SVG；按角色分配的 token 预算与升级机制杜绝无声的页中截断。
+- **封闭世界内容保真** —— 双向校验拒绝任何可见文本不来自源素材的幻灯片：不编造数字，不丢失要点。
+- **命名空间安全的受验修复** —— 自动修复只应用经 XML 校验、保留命名空间的补丁；被拒绝的修复会记录在案，绝不静默合并。
+- **可信的 QA 几何测量** —— 感知 dx 的 tspan 流式测量消除了误报的文字重叠警告；幽灵（零渲染）元素按 ERROR 级处理；检测到 Chrome 时用浏览器 `getBBox` 实测仲裁判定，且每次修复后强制重新渲染复检。
 
-**v2.0** 中已经稳定的能力（依然全部保留）：
+**v3.0** 中已经稳定的能力（依然保留）：智能内容规划（`content_planner` 从纯 markdown 为每页自动选择最佳版式），以及教学、课程、竞赛三个领域的专用版式与密度默认值。
 
-- **5 套设计主题** —— `dark-tech` · `light-corporate` · `warm-editorial` · `data-forward` · `vibrant-startup`
-- **多角色工作流** —— 策略师做规划，执行者写 SVG
-- **每个项目独立的设计指南** —— `design_guide.md` 由 spec 锁定生成，附完整 SVG 示例
-- **宽松的 SVG QA** —— 渐变、透明度、滤镜、变换、class、style 全部允许；只禁止脚本、动画、DOM 事件
-- **AI SVG 创作 prompt** —— `slide-skill generate-guide` 为执行者角色生成完整简报
-- **343 个测试全部通过** —— 包含两套主题的端到端流水线测试
+**v2.1** 中已经稳定的能力（依然保留）：PowerPoint 原生渐变（SVG `<linearGradient>`/`<radialGradient>` 导出为可编辑的 DrawingML `<a:gradFill>`），以及精修的纯 Python 自动渲染器（大字号标题、渐变光晕、编号列表标记）。
 
 ---
 
@@ -136,7 +134,7 @@ slide-skill export projects/my-deck
 
   Slide Skill 提供两条执行路径，按照你是否有 LLM 在回路里来选：
 
-  | | **自动模式**（默认 `quickstart`） | **LLM 执行者模式** |
+  | | **快速模式**（`--mode fast`；无 key 时 auto 自动回退） | **LLM 执行者模式** |
   |---|---|---|
   | 配置 | `pip install -e .` —— 这就够了 | + LLM API key（OpenAI / Claude / 本地） |
   | 出第一份 PPTX 的耗时 | 约 2 秒 | 约 30–90 秒 |
@@ -185,7 +183,7 @@ slide-skill export projects/my-deck
 
   ## 🌏 中文 / CJK 支持
 
-  五套主题现在都内置了中日韩字体回落链（Microsoft YaHei → PingFang SC → Noto Sans SC → Source Han Sans SC）。中文、日文、韩文输入在 PowerPoint、Keynote、Google Slides 中原生显示；LibreOffice 端只要装了 `noto-fonts-cjk` 也能完美渲染。
+  除两套等宽终端主题（`industrial-blueprint`、`retro-terminal`）外，所有主题都内置了中日韩字体回落链（Microsoft YaHei → PingFang SC → Noto Sans SC → Source Han Sans SC）。中文、日文、韩文输入在 PowerPoint、Keynote、Google Slides 中原生显示；LibreOffice 端只要装了 `noto-fonts-cjk` 也能完美渲染。
 
   开箱即用的中文样例在 [`examples/sample.zh-CN.md`](examples/sample.zh-CN.md)：
 
@@ -197,7 +195,7 @@ slide-skill export projects/my-deck
 
   <div align="center">
 
-  <video src="https://github.com/Yuuqq/slide-skill/raw/master/examples/auto-render/zh-CN/preview-zh.mp4" controls autoplay loop muted playsinline width="720" poster="examples/auto-render/zh-CN/slide_03.png">
+  <video src="https://github.com/icgma/slide-skill/raw/master/examples/auto-render/zh-CN/preview-zh.mp4" controls autoplay loop muted playsinline width="720" poster="examples/auto-render/zh-CN/slide_03.png">
     浏览器不支持内嵌视频 —— <a href="examples/auto-render/zh-CN/preview-zh.mp4">下载 MP4</a> 或查看 <a href="examples/auto-render/zh-CN/preview-zh.gif">动图 GIF</a>。
   </video>
 
@@ -221,21 +219,23 @@ slide-skill export projects/my-deck
   **Claude Code**（`~/.claude/skills/`）：
 
   ```bash
-  git clone https://github.com/Yuuqq/slide-skill.git ~/.claude/skills/slide-skill
+  git clone https://github.com/icgma/slide-skill.git ~/.claude/skills/slide-skill
   ```
 
   **Replit Agent**（项目内 `.local/skills/`）：
 
   ```bash
-  git clone https://github.com/Yuuqq/slide-skill.git .local/skills/slide-skill
+  git clone https://github.com/icgma/slide-skill.git .local/skills/slide-skill
   ```
 
-  **Cursor / 其他 agent**：把 [`SKILL.md`](SKILL.md) 复制到 rules/skills 目录，安装本包（`pip install -e .`），agent 就会知道遇到任何幻灯片相关请求都该调用 `slide-skill quickstart <input.md> --theme <theme>`。
+  **Cursor / 其他 agent**（项目内 `.cursor/skills/`）：把 [`SKILL.md`](SKILL.md) 复制到 `.cursor/skills/slide-skill/`，在仓库根目录安装本包（`pip install -e .`），agent 就会知道遇到任何幻灯片相关请求都该调用 `slide-skill quickstart <input.md> --theme <theme>`。
+
+  目前支持的两个手动安装目标是 `~/.claude/skills/slide-skill/` 与 `.cursor/skills/`。`npx skills add`（skills 市场）安装方式会随公开仓库发布一起上线 —— 在那之前请使用上面的手动方式。
 
   Skill 文件里写明：
   - 何时激活（中英文触发词）
   - 那条搞定 90% 工作的命令
-  - 5 套主题如何选择
+  - 32 套主题如何选择
   - Markdown 写作约定（标题层级、项目符号、用 **粗体数字** 表示数据指标、`### A / ### B` 表示对比）
   - Agent 应当遵循的决策流程
 
@@ -420,21 +420,23 @@ slide-skill narrate <project> --engine mimo --voice-design "温柔的女声"
 ## 开发
 
 ```bash
-# 跑测试套件（343 个测试）
-pytest tests/ -v
+# 跑测试套件（900+ 个测试）
+pytest tests/ -q
 
 # Lint / 类型检查辅助命令（如已配置）
 python -m slide_skill.cli --help
 ```
 
-`skills/slide/` 目录是 agent skill 的文档：
+Agent skill 文档分两处：
 
-- `SKILL.md` —— AI agent 的主入口
-- `guides/intake.md` —— 素材转换与项目初始化
-- `guides/svg-pipeline.md` —— 设计指南、SVG 规则、最终化
-- `guides/export.md` —— PPTX 导出与校验
-- `guides/editing.md` —— 模板操作
-- `guides/qa.md` —— QA 循环与产物期望
+- **`SKILL.md`**（仓库根目录）—— 规范的、自包含的 AI agent skill 入口，
+  Claude Code / Replit / Cursor 的安装步骤加载的就是这个文件。
+- `skills/slide/SKILL.md` —— 仅为让既有深链与包清单继续可解析而保留的
+  跳转占位文件，指回根目录。
+
+更细的运行时 prompt 模板（SVG 规范、执行者简报、图片版式、色板、渲染参考）
+打包在 Python 包内的 `tools/slide/src/slide_skill/references/`，由 CLI 按需注入 ——
+不需要 agent 直接阅读。
 
 ---
 

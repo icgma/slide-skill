@@ -1,0 +1,18 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="content-image-NN">
+    <rect x="0" y="0" width="560" height="720" fill="{surface}" />
+    <text x="280" y="370" font-family="{font}" font-size="18" fill="{text_tertiary}" text-anchor="middle">[Full-height Image]</text>
+  </g>
+  <g id="content-body-NN">
+    <text x="620" y="200" font-family="{font}" font-size="16" font-weight="600" fill="{accent}" text-transform="uppercase" letter-spacing="3">CATEGORY</text>
+    <text x="620" y="260" font-family="{font}" font-size="40" font-weight="700" fill="{text}">Editorial Title</text>
+    <text x="620" y="320" font-family="{font}" font-size="18" fill="{text_secondary}">Body copy for editorial-style layout.</text>
+    <text x="620" y="356" font-family="{font}" font-size="18" fill="{text_secondary}">Continue with detailed content.</text>
+  </g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

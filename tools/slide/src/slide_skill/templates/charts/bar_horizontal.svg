@@ -1,0 +1,55 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="content-title">
+    <text x="96" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}">Chart Title</text>
+    <rect x="96" y="82" width="60" height="3" fill="{accent}" />
+  </g>
+  <g id="content-body">
+    <rect x="80" y="100" width="1120" height="560" rx="16" fill="{surface}" />
+    <rect id="plot-area" x="280" y="130" width="860" height="440" fill="none" data-role="plot-area" />
+    <!-- Category labels (Y-axis) -->
+    <text x="260" y="175" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="end">Category A</text>
+    <text x="260" y="265" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="end">Category B</text>
+    <text x="260" y="355" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="end">Category C</text>
+    <text x="260" y="445" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="end">Category D</text>
+    <text x="260" y="535" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="end">Category E</text>
+    <!-- Grid lines -->
+    <line x1="280" y1="130" x2="280" y2="570" stroke="{text_tertiary}" stroke-width="1.5" />
+    <line x1="495" y1="130" x2="495" y2="570" stroke="{border}" stroke-opacity="0.2" />
+    <line x1="710" y1="130" x2="710" y2="570" stroke="{border}" stroke-opacity="0.2" />
+    <line x1="925" y1="130" x2="925" y2="570" stroke="{border}" stroke-opacity="0.2" />
+    <line x1="1140" y1="130" x2="1140" y2="570" stroke="{border}" stroke-opacity="0.2" />
+    <!-- Bars -->
+    <g id="bar-1" data-anim-order="1">
+      <rect x="280" y="155" width="688" height="40" rx="4" fill="{accent}" />
+      <text x="980" y="181" font-family="{font}" font-size="14" fill="{text}">80%</text>
+    </g>
+    <g id="bar-2" data-anim-order="2">
+      <rect x="280" y="245" width="774" height="40" rx="4" fill="{accent}" />
+      <text x="1066" y="271" font-family="{font}" font-size="14" fill="{text}">90%</text>
+    </g>
+    <g id="bar-3" data-anim-order="3">
+      <rect x="280" y="335" width="516" height="40" rx="4" fill="{secondary_accent}" />
+      <text x="808" y="361" font-family="{font}" font-size="14" fill="{text}">60%</text>
+    </g>
+    <g id="bar-4" data-anim-order="4">
+      <rect x="280" y="425" width="860" height="40" rx="4" fill="{accent}" />
+      <text x="1152" y="451" font-family="{font}" font-size="14" fill="{text}">100%</text>
+    </g>
+    <g id="bar-5" data-anim-order="5">
+      <rect x="280" y="515" width="387" height="40" rx="4" fill="{secondary_accent}" />
+      <text x="679" y="541" font-family="{font}" font-size="14" fill="{text}">45%</text>
+    </g>
+    <!-- X-axis labels -->
+    <text x="280" y="600" font-family="{font}" font-size="12" fill="{text_tertiary}">0%</text>
+    <text x="495" y="600" font-family="{font}" font-size="12" fill="{text_tertiary}" text-anchor="middle">25%</text>
+    <text x="710" y="600" font-family="{font}" font-size="12" fill="{text_tertiary}" text-anchor="middle">50%</text>
+    <text x="925" y="600" font-family="{font}" font-size="12" fill="{text_tertiary}" text-anchor="middle">75%</text>
+    <text x="1140" y="600" font-family="{font}" font-size="12" fill="{text_tertiary}" text-anchor="end">100%</text>
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

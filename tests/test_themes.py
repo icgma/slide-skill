@@ -23,6 +23,17 @@ class ThemeSpecTest(unittest.TestCase):
             "psychology-warm",
             "medical-clean",
             "gov-red",
+            # v5.0 Premium Frontend-Design themes
+            "academic-noir",
+            "neo-brutalist",
+            "industrial-blueprint",
+            "organic-clay",
+            "art-deco-archive",
+            "japandi-zen",
+            "high-fashion",
+            "retro-terminal",
+            "botanical-herbarium",
+            "celestial-glass",
         }
         self.assertTrue(expected.issubset(set(THEMES.keys())))
 

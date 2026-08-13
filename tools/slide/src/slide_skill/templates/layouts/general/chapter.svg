@@ -1,0 +1,15 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="section-band">
+    <rect x="0" y="280" width="1280" height="160" fill="{accent}" fill-opacity="0.15" />
+  </g>
+  <g id="content-title-NN">
+    <text x="640" y="370" font-family="{font}" font-size="52" font-weight="700" fill="{text}" text-anchor="middle">Chapter Title</text>
+    <rect x="580" y="388" width="120" height="4" fill="{accent}" />
+  </g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

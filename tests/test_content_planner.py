@@ -218,6 +218,31 @@ Step 3 → Done
         assert len(plans) >= 1
         # The actual layout depends on the detection logic - just verify it ran
 
+    def test_table_detection(self):
+        md = """# Results
+
+| Model | Accuracy | F1 |
+|-------|----------|-----|
+| TextCNN | 78.3% | 76.5% |
+| BERT-base | 87.6% | 86.2% |
+"""
+        plans = plan_slides(md)
+        assert any(p.layout == "table" for p in plans)
+
+    def test_table_not_confused_with_comparison(self):
+        md = """# Results
+
+| Model | Accuracy | F1 |
+|-------|----------|-----|
+| TextCNN | 78.3% | 76.5% |
+| BERT-base | 87.6% | 86.2% |
+"""
+        plans = plan_slides(md)
+        table_plans = [p for p in plans if p.layout == "table"]
+        comp_plans = [p for p in plans if p.layout == "comparison"]
+        assert len(table_plans) >= 1
+        assert len(comp_plans) == 0
+
 
 # ---------------------------------------------------------------------------
 # plan_to_markdown tests
@@ -236,13 +261,14 @@ class TestPlanToMarkdown:
         assert "`cover`" in md
         assert "`bullet-list`" in md
 
-    def test_includes_density_column(self):
+    def test_includes_v4_design_columns(self):
         plans = [
             SlidePlan(index=1, layout="cover", title="Title", density="sparse"),
         ]
         md = plan_to_markdown(plans)
-        assert "Density" in md
-        assert "sparse" in md
+        assert "Strategy" in md
+        assert "Chart" in md
+        assert "Pattern" in md
 
 
 # ---------------------------------------------------------------------------
@@ -339,3 +365,176 @@ Wrap up.
         # Should have variety, not all same layout
         layouts = set(p.layout for p in plans)
         assert len(layouts) >= 2
+
+
+class TestPremiumLayoutRouting:
+    def test_learning_objectives_routing(self):
+        md = """# Course Topic
+## 教学目标
+- 掌握智能传播的定义与范式
+- 理解平台化社会的权力流变
+- 能够运用社会计算工具进行情感分析
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="course"))
+        assert any(p.layout == "learning-objectives" for p in plans)
+        for p in plans:
+            if p.layout == "learning-objectives":
+                assert len(p.items) == 3
+                assert p.items[0].type == "objective"
+
+    def test_team_grid_routing(self):
+        md = """# About Us
+## 创始团队
+- 张三 — 首席执行官：前科技巨头副总裁，15年行业经验。
+- 李四 — 首席技术官：麻省理工博士，自然语言处理专家。
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="competition"))
+        assert any(p.layout == "team-grid" for p in plans)
+        for p in plans:
+            if p.layout == "team-grid":
+                assert len(p.items) == 2
+                assert p.items[0].type == "member"
+                assert p.items[0].primary == "张三"
+                assert "首席执行官" in p.items[0].secondary
+
+    def test_timeline_routing(self):
+        md = """# Process
+## 发展规划
+- 2026年 — 产品发布与天使轮融资
+- 2027年 — 市场扩张与A轮融资
+- 2028年 — 盈亏平衡与全球化探索
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="competition"))
+        assert any(p.layout == "timeline" for p in plans)
+        for p in plans:
+            if p.layout == "timeline":
+                assert len(p.items) == 3
+                assert p.items[0].type == "milestone"
+
+    def test_key_concept_routing(self):
+        md = """# Theory
+## 概念定义
+什么是智能传播？
+智能传播是指利用人工智能、大数据等技术，实现信息自动生产、精准匹配与动态交互的新型信息分发范式。
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="course"))
+        assert any(p.layout == "key-concept" for p in plans)
+
+    def test_case_study_routing(self):
+        md = """# Case Study
+## 经典案例分析
+SITUATION: 平台化社会中传统媒体话语权弱化，假新闻泛滥。
+---
+FINDINGS: 社会计算工具能实时识别谣言，但无法解决价值偏见。
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="course"))
+        assert any(p.layout == "case-study" for p in plans)
+
+    def test_discussion_routing(self):
+        md = """# QA
+## 思考与讨论
+如何看待算法推荐对公共讨论空间的蚕食？
+- 信息茧房是必然结果吗？
+- 如何构建算法时代的公共话语权？
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="course"))
+        assert any(p.layout == "discussion" for p in plans)
+
+    def test_comparison_matrix_routing(self):
+        md = """# Battle
+## 平台对比 (A vs B)
+平台A特点：去中心化、高隐私、用户自治。
+---
+平台B特点：中心化推荐、广告变现、平台强管控。
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="competition"))
+        assert any(p.layout == "comparison-matrix" for p in plans)
+
+    def test_metrics_dashboard_routing(self):
+        md = """# Performance
+## 关键指标数据
+- 98% 准确率：算法模型在公开数据集上的分类精度。
+- 10M 活跃用户：平台月度活跃用户突破千万大关。
+- 2.5x 增长：相比上一季度，平台流量实现翻倍。
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="competition"))
+        assert any(p.layout == "metrics-dashboard" for p in plans)
+
+    def test_market_opportunity_routes_to_dedicated_layout(self):
+        md = """# Market
+## Market Opportunity
+- Total Addressable Market - $120B by 2027
+- Enterprise adoption - 68% of teams piloting AI workflows
+- Cost pressure - 3.5x increase in support volume
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="general"))
+        assert any(p.layout == "market-opportunity" for p in plans)
+        assert not any(p.layout == "metrics-dashboard" for p in plans)
+
+    def test_core_sections_route_to_semantic_scenes(self):
+        md = """# Product
+## Problem Statement
+- Manual reporting takes 40+ hours
+- Data silos across teams
+## Our Solution
+- Unified ingestion
+- Natural language query interface
+## Technology Stack
+- Cloud-native services
+- Apache Kafka
+## Roadmap
+- Q1 2026: Mobile dashboard
+- Q2 2026: AI report writer
+## Why Now
+The market window is open.
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="general"))
+        layouts = {p.title: p.layout for p in plans}
+        assert layouts["Problem Statement"] == "problem"
+        assert layouts["Our Solution"] == "solution"
+        assert layouts["Technology Stack"] == "technology-stack"
+        assert layouts["Roadmap"] == "roadmap"
+
+    def test_metrics_dashboard_no_false_positive(self):
+        # A single occurrence like 4K should NOT trigger metrics-dashboard
+        md = """# Lab
+## 一流的智能媒体实验室与实战基地
+- 智能舆情监测平台 — 追踪社交网络热点，运用自然语言处理进行社会态度与舆情研判。
+- 融合演播厅系统 — 配备行业级 4K 融媒体转播与虚拟合成设备，对接业界主流生产环境。
+- 计算媒体中心 — 提供高性能计算集群，支持学生进行大规模文本挖掘与多模态数据分析。
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="course"))
+        assert not any(p.layout == "metrics-dashboard" for p in plans)
+
+    def test_case_study_not_confused_with_table(self):
+        # Markdown table should not be confused with case-study even if it contains "---" table divider
+        md = """# Results
+## 智能传播 vs 传统新闻：职业图景的升级
+| 职业维度 | 传统新闻专业 | 智能传播专业 |
+|---|---|---|
+| 核心技能 | 文字采编 | 数据挖掘 |
+"""
+        plans = plan_slides(md, config=ContentConfig(domain="course"))
+        assert not any(p.layout == "case-study" for p in plans)
+        assert any(p.layout == "table" for p in plans)
+
+    def test_key_concept_structural_upgrades(self):
+        # Structural layouts with core pillar keywords should map to key-concept in course/competition domain
+        md2 = """# Intro
+## 专业定位：人文温情与智能科技的交汇
+- 专业底色 — 传承经典新闻学的人文关怀
+- 技术赋能 — 拥抱人工智能
+- 培养目标 — 培养融合媒体精英
+"""
+        plans2 = plan_slides(md2, config=ContentConfig(domain="course"))
+        assert any(p.layout == "key-concept" for p in plans2)
+
+        md5 = """# Intro
+## 硬核课程体系：人文与算法双轨并进
+- 基础层 — 采写编评
+- 技术层 — Python
+- 传播层 — 计算传播
+"""
+        plans5 = plan_slides(md5, config=ContentConfig(domain="course"))
+        assert any(p.layout == "key-concept" for p in plans5)
+

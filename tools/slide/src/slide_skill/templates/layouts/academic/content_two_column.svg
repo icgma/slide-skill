@@ -1,0 +1,22 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="content-title-NN">
+    <text x="96" y="80" font-family="{font}" font-size="36" font-weight="700" fill="{text}">Dual Analysis</text>
+    <line x1="96" y1="92" x2="300" y2="92" stroke="{accent}" stroke-width="2" />
+  </g>
+  <g id="content-left-NN">
+    <text x="96" y="130" font-family="{font}" font-size="20" font-weight="600" fill="{accent}">Method A</text>
+    <rect x="80" y="148" width="555" height="500" rx="8" fill="{surface}" stroke="{border}" stroke-width="1" />
+    <text x="120" y="190" font-family="{font}" font-size="17" fill="{text_secondary}">Methodological approach</text>
+  </g>
+  <g id="content-right-NN">
+    <text x="665" y="130" font-family="{font}" font-size="20" font-weight="600" fill="{secondary_accent}">Method B</text>
+    <rect x="648" y="148" width="555" height="500" rx="8" fill="{surface}" stroke="{border}" stroke-width="1" />
+    <text x="688" y="190" font-family="{font}" font-size="17" fill="{text_secondary}">Alternative approach</text>
+  </g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

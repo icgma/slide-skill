@@ -7,7 +7,7 @@ import re
 import shutil
 from pathlib import Path
 
-UNSUPPORTED_FIELDS = {"canvas", "card_radius", "title_decoration", "page_rhythm", "svg_rules", "resources", "audience", "objective", "per_page_rationale", "format", "template"}
+UNSUPPORTED_FIELDS = {"canvas", "card_radius", "title_decoration", "page_rhythm", "svg_rules", "resources", "audience", "objective", "per_page_rationale", "format", "template", "typography"}
 
 
 def update_spec(project_path: Path | str) -> dict:

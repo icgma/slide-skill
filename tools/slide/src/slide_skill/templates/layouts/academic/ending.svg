@@ -1,0 +1,14 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="content-title-NN">
+    <text x="640" y="260" font-family="{font}" font-size="52" font-weight="700" fill="{text}" text-anchor="middle">Questions &amp; Discussion</text>
+    <line x1="440" y1="280" x2="840" y2="280" stroke="{accent}" stroke-width="2" />
+    <text x="640" y="360" font-family="{font}" font-size="22" fill="{text_secondary}" text-anchor="middle">author@university.edu</text>
+    <text x="640" y="400" font-family="{font}" font-size="18" fill="{text_tertiary}" text-anchor="middle">DOI: 10.xxxx/xxxxx</text>
+  </g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

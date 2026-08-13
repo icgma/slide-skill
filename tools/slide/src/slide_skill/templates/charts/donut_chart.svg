@@ -1,0 +1,46 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="content-title">
+    <text x="96" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}">Breakdown</text>
+    <rect x="96" y="82" width="60" height="3" fill="{accent}" />
+  </g>
+  <g id="content-body">
+    <!-- Donut: center 480,380, outer r=220, inner r=140 -->
+    <!-- Segment 1: 35% -->
+    <g id="slice-1" data-anim-order="1">
+      <path d="M480,160 A220,220 0 0,1 655,253 L524,310 A140,140 0 0,0 480,240 Z" fill="{accent}" />
+    </g>
+    <!-- Segment 2: 30% -->
+    <g id="slice-2" data-anim-order="2">
+      <path d="M655,253 A220,220 0 0,1 606,582 L498,452 A140,140 0 0,0 524,310 Z" fill="{secondary_accent}" />
+    </g>
+    <!-- Segment 3: 20% -->
+    <g id="slice-3" data-anim-order="3">
+      <path d="M606,582 A220,220 0 0,1 337,537 L410,431 A140,140 0 0,0 498,452 Z" fill="{accent}" fill-opacity="0.5" />
+    </g>
+    <!-- Segment 4: 15% -->
+    <g id="slice-4" data-anim-order="4">
+      <path d="M337,537 A220,220 0 0,1 480,160 L480,240 A140,140 0 0,0 410,431 Z" fill="{muted}" />
+    </g>
+    <!-- Center text -->
+    <circle cx="480" cy="380" r="120" fill="{background}" />
+    <text x="480" y="370" font-family="{font}" font-size="42" font-weight="700" fill="{accent}" text-anchor="middle">100%</text>
+    <text x="480" y="400" font-family="{font}" font-size="16" fill="{text_secondary}" text-anchor="middle">Total allocation</text>
+    <!-- Legend -->
+    <g id="legend">
+      <rect x="780" y="220" width="16" height="16" rx="3" fill="{accent}" />
+      <text x="806" y="234" font-family="{font}" font-size="16" fill="{text_secondary}">Segment A — 35%</text>
+      <rect x="780" y="264" width="16" height="16" rx="3" fill="{secondary_accent}" />
+      <text x="806" y="278" font-family="{font}" font-size="16" fill="{text_secondary}">Segment B — 30%</text>
+      <rect x="780" y="308" width="16" height="16" rx="3" fill="{accent}" fill-opacity="0.5" />
+      <text x="806" y="322" font-family="{font}" font-size="16" fill="{text_secondary}">Segment C — 20%</text>
+      <rect x="780" y="352" width="16" height="16" rx="3" fill="{muted}" />
+      <text x="806" y="366" font-family="{font}" font-size="16" fill="{text_secondary}">Segment D — 15%</text>
+    </g>
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

@@ -1,0 +1,50 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="content-title">
+    <text x="640" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}" text-anchor="middle">Key Areas</text>
+    <rect x="580" y="82" width="120" height="3" fill="{accent}" />
+  </g>
+  <g id="content-body">
+    <!-- Quadrant 1 (top-left) -->
+    <g id="quad-1" data-anim-order="1">
+      <rect x="80" y="110" width="548" height="260" rx="16" fill="{surface}" />
+      <rect x="80" y="110" width="548" height="4" fill="{accent}" />
+      <text x="120" y="156" font-family="{font}" font-size="22" font-weight="700" fill="{text}">Area 1 Title</text>
+      <text x="120" y="188" font-family="{font}" font-size="15" fill="{text_secondary}">• First point description</text>
+      <text x="120" y="214" font-family="{font}" font-size="15" fill="{text_secondary}">• Second point description</text>
+      <text x="120" y="240" font-family="{font}" font-size="15" fill="{text_secondary}">• Third point description</text>
+    </g>
+    <!-- Quadrant 2 (top-right) -->
+    <g id="quad-2" data-anim-order="2">
+      <rect x="652" y="110" width="548" height="260" rx="16" fill="{surface}" />
+      <rect x="652" y="110" width="548" height="4" fill="{secondary_accent}" />
+      <text x="692" y="156" font-family="{font}" font-size="22" font-weight="700" fill="{text}">Area 2 Title</text>
+      <text x="692" y="188" font-family="{font}" font-size="15" fill="{text_secondary}">• First point description</text>
+      <text x="692" y="214" font-family="{font}" font-size="15" fill="{text_secondary}">• Second point description</text>
+      <text x="692" y="240" font-family="{font}" font-size="15" fill="{text_secondary}">• Third point description</text>
+    </g>
+    <!-- Quadrant 3 (bottom-left) -->
+    <g id="quad-3" data-anim-order="3">
+      <rect x="80" y="394" width="548" height="260" rx="16" fill="{surface}" />
+      <rect x="80" y="394" width="548" height="4" fill="{accent}" fill-opacity="0.6" />
+      <text x="120" y="440" font-family="{font}" font-size="22" font-weight="700" fill="{text}">Area 3 Title</text>
+      <text x="120" y="472" font-family="{font}" font-size="15" fill="{text_secondary}">• First point description</text>
+      <text x="120" y="498" font-family="{font}" font-size="15" fill="{text_secondary}">• Second point description</text>
+      <text x="120" y="524" font-family="{font}" font-size="15" fill="{text_secondary}">• Third point description</text>
+    </g>
+    <!-- Quadrant 4 (bottom-right) -->
+    <g id="quad-4" data-anim-order="4">
+      <rect x="652" y="394" width="548" height="260" rx="16" fill="{surface}" />
+      <rect x="652" y="394" width="548" height="4" fill="{muted}" />
+      <text x="692" y="440" font-family="{font}" font-size="22" font-weight="700" fill="{text}">Area 4 Title</text>
+      <text x="692" y="472" font-family="{font}" font-size="15" fill="{text_secondary}">• First point description</text>
+      <text x="692" y="498" font-family="{font}" font-size="15" fill="{text_secondary}">• Second point description</text>
+      <text x="692" y="524" font-family="{font}" font-size="15" fill="{text_secondary}">• Third point description</text>
+    </g>
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

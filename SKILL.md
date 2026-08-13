@@ -3,10 +3,10 @@ name: slide-skill
 description: Convert any source material into a polished, fully-editable PowerPoint (.pptx). Use whenever the user asks for slides, a deck, a presentation, or "做一份 PPT". IMPORTANT — this skill requires a multi-step interactive workflow. You MUST assess the user's needs BEFORE generating anything.
 ---
 
-# slide-skill — AI Agent Skill (v3.0)
+# slide-skill — AI Agent Skill (v5.0.0a1)
 
 An SVG-first pipeline that turns prose into `.pptx` whose every shape, text run,
-and gradient is natively editable. 20 built-in themes, full CJK support, domain-
+and gradient is natively editable. 32 built-in themes, full CJK support, domain-
 specific generators for teaching, courses, and competitions.
 
 ## ⚠️ CRITICAL: Never Generate Without Understanding
@@ -158,7 +158,7 @@ Pick based on scenario. **Always confirm with the user.**
 | Course presentation | `light-corporate`, `dark-tech` | Professional, clean |
 
 ```bash
-slide-skill themes    # list all 20 themes with previews
+slide-skill themes    # list all 32 themes with previews
 ```
 
 ---
@@ -169,6 +169,8 @@ slide-skill themes    # list all 20 themes with previews
 # The one command — but ONLY after steps 1-3 are done
 slide-skill quickstart <prepared-input.md> --theme <theme-name>
 ```
+
+Default `--mode auto`: AI generation when a key is configured, deterministic fast templates otherwise. Force with `--mode fast` or `--mode ai`.
 
 Output structure:
 ```
@@ -266,7 +268,7 @@ Step 5: PREVIEW & ITERATE ← Show user, get feedback
 
 | Command | What it does |
 |---------|-------------|
-| `slide-skill themes` | List all 20 themes |
+| `slide-skill themes` | List all 32 themes |
 | `slide-skill formats` | Canvas sizes (16:9, 4:3, A4, etc.) |
 | `slide-skill competitions` | List competition templates |
 | `slide-skill rehearse <project>` | Estimate speaking time per slide |
@@ -292,7 +294,7 @@ Step 5: PREVIEW & ITERATE ← Show user, get feedback
 ## Setup
 
 ```bash
-git clone https://github.com/Yuuqq/slide-skill.git
+git clone https://github.com/icgma/slide-skill.git
 cd slide-skill
 pip install -e .
 pip install pymupdf  # optional: PDF input support

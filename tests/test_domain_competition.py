@@ -5,6 +5,7 @@ from slide_skill.content_planner import ContentItem, SlidePlan
 from slide_skill.domain_competition import (
     render_competition_slide,
 )
+from slide_skill.svg_qa import check_svg_file
 
 
 @pytest.fixture
@@ -52,6 +53,35 @@ class TestCompetitionRenderers:
         svg = render_competition_slide(plan, sample_lock, total=10)
         assert svg is not None
         assert "$50B" in svg or "$5B" in svg
+
+    def test_metrics_dashboard_fits_long_label_and_value(self, sample_lock, tmp_path):
+        plan = SlidePlan(
+            index=2,
+            layout="metrics-dashboard",
+            title="Market Opportunity",
+            items=[
+                ContentItem(
+                    type="metric",
+                    primary="Total Addressable Market",
+                    secondary="$120B by 2027",
+                ),
+                ContentItem(
+                    type="metric",
+                    primary="Enterprise adoption among operational teams",
+                    secondary="68% piloting AI workflows",
+                ),
+            ],
+        )
+        svg = render_competition_slide(plan, sample_lock, total=10)
+        assert svg is not None
+        assert "Total Addressable Market" in svg
+        assert "<tspan>Total Addres</tspan>" not in svg
+        assert 'font-size="56"' not in svg
+
+        svg_file = tmp_path / "slide_02.svg"
+        svg_file.write_text(svg, encoding="utf-8")
+        issues = check_svg_file(svg_file, tmp_path)
+        assert not [i for i in issues if i.level == "error"]
 
     def test_timeline_layout(self, sample_lock):
         plan = SlidePlan(

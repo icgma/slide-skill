@@ -1,0 +1,76 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="{background}" />
+      <stop offset="100%" stop-color="{bg_secondary}" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="url(#bg-grad)" />
+  </g>
+
+  <!-- Chrome -->
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="6" height="720" fill="{accent}" />
+  </g>
+
+  <!-- Title -->
+  <g id="content-title">
+    <text x="96" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}">Timeline Title</text>
+    <rect x="96" y="82" width="60" height="3" fill="{accent}" />
+  </g>
+
+  <!-- Timeline Track -->
+  <g id="content-body">
+    <!-- Horizontal track line -->
+    <line x1="120" y1="360" x2="1160" y2="360" stroke="{border}" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Node 1 -->
+    <g id="node-1" data-anim-order="1">
+      <circle cx="200" cy="360" r="16" fill="{accent}" />
+      <circle cx="200" cy="360" r="8" fill="{background}" />
+      <text x="200" y="320" font-family="{font}" font-size="16" font-weight="700" fill="{text}" text-anchor="middle">Q1 2025</text>
+      <text x="200" y="400" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Phase label</text>
+    </g>
+
+    <!-- Node 2 -->
+    <g id="node-2" data-anim-order="2">
+      <circle cx="440" cy="360" r="16" fill="{accent}" />
+      <circle cx="440" cy="360" r="8" fill="{background}" />
+      <text x="440" y="320" font-family="{font}" font-size="16" font-weight="700" fill="{text}" text-anchor="middle">Q2 2025</text>
+      <text x="440" y="400" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Phase label</text>
+    </g>
+
+    <!-- Node 3 -->
+    <g id="node-3" data-anim-order="3">
+      <circle cx="680" cy="360" r="16" fill="{secondary_accent}" />
+      <circle cx="680" cy="360" r="8" fill="{background}" />
+      <text x="680" y="320" font-family="{font}" font-size="16" font-weight="700" fill="{text}" text-anchor="middle">Q3 2025</text>
+      <text x="680" y="400" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Phase label</text>
+    </g>
+
+    <!-- Node 4 -->
+    <g id="node-4" data-anim-order="4">
+      <circle cx="920" cy="360" r="16" fill="{secondary_accent}" />
+      <circle cx="920" cy="360" r="8" fill="{background}" />
+      <text x="920" y="320" font-family="{font}" font-size="16" font-weight="700" fill="{text}" text-anchor="middle">Q4 2025</text>
+      <text x="920" y="400" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Phase label</text>
+    </g>
+
+    <!-- Node 5 -->
+    <g id="node-5" data-anim-order="5">
+      <circle cx="1080" cy="360" r="16" fill="{muted}" />
+      <circle cx="1080" cy="360" r="8" fill="{background}" />
+      <text x="1080" y="320" font-family="{font}" font-size="16" font-weight="700" fill="{text}" text-anchor="middle">Q1 2026</text>
+      <text x="1080" y="400" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Phase label</text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

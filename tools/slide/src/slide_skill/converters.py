@@ -124,13 +124,21 @@ def extract_gradient_info(root: ET.Element, ref_id: str) -> dict | None:
     if not raw_stops:
         return None
 
-    stops: list[tuple[float, tuple[int, int, int]]] = []
+    stops: list[tuple[float, tuple[int, int, int], float]] = []
     for s in raw_stops:
         color = _parse_stop_color(s)
         if color is None:
             continue
         pos = max(0.0, min(1.0, _parse_stop_offset(s)))
-        stops.append((pos, color))
+        # Preserve stop-opacity for DrawingML alpha channel
+        opacity_raw = s.attrib.get("stop-opacity")
+        if not opacity_raw:
+            style = s.attrib.get("style", "")
+            m_op = re.search(r"stop-opacity\s*:\s*([^;]+)", style)
+            if m_op:
+                opacity_raw = m_op.group(1).strip()
+        alpha = max(0.0, min(1.0, safe_float(opacity_raw, default=1.0)))
+        stops.append((pos, color, alpha))
     stops.sort(key=lambda t: t[0])
     if not stops:
         return None
@@ -189,10 +197,25 @@ def _is_gradient_fill(elem: ET.Element) -> tuple[bool, str]:
 def _build_grad_fill_xml_string(info: dict) -> str:
     """Build a DrawingML <a:gradFill> XML string from gradient info."""
     stops_xml = ""
-    for pos, (r, g, b) in info["stops"]:
+    for stop_entry in info["stops"]:
+        # Support both old (pos, (r,g,b)) and new (pos, (r,g,b), alpha) format
+        if len(stop_entry) == 3:
+            pos, (r, g, b), alpha = stop_entry
+        else:
+            pos, (r, g, b) = stop_entry
+            alpha = 1.0
         pos_val = int(round(pos * 100000))
         hex_val = f"{r:02X}{g:02X}{b:02X}"
-        stops_xml += f'<a:gs pos="{pos_val}"><a:srgbClr val="{hex_val}"/></a:gs>'
+        if alpha < 1.0:
+            alpha_val = int(round(alpha * 100000))
+            stops_xml += (
+                f'<a:gs pos="{pos_val}">'
+                f'<a:srgbClr val="{hex_val}">'
+                f'<a:alpha val="{alpha_val}"/>'
+                f'</a:srgbClr></a:gs>'
+            )
+        else:
+            stops_xml += f'<a:gs pos="{pos_val}"><a:srgbClr val="{hex_val}"/></a:gs>'
 
     if info["type"] == "linear":
         direction_xml = f'<a:lin ang="{info["ang"]}" scaled="0"/>'
@@ -298,6 +321,13 @@ def _apply_fill_and_line(shape, elem, rgb_cls, root=None):
         if grad_info:
             _apply_fill_and_line_with_gradient(shape, elem, rgb_cls, root, grad_info)
             return
+        # Gradient parsing failed — fallback to midpoint stop colour
+        fallback = extract_gradient_color(root, ref_id)
+        if fallback:
+            shape.fill.solid()
+            shape.fill.fore_color.rgb = rgb_cls(*fallback)
+            _apply_line(shape.line, elem, rgb_cls, root)
+            return
 
     fill = resolve_fill(elem, root) if root is not None else parse_hex(elem.attrib.get("fill"))
     if fill:
@@ -345,6 +375,38 @@ def _parse_simple_translate(transform: str) -> tuple[float, float]:
     return 0.0, 0.0
 
 
+def get_cumulative_translation(elem, root, parent_map=None) -> tuple[float, float]:
+    """Accumulate translate() offsets from all ancestor <g> elements.
+
+    When *parent_map* is supplied (pre-built once per slide in exporter.py),
+    the lookup is O(depth).  Without it the map is rebuilt here at O(N) —
+    still correct, but slower when called per-element."""
+    tx, ty = 0.0, 0.0
+    if root is None:
+        return tx, ty
+    if parent_map is None:
+        parent_map = {c: p for p in root.iter() for c in p}
+    
+    # Process element transform
+    transform = elem.attrib.get("transform", "")
+    if "translate" in transform:
+        cx, cy = _parse_simple_translate(transform)
+        tx += cx
+        ty += cy
+        
+    # Traverse up ancestors
+    curr = parent_map.get(elem)
+    while curr is not None:
+        c_trans = curr.attrib.get("transform", "")
+        if "translate" in c_trans:
+            cx, cy = _parse_simple_translate(c_trans)
+            tx += cx
+            ty += cy
+        curr = parent_map.get(curr)
+        
+    return tx, ty
+
+
 # --- converter functions ---
 
 def convert_rect(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
@@ -353,12 +415,9 @@ def convert_rect(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
 
     x, y, w, h = _box(elem, scale_x, scale_y)
 
-    # Apply simple translate transform
-    transform = elem.attrib.get("transform", "")
-    if "translate" in transform:
-        tx, ty = _parse_simple_translate(transform)
-        x += tx * scale_x
-        y += ty * scale_y
+    tx, ty = get_cumulative_translation(elem, root, meta.get("_parent_map"))
+    x += tx * scale_x
+    y += ty * scale_y
 
     rx = safe_float(elem.attrib.get("rx", "0"))
     shape_type = MSO_SHAPE.ROUNDED_RECTANGLE if rx else MSO_SHAPE.RECTANGLE
@@ -371,6 +430,10 @@ def convert_oval(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
     from pptx.util import Inches
 
     x, y, w, h = _oval_box(elem, scale_x, scale_y)
+    tx, ty = get_cumulative_translation(elem, root, meta.get("_parent_map"))
+    x += tx * scale_x
+    y += ty * scale_y
+
     shape = slide.shapes.add_shape(MSO_SHAPE.OVAL, Inches(x), Inches(y), Inches(w), Inches(h))
     _apply_fill_and_line(shape, elem, rgb_cls, root)
 
@@ -383,6 +446,13 @@ def convert_line(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
     y1 = safe_float(elem.attrib.get("y1", 0)) * scale_y
     x2 = safe_float(elem.attrib.get("x2", 0)) * scale_x
     y2 = safe_float(elem.attrib.get("y2", 0)) * scale_y
+
+    tx, ty = get_cumulative_translation(elem, root, meta.get("_parent_map"))
+    x1 += tx * scale_x
+    y1 += ty * scale_y
+    x2 += tx * scale_x
+    y2 += ty * scale_y
+
     connector = slide.shapes.add_connector(
         MSO_CONNECTOR.STRAIGHT, Inches(x1), Inches(y1), Inches(x2), Inches(y2)
     )
@@ -394,7 +464,7 @@ def convert_text(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
 
     tspans = [c for c in elem if local_name(c.tag) == "tspan"]
     if tspans:
-        para_texts = [(c.text or "").strip() for c in tspans]
+        para_texts = [("".join(c.itertext())).strip() for c in tspans]
         para_texts = [t for t in para_texts if t]
         text = "\n".join(para_texts)
     else:
@@ -409,11 +479,15 @@ def convert_text(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
     ascent_in = (font_pt / 72.0) * 0.92
     y = max(0.0, baseline - ascent_in)
 
+    tx, ty = get_cumulative_translation(elem, root, meta.get("_parent_map"))
+    x += tx * scale_x
+    y += ty * scale_y
+
     anchor = elem.attrib.get("text-anchor", "start").lower()
     if para_texts:
-        w = max(0.5, max(approx_w_in(t, font_pt) for t in para_texts))
+        w = max(0.5, max(approx_w_in(t, font_pt) for t in para_texts)) * 1.25
     elif anchor in ("middle", "end"):
-        w = max(0.5, approx_w_in(text, font_pt))
+        w = max(0.5, approx_w_in(text, font_pt)) * 1.25
     else:
         w = max(0.5, float(meta["canvas"]["pptx_width_in"]) - x - 0.5)
     if anchor == "middle":
@@ -437,9 +511,13 @@ def convert_text(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
         primary = families[0] if families else family
         cjk = next((f for f in families if any(m in f.lower() for m in cjk_markers)), None)
 
+    # Resolve text opacity from fill-opacity / opacity attributes
+    opacity_raw = elem.attrib.get("fill-opacity") or elem.attrib.get("opacity")
+    text_opacity = safe_float(opacity_raw, default=1.0) if opacity_raw else 1.0
+
     _create_styled_textbox(
         slide, text, x, y, w, font_pt, bold, color, primary, rgb_cls,
-        cjk=cjk, anchor=anchor, word_wrap=not para_texts)
+        cjk=cjk, anchor=anchor, word_wrap=not para_texts, text_opacity=text_opacity)
 
 
 def convert_image(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
@@ -463,7 +541,7 @@ def convert_path(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
     if not d.strip():
         return
     commands = parse_svg_path(d)
-    _add_freeform(slide, elem, commands, scale_x, scale_y, rgb_cls, root)
+    _add_freeform(slide, elem, commands, scale_x, scale_y, meta, rgb_cls, root)
 
 
 def convert_polygon(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
@@ -471,7 +549,7 @@ def convert_polygon(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
 
     pts = parse_svg_points(elem.attrib.get("points", ""))
     commands = points_to_commands(pts, closed=True)
-    _add_freeform(slide, elem, commands, scale_x, scale_y, rgb_cls, root)
+    _add_freeform(slide, elem, commands, scale_x, scale_y, meta, rgb_cls, root)
 
 
 def convert_polyline(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
@@ -479,10 +557,10 @@ def convert_polyline(slide, elem, scale_x, scale_y, meta, rgb_cls, root=None):
 
     pts = parse_svg_points(elem.attrib.get("points", ""))
     commands = points_to_commands(pts, closed=False)
-    _add_freeform(slide, elem, commands, scale_x, scale_y, rgb_cls, root)
+    _add_freeform(slide, elem, commands, scale_x, scale_y, meta, rgb_cls, root)
 
 
-def _add_freeform(slide, elem, commands, scale_x, scale_y, rgb_cls, root=None):
+def _add_freeform(slide, elem, commands, scale_x, scale_y, meta, rgb_cls, root=None):
     from pptx.enum.shapes import MSO_SHAPE
     from pptx.util import Inches
     from .geometry import EMU_PER_INCH, build_freeform_xml, compute_bbox
@@ -495,6 +573,10 @@ def _add_freeform(slide, elem, commands, scale_x, scale_y, rgb_cls, root=None):
     bbox_h = max(max_y - min_y, 0.01)
     left_in = min_x * scale_x
     top_in = min_y * scale_y
+
+    tx, ty = get_cumulative_translation(elem, root, meta.get("_parent_map") if meta else None)
+    left_in += tx * scale_x
+    top_in += ty * scale_y
     width_in = bbox_w * scale_x
     height_in = bbox_h * scale_y
     w_emu = int(width_in * EMU_PER_INCH)
@@ -529,23 +611,27 @@ def approx_w_in(s: str, font_pt: float) -> float:
 
 
 def _create_styled_textbox(slide, text, x, y, w, font_pt, bold, color, family,
-                           rgb_cls, cjk=None, anchor="start", word_wrap=True):
+                           rgb_cls, cjk=None, anchor="start", word_wrap=True,
+                           text_opacity=1.0):
     from pptx.util import Inches, Pt
     from pptx.enum.text import PP_ALIGN
 
     line_count = max(1, text.count("\n") + 1)
-    h = max(0.35, (font_pt / 72.0) * 1.25 * line_count)
+    h = max(0.1, (font_pt / 72.0) * 1.25 * line_count)
     textbox = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
     textbox.text = text
     frame = textbox.text_frame
     frame.margin_left = frame.margin_right = frame.margin_top = frame.margin_bottom = 0
-    frame.word_wrap = word_wrap
+    frame.word_wrap = False if line_count == 1 else word_wrap
 
     pp_align = None
     if anchor == "middle":
         pp_align = PP_ALIGN.CENTER
     elif anchor == "end":
         pp_align = PP_ALIGN.RIGHT
+
+    # Pre-check: do we need to inject alpha for text opacity?
+    need_alpha = 0 < text_opacity < 1
 
     for paragraph in frame.paragraphs:
         if pp_align is not None:
@@ -559,14 +645,26 @@ def _create_styled_textbox(slide, text, x, y, w, font_pt, bold, color, family,
                 run.font.color.rgb = rgb_cls(*color)
             if family:
                 run.font.name = family
-            if cjk:
+            if cjk or need_alpha:
                 from pptx.oxml.ns import qn
                 from lxml import etree as _lxml_etree
                 rPr = run._r.get_or_add_rPr()
-                for ea in rPr.findall(qn("a:ea")):
-                    rPr.remove(ea)
-                ea = _lxml_etree.SubElement(rPr, qn("a:ea"))
-                ea.set("typeface", cjk)
+                if cjk:
+                    for ea in rPr.findall(qn("a:ea")):
+                        rPr.remove(ea)
+                    ea = _lxml_etree.SubElement(rPr, qn("a:ea"))
+                    ea.set("typeface", cjk)
+                if need_alpha:
+                    # Inject <a:alpha> into the font colour's <a:srgbClr>
+                    solid = rPr.find(qn("a:solidFill"))
+                    if solid is not None:
+                        srgb = solid.find(qn("a:srgbClr"))
+                        if srgb is not None:
+                            # Remove any existing alpha children
+                            for old_a in srgb.findall(qn("a:alpha")):
+                                srgb.remove(old_a)
+                            alpha_el = _lxml_etree.SubElement(srgb, qn("a:alpha"))
+                            alpha_el.set("val", str(int(text_opacity * 100000)))
 
     return textbox
 

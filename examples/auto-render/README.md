@@ -7,7 +7,7 @@
   slide-skill quickstart examples/sample.md --theme light-corporate
   ```
 
-  The same source ([`examples/sample.md`](../sample.md)) — an 8-slide
+  The same source ([`examples/sample.md`](../sample.md)) — a 14-slide
   "AI-Powered Analytics Platform" deck — rendered through two different themes
   using the pure-Python template engine in `tools/slide/src/slide_skill/svg_pipeline.py`.
 
@@ -20,4 +20,3 @@
   The v2.1 auto-renderer adds: hero typography on cover slides, decorative
   gradient orbs, numbered bullet markers, accent edge bars, gradient cards on
   metrics, A/B labels on two-column layouts, and a centered thank-you closing slide.
-  

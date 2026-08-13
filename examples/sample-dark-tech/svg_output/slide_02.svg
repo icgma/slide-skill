@@ -1,0 +1,28 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="#0F172A"/></g>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="6" height="720" fill="#3B82F6" />
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="#1E293B" />
+    <text x="1184" y="710" font-family="Aptos, Arial, sans-serif" font-size="12" fill="#334155" text-anchor="end">02 / 08</text>
+  </g>
+  <g id="content-title-02">
+    <text x="96" y="108" font-family="Aptos, Arial, sans-serif" font-size="44" font-weight="700" fill="#F1F5F9">Problem Statement</text>
+    <rect x="96" y="118" width="80" height="4" fill="#3B82F6"/>
+  </g>
+  <g id="content-body-02">
+    <rect x="80" y="148" width="1120" height="56" rx="8" fill="#1E293B"/>
+    <text x="120" y="183" font-family="Aptos, Arial, sans-serif" font-size="22" fill="#3B82F6">&#x2022;</text>
+    <text x="148" y="183" font-family="Aptos, Arial, sans-serif" font-size="22" fill="#94A3B8">Data silos across 5+ disconnected systems</text>
+    <rect x="80" y="212" width="1120" height="56" rx="8" fill="#334155"/>
+    <text x="120" y="247" font-family="Aptos, Arial, sans-serif" font-size="22" fill="#3B82F6">&#x2022;</text>
+    <text x="148" y="247" font-family="Aptos, Arial, sans-serif" font-size="22" fill="#94A3B8">Manual reporting takes 40+ hours per week</text>
+    <rect x="80" y="276" width="1120" height="56" rx="8" fill="#1E293B"/>
+    <text x="120" y="311" font-family="Aptos, Arial, sans-serif" font-size="22" fill="#3B82F6">&#x2022;</text>
+    <text x="148" y="311" font-family="Aptos, Arial, sans-serif" font-size="22" fill="#94A3B8">Decision latency averages 72 hours</text>
+    <rect x="80" y="340" width="1120" height="56" rx="8" fill="#334155"/>
+    <text x="120" y="375" font-family="Aptos, Arial, sans-serif" font-size="22" fill="#3B82F6">&#x2022;</text>
+    <text x="148" y="375" font-family="Aptos, Arial, sans-serif" font-size="22" fill="#94A3B8">30% of insights arrive too late to act on</text>
+  </g>
+</svg>

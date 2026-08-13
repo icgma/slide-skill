@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "description": "Chart and visualization template SVGs for AI-authored slide design",
+  "templates": [
+    {"id": "timeline_horizontal", "file": "timeline_horizontal.svg", "category": "timeline", "description": "Horizontal timeline with connected nodes and quarter labels"},
+    {"id": "timeline_vertical", "file": "timeline_vertical.svg", "category": "timeline", "description": "Vertical timeline with milestone cards"},
+    {"id": "kpi_cards", "file": "kpi_cards.svg", "category": "kpi", "description": "4 KPI metric cards with values, labels, trends"},
+    {"id": "kpi_dashboard", "file": "kpi_dashboard.svg", "category": "kpi", "description": "Dashboard with mini KPIs, sparkline, activity list"},
+    {"id": "bar_vertical", "file": "bar_vertical.svg", "category": "bar", "description": "Vertical bar chart with 6 bars and grid"},
+    {"id": "bar_horizontal", "file": "bar_horizontal.svg", "category": "bar", "description": "Horizontal bar chart with 5 categories"},
+    {"id": "bar_grouped", "file": "bar_grouped.svg", "category": "bar", "description": "Grouped bars with 2 series and legend"},
+    {"id": "line_chart", "file": "line_chart.svg", "category": "line", "description": "Line chart with 2 series and data points"},
+    {"id": "area_chart", "file": "area_chart.svg", "category": "area", "description": "Area chart with gradient fill"},
+    {"id": "pie_chart", "file": "pie_chart.svg", "category": "circular", "description": "Pie chart with 4 segments and legend"},
+    {"id": "donut_chart", "file": "donut_chart.svg", "category": "circular", "description": "Donut chart with center text and legend"},
+    {"id": "basic_table", "file": "basic_table.svg", "category": "table", "description": "Data table with header and alternating rows"},
+    {"id": "comparison_table", "file": "comparison_table.svg", "category": "table", "description": "Feature comparison with checkmarks"},
+    {"id": "process_flow", "file": "process_flow.svg", "category": "process", "description": "5-step circular process with arrows"},
+    {"id": "chevron_process", "file": "chevron_process.svg", "category": "process", "description": "5-step chevron arrow process"},
+    {"id": "matrix_2x2", "file": "matrix_2x2.svg", "category": "matrix", "description": "2x2 strategic quadrant matrix"},
+    {"id": "quadrant_text_bullets", "file": "quadrant_text_bullets.svg", "category": "matrix", "description": "4-quadrant card grid with bullet points"}
+  ]
+}

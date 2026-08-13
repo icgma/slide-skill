@@ -1,0 +1,26 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-creative" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="{background}" />
+      <stop offset="100%" stop-color="{bg_secondary}" />
+    </linearGradient>
+  </defs>
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="{background}" />
+    <rect x="0" y="0" width="640" height="720" fill="{accent}" fill-opacity="0.08" />
+  </g>
+  <g id="content-title-01">
+    <text x="120" y="300" font-family="{font}" font-size="72" font-weight="700" fill="{text}">Bold</text>
+    <text x="120" y="380" font-family="{font}" font-size="72" font-weight="700" fill="{accent}">Title</text>
+    <text x="120" y="440" font-family="{font}" font-size="24" fill="{text_secondary}">Tagline or creative hook</text>
+  </g>
+  <g id="content-image-placeholder">
+    <rect x="700" y="80" width="500" height="560" rx="24" fill="{surface}" />
+    <text x="950" y="370" font-family="{font}" font-size="18" fill="{text_tertiary}" text-anchor="middle">[Hero Image]</text>
+  </g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

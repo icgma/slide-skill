@@ -1,0 +1,17 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="{background}" />
+    <rect x="0" y="580" width="1280" height="140" fill="{surface}" />
+  </g>
+  <g id="content-title-01">
+    <text x="640" y="320" font-family="{font}" font-size="60" font-weight="700" fill="{text}" text-anchor="middle">Presentation Title</text>
+    <rect x="540" y="340" width="200" height="4" fill="{accent}" />
+    <text x="640" y="400" font-family="{font}" font-size="26" fill="{text_secondary}" text-anchor="middle">Subtitle or author line</text>
+    <text x="640" y="650" font-family="{font}" font-size="16" fill="{text_tertiary}" text-anchor="middle">Date · Organization</text>
+  </g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

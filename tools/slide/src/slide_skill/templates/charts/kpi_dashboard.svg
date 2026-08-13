@@ -1,0 +1,59 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="{background}" />
+  </g>
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="6" height="720" fill="{accent}" />
+  </g>
+  <g id="content-title">
+    <text x="96" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}">Dashboard Overview</text>
+    <rect x="96" y="82" width="60" height="3" fill="{accent}" />
+  </g>
+  <g id="content-body">
+    <!-- Top row: 3 mini KPI cards -->
+    <g id="kpi-row">
+      <rect x="80" y="110" width="352" height="120" rx="12" fill="{surface}" />
+      <text x="256" y="160" font-family="{font}" font-size="40" font-weight="700" fill="{accent}" text-anchor="middle">1,247</text>
+      <text x="256" y="200" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Total Users</text>
+
+      <rect x="464" y="110" width="352" height="120" rx="12" fill="{surface}" />
+      <text x="640" y="160" font-family="{font}" font-size="40" font-weight="700" fill="{accent}" text-anchor="middle">$48.5K</text>
+      <text x="640" y="200" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Revenue</text>
+
+      <rect x="848" y="110" width="352" height="120" rx="12" fill="{surface}" />
+      <text x="1024" y="160" font-family="{font}" font-size="40" font-weight="700" fill="{secondary_accent}" text-anchor="middle">92.3%</text>
+      <text x="1024" y="200" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Satisfaction</text>
+    </g>
+
+    <!-- Bottom: sparkline area -->
+    <g id="chart-area">
+      <rect x="80" y="254" width="740" height="400" rx="12" fill="{surface}" />
+      <rect id="plot-area" x="120" y="280" width="660" height="340" fill="none" stroke="none" data-role="plot-area" />
+      <!-- Grid lines -->
+      <line x1="120" y1="360" x2="780" y2="360" stroke="{border}" stroke-opacity="0.3" />
+      <line x1="120" y1="440" x2="780" y2="440" stroke="{border}" stroke-opacity="0.3" />
+      <line x1="120" y1="520" x2="780" y2="520" stroke="{border}" stroke-opacity="0.3" />
+      <!-- Sparkline -->
+      <polyline points="120,520 230,480 340,500 450,400 560,360 670,320 780,300"
+                fill="none" stroke="{accent}" stroke-width="3" stroke-linejoin="round" />
+      <text x="120" y="620" font-family="{font}" font-size="12" fill="{text_tertiary}">Jan</text>
+      <text x="780" y="620" font-family="{font}" font-size="12" fill="{text_tertiary}" text-anchor="end">Jul</text>
+    </g>
+
+    <!-- Side: recent activity list -->
+    <g id="activity-list">
+      <rect x="848" y="254" width="352" height="400" rx="12" fill="{surface}" />
+      <text x="880" y="290" font-family="{font}" font-size="18" font-weight="600" fill="{text}">Recent Activity</text>
+      <rect x="872" y="308" width="304" height="48" rx="8" fill="{accent_tint}" />
+      <text x="888" y="338" font-family="{font}" font-size="14" fill="{text_secondary}">New signup — 2 min ago</text>
+      <rect x="872" y="368" width="304" height="48" rx="8" fill="{bg_secondary}" />
+      <text x="888" y="398" font-family="{font}" font-size="14" fill="{text_secondary}">Order placed — 15 min ago</text>
+      <rect x="872" y="428" width="304" height="48" rx="8" fill="{accent_tint}" />
+      <text x="888" y="458" font-family="{font}" font-size="14" fill="{text_secondary}">Review posted — 1 hr ago</text>
+    </g>
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-"""SVG to native PPTX export — slide-skill v2.0."""
+"""SVG to native PPTX export — slide-skill v4.1."""
 
 from __future__ import annotations
 
@@ -114,6 +114,8 @@ def export_project(project_path: Path | str, output: Path | str | None = None, s
         clips = collect_clip_paths(root)
         patterns = collect_patterns(root)
         svg_filters = collect_filters(root)
+        # Build parent_map ONCE per slide for O(N) cumulative translation lookups
+        meta["_parent_map"] = {c: p for p in root.iter() for c in p}
 
         # Pre-scan for bilingual groups — their text children are handled as a unit
         bilingual_group_ids = set()

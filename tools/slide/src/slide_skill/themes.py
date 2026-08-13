@@ -34,6 +34,138 @@ except ImportError:  # pragma: no cover
 
 ENTRY_POINT_GROUP = "slide_skill.themes"
 
+# Default monospace stack for code font role
+_CODE_FONT_STACK = "'JetBrains Mono', 'Fira Code', Consolas, 'Source Code Pro', monospace"
+
+# v4.0 extended color roles (6 base + 6 derived)
+EXTENDED_COLOR_ROLES = (
+    "background", "bg_secondary", "surface",
+    "text", "text_secondary", "text_tertiary",
+    "body", "accent", "secondary_accent", "accent_tint",
+    "muted", "border",
+)
+
+# v4.0 typography size ramp (anchored on 720px canvas height)
+DEFAULT_SIZE_RAMP: dict[str, int] = {
+    "hero": 72, "h1": 60, "h2": 48, "h3": 36,
+    "body": 24, "body_lg": 28,
+    "caption": 16, "overline": 14, "footnote": 12,
+}
+
+
+# ---------------------------------------------------------------------------
+# TypographySpec — role-based font family system
+# ---------------------------------------------------------------------------
+
+@dataclass
+class TypographySpec:
+    """Role-based typography specification for a slide deck.
+
+    Each role maps to a specific font family. The size ramp provides
+    canonical sizes for common text elements.
+    """
+    title_family: str       # Heading/title font
+    body_family: str        # Body text font
+    emphasis_family: str    # Bold callouts, hero numbers
+    code_family: str        # Monospace for code/data
+    size_ramp: dict[str, int] = field(default_factory=lambda: dict(DEFAULT_SIZE_RAMP))
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "TypographySpec":
+        kwargs = {k: v for k, v in data.items() if k in cls.__dataclass_fields__}
+        kwargs.setdefault("size_ramp", dict(DEFAULT_SIZE_RAMP))
+        return cls(**kwargs)
+
+
+# ---------------------------------------------------------------------------
+# Palette & typography derivation helpers
+# ---------------------------------------------------------------------------
+
+def _hex_shift(hexc: str, delta: int) -> str:
+    """Shift a hex color lighter (+) or darker (-) by delta per channel."""
+    h_ = hexc.lstrip("#")
+    r, g, b = (int(h_[i:i + 2], 16) for i in (0, 2, 4))
+    r = max(0, min(255, r + delta))
+    g = max(0, min(255, g + delta))
+    b = max(0, min(255, b + delta))
+    return f"#{r:02X}{g:02X}{b:02X}"
+
+
+def _hex_with_alpha(hexc: str, alpha_hex: str = "20") -> str:
+    """Append alpha channel to a 6-char hex color → 8-char RGBA hex."""
+    return hexc.rstrip() + alpha_hex
+
+
+def _is_light_bg(hexc: str) -> bool:
+    """Return True if the hex color has a light perceived luminance."""
+    h_ = hexc.lstrip("#")
+    r, g, b = int(h_[0:2], 16), int(h_[2:4], 16), int(h_[4:6], 16)
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.4
+
+
+def derive_extended_palette(base_palette: dict[str, str]) -> dict[str, str]:
+    """Compute all 12 color roles from a base palette (6 or more roles).
+
+    Missing roles are derived from the 6 core roles using luminance-aware
+    shifts.  Existing values are preserved — this function never overwrites
+    a color that is already set.
+
+    Returns a new dict with all 12 roles populated.
+    """
+    p = dict(base_palette)  # shallow copy
+    light = _is_light_bg(p.get("background", "#FFFFFF"))
+
+    # bg_secondary: a subtle variant of surface
+    if "bg_secondary" not in p:
+        surf = p.get("surface", p.get("background", "#FFFFFF"))
+        p["bg_secondary"] = _hex_shift(surf, -8 if light else 8)
+
+    # text_secondary: defaults to body color
+    if "text_secondary" not in p:
+        p["text_secondary"] = p.get("body", p.get("text", "#333333"))
+
+    # text_tertiary: defaults to muted color
+    if "text_tertiary" not in p:
+        p["text_tertiary"] = p.get("muted", "#999999")
+
+    # secondary_accent: a lighter tint of accent
+    if "secondary_accent" not in p:
+        accent = p.get("accent", "#3B82F6")
+        p["secondary_accent"] = _hex_shift(accent, 30 if light else 40)
+
+    # accent_tint: accent at ~12% opacity (as 8-digit hex)
+    if "accent_tint" not in p:
+        accent = p.get("accent", "#3B82F6")
+        p["accent_tint"] = _hex_with_alpha(accent, "20")
+
+    # border: shifted from muted
+    if "border" not in p:
+        muted = p.get("muted", "#CCCCCC")
+        p["border"] = _hex_shift(muted, 10 if light else -10)
+
+    return p
+
+
+def derive_typography(font_family: str) -> TypographySpec:
+    """Build a TypographySpec from a single font_family string.
+
+    Splits the font stack to extract the primary family for titles,
+    keeps the full stack for body, and adds a monospace fallback for code.
+    """
+    # Extract first family name (strip quotes and whitespace)
+    parts = [f.strip().strip("'\"") for f in font_family.split(",")]
+    primary = parts[0] if parts else "Arial"
+
+    return TypographySpec(
+        title_family=primary,
+        body_family=font_family,
+        emphasis_family=primary,
+        code_family=_CODE_FONT_STACK,
+    )
+
 
 @dataclass
 class ThemeSpec:
@@ -46,6 +178,18 @@ class ThemeSpec:
     layout_rhythm: list[str] = field(default_factory=lambda: ["anchor", "breathing", "dense"])
     icons: dict[str, str] = field(default_factory=dict)
     source: str = "builtin"  # "builtin" | "entry-point:<pkg>" | "user:<path>"
+
+    # --- v4.0 computed properties ---
+
+    @property
+    def extended_palette(self) -> dict[str, str]:
+        """Return palette expanded to all 12 color roles."""
+        return derive_extended_palette(self.palette)
+
+    @property
+    def typography(self) -> TypographySpec:
+        """Return role-based typography derived from font_family."""
+        return derive_typography(self.font_family)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -473,6 +617,215 @@ BUILTIN_THEMES: dict[str, ThemeSpec] = {
         ),
         layout_rhythm=["anchor", "anchor", "dense"],
         icons={"stroke": "#1E1B4B", "weight": "1.5"},
+    ),
+    # ------------------------------------------------------------------
+    # v5.0 Premium Frontend-Design themes — 10 distinctive high-end
+    # visual styles that avoid generic "AI slop" aesthetics.
+    # Each commits to a BOLD, intentional design direction per the
+    # Anthropic frontend-design skill guidelines.
+    # ------------------------------------------------------------------
+    "academic-noir": ThemeSpec(
+        name="academic-noir",
+        palette={
+            "background": "#FAF6F0", "surface": "#FFFFFF",
+            "text": "#2D1B22", "body": "#5E4E53",
+            "accent": "#A83C50", "muted": "#EAE0D5",
+        },
+        font_family="'Playfair Display', Georgia, 'Source Han Serif SC', 'Songti SC', SimSun, serif",
+        design_hints=(
+            "Premium academic editorial deck. Warm sand-paper background (#FAF6F0) with deep mulberry "
+            "text (#2D1B22) and berry-terracotta accent (#A83C50). NO rounded card containers — text "
+            "floats directly on the warm canvas, structured only by 0.5px hairline rules and generous "
+            "whitespace. Staggered vertical offsets between columns (one shifted up 25px, next down "
+            "15px) create asymmetric editorial tension. Double thin-line frame borders around slide "
+            "edges. Large low-opacity CJK serif watermark characters behind content columns. "
+            "Serif typography for all headings (Playfair Display / Source Han Serif SC). "
+            "Fine vertical bookmark stripe (4px) on left edge in accent color."
+        ),
+        layout_rhythm=["breathing", "breathing", "anchor"],
+        icons={"stroke": "#2D1B22", "weight": "1.25"},
+    ),
+    "neo-brutalist": ThemeSpec(
+        name="neo-brutalist",
+        palette={
+            "background": "#FBFBF9", "surface": "#FFFFFF",
+            "text": "#0A0A0A", "body": "#333333",
+            "accent": "#1D4ED8", "muted": "#E5E5E5",
+        },
+        font_family="'Space Grotesk', Impact, 'Microsoft YaHei', 'Noto Sans SC', sans-serif",
+        design_hints=(
+            "Neo-brutalist Swiss-grid deck. Stark white (#FBFBF9) background with carbon-black "
+            "(#0A0A0A) text and thick 2-3px solid black borders around ALL containers. ZERO blur, "
+            "ZERO gradients, ZERO rounded corners. Drop shadows are hard offset (dx=4, dy=4) in "
+            "pure black with opacity=1. Massive font-size contrast (titles 80px, body 14px) as "
+            "the sole decorative element. Klein-blue (#1D4ED8) or safety-orange (#F97316) used "
+            "as a single-point accent for maximum impact. Monospace code blocks welcome. "
+            "Aggressive grid alignment with visible construction lines."
+        ),
+        layout_rhythm=["dense", "dense", "anchor"],
+        icons={"stroke": "#0A0A0A", "weight": "2.5"},
+    ),
+    "industrial-blueprint": ThemeSpec(
+        name="industrial-blueprint",
+        palette={
+            "background": "#0B2B5C", "surface": "#0E3470",
+            "text": "#E0F2FE", "body": "#94B8D9",
+            "accent": "#00E5FF", "muted": "#1A4A7A",
+        },
+        font_family="'Roboto Mono', 'JetBrains Mono', 'Fira Code', Consolas, 'Source Code Pro', monospace",
+        design_hints=(
+            "Technical blueprint / engineering drawing deck. Deep blueprint-navy (#0B2B5C) "
+            "background with aurora-cyan (#00E5FF) accent lines and inspection-red (#C82A2A) "
+            "for warnings. All-monospace typography. Grid-dot texture background (tiny dots at "
+            "regular intervals). Content frames use L-shaped corner brackets instead of full "
+            "borders. Dimension lines with arrows (|<--- 120px --->|) between elements. "
+            "Cross-hair alignment markers (+) at container corners. Coordinate labels in small "
+            "text. Technical drawing aesthetic — precision, cold, engineered."
+        ),
+        layout_rhythm=["dense", "dense", "dense"],
+        icons={"stroke": "#00E5FF", "weight": "1.5"},
+    ),
+    "organic-clay": ThemeSpec(
+        name="organic-clay",
+        palette={
+            "background": "#F6F4ED", "surface": "#E2DCD2",
+            "text": "#343A40", "body": "#5C5248",
+            "accent": "#D4A373", "muted": "#CCD5AE",
+        },
+        font_family="Lora, Georgia, Garamond, 'Source Han Serif SC', 'Songti SC', serif",
+        design_hints=(
+            "Organic clay / earthy botanics deck. Mineral chalk-white (#F6F4ED) background "
+            "with warm terracotta-clay surfaces (#E2DCD2). Wild sage-green (#CCD5AE) for "
+            "secondary highlights. Containers use organic smooth Bezier curves instead of "
+            "hard rectangles — think soft clay blob shapes. Shadows are directionless ambient "
+            "diffuse (stdDeviation=30, opacity=0.02) like sunlight on ceramic. Serif typography "
+            "(Lora/Garamond) for warm human feel. Rounded line-cap icon strokes. "
+            "Watercolor-style gradient blob decorations in corners at very low opacity."
+        ),
+        layout_rhythm=["breathing", "breathing", "breathing"],
+        icons={"stroke": "#343A40", "weight": "1.25"},
+    ),
+    "art-deco-archive": ThemeSpec(
+        name="art-deco-archive",
+        palette={
+            "background": "#132E27", "surface": "#1A3B32",
+            "text": "#FFFFF0", "body": "#C8C8B0",
+            "accent": "#D4AF37", "muted": "#2A5A4A",
+        },
+        font_family="Didot, Bodoni, 'Source Han Serif SC', 'Noto Serif SC', Georgia, serif",
+        design_hints=(
+            "Art Deco vintage archive deck. Deep midnight-emerald (#132E27) background with "
+            "brushed champagne-gold (#D4AF37) decorative frames and accent lines. Ivory text "
+            "(#FFFFF0) on dark surface. Symmetric golden-ratio nested line frames around content "
+            "areas. Ultra-wide letter-spacing (6px+) on uppercase headings. High-contrast Didone "
+            "serif titles (Didot/Bodoni). Optional Chinese vertical text layout alongside gold "
+            "vertical rules. Geometric Art Deco fan/sunburst motifs as decorative corners. "
+            "Lavish, classical, museum-grade archival authority."
+        ),
+        layout_rhythm=["anchor", "anchor", "breathing"],
+        icons={"stroke": "#D4AF37", "weight": "1"},
+    ),
+    "japandi-zen": ThemeSpec(
+        name="japandi-zen",
+        palette={
+            "background": "#FEFEFE", "surface": "#F8F8F6",
+            "text": "#1A1A1A", "body": "#6B6B6B",
+            "accent": "#8E7960", "muted": "#F3F3F3",
+        },
+        font_family="Satoshi, Archivo, 'Noto Sans CJK SC', 'PingFang SC', sans-serif",
+        design_hints=(
+            "Japandi quiet zen deck. Near-pure-white (#FEFEFE) background with dried-leaf brown "
+            "(#8E7960) or soft bamboo-green (#A4B09F) as the sole accent. 90%+ of each slide is "
+            "deliberate empty space. NO borders, NO containers, NO shadows. Text is positioned "
+            "using absolute geometric gravity (anchored to bottom-left or right-center). A single "
+            "0.25px ultra-thin gray line spans the full width as the only structural element. "
+            "Typography uses extreme negative space with 130%+ letter-spacing on CJK characters. "
+            "Maximum restraint. If it feels empty, it is working."
+        ),
+        layout_rhythm=["breathing", "breathing", "breathing"],
+        icons={"stroke": "#1A1A1A", "weight": "0.75"},
+    ),
+    "high-fashion": ThemeSpec(
+        name="high-fashion",
+        palette={
+            "background": "#000000", "surface": "#F8F3EC",
+            "text": "#FFFFFF", "body": "#CCCCCC",
+            "accent": "#FF2D2D", "muted": "#333333",
+        },
+        font_family="Didot, 'Bodoni MT', 'Playfair Display', Georgia, 'Source Han Serif SC', serif",
+        design_hints=(
+            "High-fashion luxury editorial deck (Vogue/Bazaar aesthetic). Pure black (#000000) "
+            "or pure white backgrounds — never gray. High-contrast Didone serif headlines at "
+            "massive sizes (80-120px) used as visual art, not just text. Body copy is ultra-thin "
+            "weight sans-serif at tiny sizes (12-14px). Title text OVERLAYS content as a "
+            "semi-transparent background layer. Drop-cap initials (large decorative first letter) "
+            "begin each text section. NO card containers — content defined purely by typography "
+            "hierarchy and alignment. Accent red (#FF2D2D) used only for single-word emphasis. "
+            "Black and white photography crops welcome."
+        ),
+        layout_rhythm=["anchor", "breathing", "breathing"],
+        icons={"stroke": "#FFFFFF", "weight": "1"},
+    ),
+    "retro-terminal": ThemeSpec(
+        name="retro-terminal",
+        palette={
+            "background": "#090A09", "surface": "#162E1A",
+            "text": "#00FF55", "body": "#88CC88",
+            "accent": "#FF9F00", "muted": "#1A2E1A",
+        },
+        font_family="'JetBrains Mono', 'Courier Prime', 'Fira Code', Consolas, 'Source Code Pro', monospace",
+        design_hints=(
+            "Retro-futuristic tactical terminal deck. Abyss-black (#090A09) background with "
+            "radar-phosphor green (#00FF55) primary text and amber (#FF9F00) accent for warnings "
+            "and highlights. ALL-monospace typography throughout. Page hierarchy built using "
+            "ASCII-art brackets [ SECTION-14 ] and dot-line connectors o---o instead of card "
+            "borders. Concentric dashed-circle radar sweeps (stroke-dasharray) as background "
+            "decoration. Scanline overlay effect optional. Terminal-style headers with > prefix. "
+            "Cold War radar console / DOS CRT monitor aesthetic. Feels like mission control."
+        ),
+        layout_rhythm=["dense", "dense", "dense"],
+        icons={"stroke": "#00FF55", "weight": "2"},
+    ),
+    "botanical-herbarium": ThemeSpec(
+        name="botanical-herbarium",
+        palette={
+            "background": "#F2EAD0", "surface": "#FAF4E4",
+            "text": "#3A4736", "body": "#5A6B52",
+            "accent": "#7D6852", "muted": "#D4C9A8",
+        },
+        font_family="'Cormorant Garamond', Garamond, 'Source Han Serif SC', 'Songti SC', Georgia, serif",
+        design_hints=(
+            "Botanical garden / vintage herbarium deck. Antique parchment (#F2EAD0) background "
+            "with pine-needle dark-green (#3A4736) text and tea-stain brown (#7D6852) accent. "
+            "Misty stone-blue (#8FA2A6) for secondary highlights. Elegant italic Garamond "
+            "typography evoking handwritten naturalist field notes. Containers use fine wavy "
+            "serrated border lines (specimen-clip edge effect). Key numbers have a very faint, "
+            "low-opacity watercolor wash ellipse behind them (soft organic blob, not a rectangle). "
+            "Darwin's HMS Beagle journal aesthetic. Romantic, scientific, archival warmth."
+        ),
+        layout_rhythm=["breathing", "breathing", "anchor"],
+        icons={"stroke": "#3A4736", "weight": "1.25"},
+    ),
+    "celestial-glass": ThemeSpec(
+        name="celestial-glass",
+        palette={
+            "background": "#07070C", "surface": "#12121A",
+            "text": "#F0F4FF", "body": "#A0B0D0",
+            "accent": "#4FACFE", "muted": "#1A1A2E",
+        },
+        font_family="'Plus Jakarta Sans', 'Clash Display', Inter, 'PingFang SC', 'Noto Sans SC', sans-serif",
+        design_hints=(
+            "Celestial frosted-glass deck. Deep-space black (#07070C) background with large "
+            "aurora gradient mesh blobs (blend of #00F2FE cyan and #4FACFE blue-violet) as "
+            "deep background decoration behind a heavy Gaussian blur (stdDeviation=40). "
+            "Content panels are frosted-glass: semi-transparent white fill (opacity=0.03-0.05) "
+            "with ultra-thin white borders (stroke-width=0.5, stroke-opacity=0.1). Weightless, "
+            "floating, zero-gravity feel. Modern geometric sans-serif typography (Plus Jakarta "
+            "Sans). Fluorescent white (#F0F4FF) text. Avoid any hard edges or solid fills — "
+            "everything should feel ethereal, translucent, and cosmically distant."
+        ),
+        layout_rhythm=["anchor", "breathing", "breathing"],
+        icons={"stroke": "#F0F4FF", "weight": "1.5"},
     ),
 }
 

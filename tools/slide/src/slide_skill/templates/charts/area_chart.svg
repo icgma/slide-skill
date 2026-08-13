@@ -1,0 +1,49 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="area-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="{accent}" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="{accent}" stop-opacity="0.02" />
+    </linearGradient>
+  </defs>
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="content-title">
+    <text x="96" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}">Growth Over Time</text>
+    <rect x="96" y="82" width="60" height="3" fill="{accent}" />
+  </g>
+  <g id="content-body">
+    <rect x="80" y="100" width="1120" height="560" rx="16" fill="{surface}" />
+    <rect id="plot-area" x="160" y="130" width="960" height="420" fill="none" data-role="plot-area" />
+    <!-- Grid -->
+    <line x1="160" y1="550" x2="1120" y2="550" stroke="{text_tertiary}" stroke-width="1.5" />
+    <line x1="160" y1="445" x2="1120" y2="445" stroke="{border}" stroke-opacity="0.2" />
+    <line x1="160" y1="340" x2="1120" y2="340" stroke="{border}" stroke-opacity="0.2" />
+    <line x1="160" y1="235" x2="1120" y2="235" stroke="{border}" stroke-opacity="0.2" />
+    <!-- Area fill -->
+    <polygon points="200,480 360,420 520,440 680,350 840,280 1000,220 1080,190 1080,550 200,550"
+             fill="url(#area-fill)" />
+    <!-- Line on top -->
+    <polyline points="200,480 360,420 520,440 680,350 840,280 1000,220 1080,190"
+              fill="none" stroke="{accent}" stroke-width="3" stroke-linejoin="round" />
+    <!-- Data points -->
+    <circle cx="200" cy="480" r="5" fill="{accent}" />
+    <circle cx="360" cy="420" r="5" fill="{accent}" />
+    <circle cx="520" cy="440" r="5" fill="{accent}" />
+    <circle cx="680" cy="350" r="5" fill="{accent}" />
+    <circle cx="840" cy="280" r="5" fill="{accent}" />
+    <circle cx="1000" cy="220" r="5" fill="{accent}" />
+    <circle cx="1080" cy="190" r="5" fill="{accent}" />
+    <!-- X-axis -->
+    <text x="200" y="580" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">Jan</text>
+    <text x="360" y="580" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">Feb</text>
+    <text x="520" y="580" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">Mar</text>
+    <text x="680" y="580" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">Apr</text>
+    <text x="840" y="580" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">May</text>
+    <text x="1000" y="580" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">Jun</text>
+    <text x="1080" y="580" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">Jul</text>
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

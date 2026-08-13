@@ -1,0 +1,34 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="content-title">
+    <text x="640" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}" text-anchor="middle">Strategic Matrix</text>
+    <rect x="580" y="82" width="120" height="3" fill="{accent}" />
+  </g>
+  <g id="content-body">
+    <!-- Axes -->
+    <line x1="200" y1="120" x2="200" y2="620" stroke="{border}" stroke-width="2" />
+    <line x1="200" y1="620" x2="1120" y2="620" stroke="{border}" stroke-width="2" />
+    <!-- Axis labels -->
+    <text x="660" y="665" font-family="{font}" font-size="16" font-weight="600" fill="{text_secondary}" text-anchor="middle">Dimension X →</text>
+    <text x="160" y="370" font-family="{font}" font-size="16" font-weight="600" fill="{text_secondary}" text-anchor="middle" transform="rotate(-90,160,370)">Dimension Y →</text>
+    <!-- Quadrant backgrounds -->
+    <rect x="200" y="120" width="460" height="250" fill="{accent_tint}" fill-opacity="0.3" />
+    <rect x="660" y="120" width="460" height="250" fill="{accent}" fill-opacity="0.1" />
+    <rect x="200" y="370" width="460" height="250" fill="{surface}" />
+    <rect x="660" y="370" width="460" height="250" fill="{accent_tint}" fill-opacity="0.3" />
+    <!-- Quadrant labels -->
+    <text x="430" y="200" font-family="{font}" font-size="20" font-weight="700" fill="{text}" text-anchor="middle">Quadrant A</text>
+    <text x="430" y="228" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">Low X, High Y</text>
+    <text x="890" y="200" font-family="{font}" font-size="20" font-weight="700" fill="{accent}" text-anchor="middle">Quadrant B</text>
+    <text x="890" y="228" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">High X, High Y</text>
+    <text x="430" y="460" font-family="{font}" font-size="20" font-weight="700" fill="{text_secondary}" text-anchor="middle">Quadrant C</text>
+    <text x="430" y="488" font-family="{font}" font-size="14" fill="{text_tertiary}" text-anchor="middle">Low X, Low Y</text>
+    <text x="890" y="460" font-family="{font}" font-size="20" font-weight="700" fill="{text}" text-anchor="middle">Quadrant D</text>
+    <text x="890" y="488" font-family="{font}" font-size="14" fill="{text_secondary}" text-anchor="middle">High X, Low Y</text>
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

@@ -1,0 +1,50 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="content-title">
+    <text x="96" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}">Workflow Steps</text>
+    <rect x="96" y="82" width="60" height="3" fill="{accent}" />
+  </g>
+  <g id="content-body">
+    <!-- Chevron 1 -->
+    <g id="chevron-1" data-anim-order="1">
+      <polygon points="80,280 280,280 320,360 280,440 80,440" fill="{accent}" />
+      <text x="180" y="350" font-family="{font}" font-size="18" font-weight="700" fill="{background}" text-anchor="middle">01</text>
+      <text x="180" y="375" font-family="{font}" font-size="14" fill="{background}" text-anchor="middle">Discover</text>
+    </g>
+    <!-- Chevron 2 -->
+    <g id="chevron-2" data-anim-order="2">
+      <polygon points="316,280 516,280 556,360 516,440 316,440 356,360" fill="{accent}" fill-opacity="0.85" />
+      <text x="426" y="350" font-family="{font}" font-size="18" font-weight="700" fill="{background}" text-anchor="middle">02</text>
+      <text x="426" y="375" font-family="{font}" font-size="14" fill="{background}" text-anchor="middle">Define</text>
+    </g>
+    <!-- Chevron 3 -->
+    <g id="chevron-3" data-anim-order="3">
+      <polygon points="552,280 752,280 792,360 752,440 552,440 592,360" fill="{accent}" fill-opacity="0.7" />
+      <text x="662" y="350" font-family="{font}" font-size="18" font-weight="700" fill="{background}" text-anchor="middle">03</text>
+      <text x="662" y="375" font-family="{font}" font-size="14" fill="{background}" text-anchor="middle">Develop</text>
+    </g>
+    <!-- Chevron 4 -->
+    <g id="chevron-4" data-anim-order="4">
+      <polygon points="788,280 988,280 1028,360 988,440 788,440 828,360" fill="{secondary_accent}" fill-opacity="0.85" />
+      <text x="898" y="350" font-family="{font}" font-size="18" font-weight="700" fill="{background}" text-anchor="middle">04</text>
+      <text x="898" y="375" font-family="{font}" font-size="14" fill="{background}" text-anchor="middle">Deliver</text>
+    </g>
+    <!-- Chevron 5 -->
+    <g id="chevron-5" data-anim-order="5">
+      <polygon points="1024,280 1200,280 1200,440 1024,440 1064,360" fill="{secondary_accent}" />
+      <text x="1122" y="350" font-family="{font}" font-size="18" font-weight="700" fill="{background}" text-anchor="middle">05</text>
+      <text x="1122" y="375" font-family="{font}" font-size="14" fill="{background}" text-anchor="middle">Deploy</text>
+    </g>
+    <!-- Step descriptions below -->
+    <text x="180" y="480" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">Research &amp; gather</text>
+    <text x="426" y="480" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">Scope &amp; plan</text>
+    <text x="662" y="480" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">Build &amp; iterate</text>
+    <text x="898" y="480" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">Test &amp; validate</text>
+    <text x="1122" y="480" font-family="{font}" font-size="13" fill="{text_secondary}" text-anchor="middle">Release &amp; monitor</text>
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

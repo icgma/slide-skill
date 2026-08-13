@@ -1,0 +1,22 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="content-title-NN">
+    <text x="96" y="80" font-family="{font}" font-size="36" font-weight="700" fill="{text}">Two Column Title</text>
+    <rect x="96" y="92" width="60" height="3" fill="{accent}" />
+  </g>
+  <g id="content-left-NN">
+    <rect x="80" y="112" width="555" height="554" rx="12" fill="{surface}" />
+    <text x="120" y="164" font-family="{font}" font-size="22" font-weight="700" fill="{text}">Left Section</text>
+    <text x="120" y="200" font-family="{font}" font-size="18" fill="{text_secondary}">Body content for left column.</text>
+  </g>
+  <g id="content-right-NN">
+    <rect x="648" y="112" width="555" height="554" rx="12" fill="{surface}" />
+    <text x="688" y="164" font-family="{font}" font-size="22" font-weight="700" fill="{text}">Right Section</text>
+    <text x="688" y="200" font-family="{font}" font-size="18" fill="{text_secondary}">Body content for right column.</text>
+  </g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>

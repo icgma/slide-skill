@@ -14,48 +14,41 @@ from svg_pipeline so they blend seamlessly with existing themes.
 from __future__ import annotations
 
 from .content_planner import ContentItem, SlidePlan
+from .svg_shared import (
+    adaptive_title_font,
+    card_style_params,
+    chrome_body,
+    chrome_defs,
+    decor_orbs,
+    design_tokens,
+    hex_shift,
+    is_light,
+    shadow_filter_def,
+    svg_open,
+    title_block,
+    title_underline,
+)
 from .util import xml_escape
 
 
 # ---------------------------------------------------------------------------
-# Shared helpers (mirrored from svg_pipeline for decoupling)
+# Local aliases — single source of truth is svg_shared
 # ---------------------------------------------------------------------------
 
+_tokens = design_tokens
+_hex_shift = hex_shift
+_shadow_filter_def = shadow_filter_def
+_svg_open = svg_open
+_title_underline = title_underline
+_title_block = title_block
+_decor_orbs = decor_orbs
+
+
 def _chrome(index: int, total: int, lock: dict, w: int, h: int) -> str:
-    """Left accent stripe + footer bar — same as svg_pipeline._chrome."""
-    p = lock["palette"]
-    font = lock["font_family"]
-    return (
-        f'  <g id="chrome-stripe">\n'
-        f'    <rect x="0" y="0" width="6" height="{h}" fill="{p["accent"]}" />\n'
-        f'  </g>\n'
-        f'  <g id="chrome-footer">\n'
-        f'    <rect x="0" y="{h - 32}" width="{w}" height="32" fill="{p["surface"]}" />\n'
-        f'    <text x="{w - 96}" y="{h - 10}" font-family="{font}" font-size="12" '
-        f'fill="{p["muted"]}" text-anchor="end">{index:02d} / {total:02d}</text>\n'
-        f'  </g>'
-    )
-
-
-def _decor_orbs(index: int, lock: dict, w: int, h: int, intensity: float = 0.10) -> tuple[str, str]:
-    """Subtle decorative orbs."""
-    p = lock["palette"]
-    defs = (
-        f'    <radialGradient id="teach-orb-{index:02d}" cx="50%" cy="50%" r="50%">\n'
-        f'      <stop offset="0%" stop-color="{p["accent"]}" stop-opacity="{intensity}"/>\n'
-        f'      <stop offset="100%" stop-color="{p["accent"]}" stop-opacity="0"/>\n'
-        f'    </radialGradient>'
-    )
-    body = (
-        f'  <g id="decor-{index:02d}">\n'
-        f'    <circle cx="{w - 80}" cy="60" r="280" fill="url(#teach-orb-{index:02d})"/>\n'
-        f'  </g>'
-    )
-    return defs, body
-
-
-def _svg_open(w: int, h: int) -> str:
-    return f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" xmlns="http://www.w3.org/2000/svg">'
+    """Wrapper combining svg_shared chrome_defs + chrome_body."""
+    defs = chrome_defs(index, lock, w, h)
+    body = chrome_body(index, total, lock, w, h)
+    return f'  <defs>\n{defs}\n  </defs>\n{body}'
 
 
 # ---------------------------------------------------------------------------
@@ -75,6 +68,7 @@ def render_vocab_card(plan: SlidePlan, lock: dict, total: int) -> str:
     w, h = int(canvas["width"]), int(canvas["height"])
     p = lock["palette"]
     font = lock["font_family"]
+    t = _tokens(w, h)
     chrome = _chrome(plan.index, total, lock, w, h)
     orb_defs, orb_body = _decor_orbs(plan.index, lock, w, h)
     title = xml_escape(plan.title)
@@ -91,12 +85,18 @@ def render_vocab_card(plan: SlidePlan, lock: dict, total: int) -> str:
     else:
         cols, rows = 2, 2
 
-    card_w = (w - 160 - (cols - 1) * 32) // cols
-    card_h = (h - 240 - (rows - 1) * 24) // rows
-    start_x = 80
-    start_y = 160
+    m = t["margin"]["content"]
+    card_w = (w - m * 2 - (cols - 1) * 32) // cols
+    card_h = (h - m * 2 - 80 - (rows - 1) * 24) // rows
+    start_x = m
+    start_y = m + 80
 
+    defs_parts: list[str] = [
+        _shadow_filter_def(plan.index),
+        orb_defs
+    ]
     cards_svg: list[str] = []
+
     for idx, item in enumerate(items[:count]):
         col = idx % cols
         row = idx // cols
@@ -105,66 +105,91 @@ def render_vocab_card(plan: SlidePlan, lock: dict, total: int) -> str:
         mid_x = cx + card_w // 2
         mid_y = cy + card_h // 2
 
-        # Card background
-        cards_svg.append(
-            f'    <rect x="{cx}" y="{cy}" width="{card_w}" height="{card_h}" '
-            f'rx="16" fill="{p["surface"]}"/>'
+        ca = _hex_shift(p["accent"], idx * 15 - 30)
+        cs = card_style_params(lock, idx)
+        grad_id = f"vocab-card-grad-{plan.index:02d}-{idx}"
+        clip_id = f"vocab-card-clip-{plan.index:02d}-{idx}"
+
+        defs_parts.append(
+            f'    <linearGradient id="{grad_id}" x1="0%" y1="0%" x2="100%" y2="100%">\n'
+            f'      <stop offset="0%" stop-color="{p["surface"]}" stop-opacity="{cs["fill_opacity_start"]}"/>\n'
+            f'      <stop offset="100%" stop-color="{_hex_shift(p["surface"], -10)}" stop-opacity="{cs["fill_opacity_end"]}"/>\n'
+            f'    </linearGradient>'
         )
-        # Top accent bar
-        cards_svg.append(
-            f'    <rect x="{cx}" y="{cy}" width="{card_w}" height="5" '
-            f'rx="3" fill="{p["accent"]}"/>'
+        defs_parts.append(
+            f'    <clipPath id="{clip_id}">\n'
+            f'      <rect x="{cx}" y="{cy}" width="{card_w}" height="{card_h}" rx="16" />\n'
+            f'    </clipPath>'
         )
 
-        # Pinyin (above Chinese, accent color)
+        cards_svg.append(
+            f'    <g clip-path="url(#{clip_id})">\n'
+            f'      <rect x="{cx}" y="{cy}" width="{card_w}" height="{card_h}" fill="url(#{grad_id})"/>\n'
+            f'      <rect x="{cx}" y="{cy}" width="{card_w}" height="5" fill="{ca}" opacity="0.85"/>\n'
+            f'    </g>'
+        )
+
+        cards_svg.append(
+            f'    <rect x="{cx}" y="{cy}" width="{card_w}" height="{card_h}" rx="16" fill="none" '
+            f'stroke="{ca}" stroke-opacity="{cs["stroke_opacity"]}" stroke-width="{cs["stroke_width"]}" '
+            f'filter="url(#card-shadow-{plan.index:02d})"/>'
+        )
+
+        if cs["inner_border"]:
+            cards_svg.append(
+                f'    <rect x="{cx + 6}" y="{cy + 6}" width="{card_w - 12}" height="{card_h - 12}" rx="12" fill="none" '
+                f'stroke="{ca}" stroke-opacity="{cs["inner_stroke_opacity"]}" stroke-width="{cs["inner_stroke_width"]}"/>'
+            )
+
+        # Pinyin (above Chinese, shifted accent color)
         if item.tertiary:
             pinyin = xml_escape(item.tertiary)
             cards_svg.append(
-                f'    <text x="{mid_x}" y="{mid_y - 50}" font-family="{font}" '
-                f'font-size="22" font-style="italic" fill="{p["accent"]}" '
+                f'    <text x="{mid_x}" y="{mid_y - 36}" font-family="{font}" '
+                f'font-size="20" font-weight="600" fill="{ca}" '
                 f'text-anchor="middle">{pinyin}</text>'
             )
 
         # Chinese characters (large, centered, primary)
         chinese = xml_escape(item.primary)
-        # Auto-size: shorter words get bigger font
         zh_len = len(item.primary)
         if zh_len <= 2:
             zh_font = 64
         elif zh_len <= 4:
-            zh_font = 52
+            zh_font = 48
         else:
             zh_font = 40
 
         cards_svg.append(
-            f'    <text x="{mid_x}" y="{mid_y + 10}" font-family="{font}" '
+            f'    <text x="{mid_x}" y="{mid_y + 12}" font-family="{font}" '
             f'font-size="{zh_font}" font-weight="700" fill="{p["text"]}" '
             f'text-anchor="middle">{chinese}</text>'
         )
 
         # English translation (below Chinese, muted)
         if item.secondary:
-            eng = xml_escape(item.secondary)
+            from .svg_pipeline import _wrap_to_tspans
+            eng_font = 20
+            eng_w = card_w - 32
+            tspans, line_count = _wrap_to_tspans(item.secondary, mid_x, eng_font, eng_w, line_height=1.2)
+            ey = mid_y + 42 - ((line_count - 1) * 15 // 2)
             cards_svg.append(
-                f'    <text x="{mid_x}" y="{mid_y + 60}" font-family="{font}" '
-                f'font-size="18" fill="{p["body"]}" '
-                f'text-anchor="middle">{eng}</text>'
+                f'    <text x="{mid_x}" y="{ey}" font-family="{font}" '
+                f'font-size="{eng_font}" fill="{p["body"]}" '
+                f'text-anchor="middle">{tspans}</text>'
             )
 
     card_content = "\n".join(cards_svg)
+    defs_content = "\n".join(defs_parts)
     return (
         f'{_svg_open(w, h)}\n'
         f'  <defs>\n'
-        f'{orb_defs}\n'
+        f'{defs_content}\n'
         f'  </defs>\n'
         f'  <g id="background"><rect x="0" y="0" width="{w}" height="{h}" fill="{p["background"]}"/></g>\n'
         f'{orb_body}\n'
         f'{chrome}\n'
-        f'  <g id="content-title-{plan.index:02d}">\n'
-        f'    <text x="96" y="108" font-family="{font}" font-size="36" '
-        f'font-weight="700" fill="{p["text"]}">{title}</text>\n'
-        f'    <rect x="96" y="120" width="60" height="4" fill="{p["accent"]}"/>\n'
-        f'  </g>\n'
+        f'{_title_block(plan.index, plan.title, lock, w, h)}\n'
         f'  <g id="content-vocab-{plan.index:02d}">\n'
         f'{card_content}\n'
         f'  </g>\n'
@@ -186,79 +211,176 @@ def render_dialogue(plan: SlidePlan, lock: dict, total: int) -> str:
     w, h = int(canvas["width"]), int(canvas["height"])
     p = lock["palette"]
     font = lock["font_family"]
+    t = _tokens(w, h)
     chrome = _chrome(plan.index, total, lock, w, h)
-    orb_defs, orb_body = _decor_orbs(plan.index, lock, w, h, intensity=0.06)
+    orb_defs, orb_body = _decor_orbs(plan.index, lock, w, h, intensity=0.12)
     title = xml_escape(plan.title)
 
     items = [i for i in plan.items if i.type == "dialogue"]
     bubble_parts: list[str] = []
-    bubble_y = 180
-    bubble_h = 70
-    gap = 16
-    max_bubble_w = w - 300  # Leave room for speaker label
+    
+    max_bubble_w = w - 320  # Leave room for speaker label
 
-    for item in items:
+    accent_lighter = _hex_shift(p["accent"], 40)
+    defs_parts: list[str] = [
+        _shadow_filter_def(plan.index),
+        orb_defs
+    ]
+
+    from .svg_pipeline import _wrap_to_tspans
+    
+    dialogue_data = []
+    total_bubble_h = 0
+    count = min(len(items), 4)
+    if count == 0:
+        return _render_text_fallback(plan, lock, total)
+        
+    for idx, item in enumerate(items[:count]):
         speaker = item.meta.get("speaker", "A")
-        text = xml_escape(item.primary[:80])
-        annotation = xml_escape(item.secondary[:80]) if item.secondary else ""
-
-        is_left = speaker in ("A", "甲")
+        is_left = speaker in ("A", "甲", "1") or idx % 2 == 0
+        
         if is_left:
-            bx = 120
-            label_x = 80
+            bx = 130
             text_x = bx + 24
-            label_anchor = "end"
         else:
-            bx = w - max_bubble_w - 120
-            label_x = w - 80
+            bx = w - max_bubble_w - 130
             text_x = bx + 24
-            label_anchor = "start"
+            
+        text_w = max_bubble_w - 48
+        p_tspans, p_lines = _wrap_to_tspans(item.primary, text_x, 18, text_w, line_height=1.3)
+        p_h = p_lines * 23
+        
+        s_tspans, s_lines = "", 0
+        s_h = 0
+        if item.secondary:
+            s_tspans, s_lines = _wrap_to_tspans(item.secondary, text_x, 13, text_w, line_height=1.3)
+            s_h = s_lines * 16
+            
+        text_h = p_h + (s_h + 8 if item.secondary else 0)
+        curr_bubble_h = max(72, text_h + 28)
+        
+        total_bubble_h += curr_bubble_h
+        dialogue_data.append({
+            "item": item,
+            "speaker": speaker,
+            "is_left": is_left,
+            "bx": bx,
+            "text_x": text_x,
+            "p_tspans": p_tspans,
+            "s_tspans": s_tspans,
+            "text_h": text_h,
+            "p_h": p_h,
+            "bubble_h": curr_bubble_h
+        })
+        
+    # Calculate gaps and starting y
+    content_h = h - 220
+    gap = min(16, max(10, (content_h - total_bubble_h) // max(count - 1, 1))) if count > 1 else 16
+    bubble_y = 150 + max(0, (content_h - (total_bubble_h + gap * (count - 1))) // 2)
 
-        # Speaker label circle
-        circle_x = label_x if is_left else label_x
+    for idx, data in enumerate(dialogue_data):
+        bx = data["bx"]
+        text_x = data["text_x"]
+        bubble_h = data["bubble_h"]
+        speaker = data["speaker"]
+        is_left = data["is_left"]
+        p_tspans = data["p_tspans"]
+        s_tspans = data["s_tspans"]
+        text_h = data["text_h"]
+        p_h = data["p_h"]
+        
+        if is_left:
+            label_x = 80
+        else:
+            label_x = w - 80
+            
+        ca = p["accent"] if is_left else accent_lighter
+        cs = card_style_params(lock, idx)
+        grad_id = f"dialogue-bubble-grad-{plan.index:02d}-{idx}"
+        clip_id = f"dialogue-bubble-clip-{plan.index:02d}-{idx}"
+
+        defs_parts.append(
+            f'    <linearGradient id="{grad_id}" x1="0%" y1="0%" x2="100%" y2="100%">\n'
+            f'      <stop offset="0%" stop-color="{p["surface"]}" stop-opacity="{cs["fill_opacity_start"]}"/>\n'
+            f'      <stop offset="100%" stop-color="{_hex_shift(p["surface"], -10)}" stop-opacity="{cs["fill_opacity_end"]}"/>\n'
+            f'    </linearGradient>'
+        )
+        defs_parts.append(
+            f'    <clipPath id="{clip_id}">\n'
+            f'      <rect x="{bx}" y="{bubble_y}" width="{max_bubble_w}" height="{bubble_h}" rx="14" />\n'
+            f'    </clipPath>'
+        )
+        
+        # Speaker label circle with concentric glowing rings
+        label_cy = bubble_y + bubble_h // 2
         bubble_parts.append(
-            f'    <circle cx="{80 if is_left else w - 80}" cy="{bubble_y + 24}" '
-            f'r="20" fill="{p["accent"]}" opacity="0.15"/>'
+            f'    <circle cx="{label_x}" cy="{label_cy}" r="26" '
+            f'fill="{ca}" fill-opacity="0.04" stroke="{ca}" stroke-opacity="0.1" stroke-width="1"/>'
         )
         bubble_parts.append(
-            f'    <text x="{80 if is_left else w - 80}" y="{bubble_y + 30}" '
-            f'font-family="{font}" font-size="16" font-weight="700" '
-            f'fill="{p["accent"]}" text-anchor="middle">{xml_escape(speaker)}</text>'
+            f'    <circle cx="{label_x}" cy="{label_cy}" r="21" '
+            f'fill="{ca}" fill-opacity="0.08" stroke="{ca}" stroke-opacity="0.2" stroke-dasharray="3 2" stroke-width="1"/>'
+        )
+        bubble_parts.append(
+            f'    <circle cx="{label_x}" cy="{label_cy}" r="17" '
+            f'fill="{ca}" fill-opacity="0.15" stroke="{ca}" stroke-opacity="0.3"/>'
+        )
+        bubble_parts.append(
+            f'    <text x="{label_x}" y="{label_cy + 6}" font-family="{font}" font-size="20" font-weight="700" '
+            f'fill="{ca}" text-anchor="middle">{xml_escape(speaker)}</text>'
+        )
+        
+        # Speech bubble body with clip path
+        bubble_parts.append(
+            f'    <g clip-path="url(#{clip_id})">\n'
+            f'      <rect x="{bx}" y="{bubble_y}" width="{max_bubble_w}" height="{bubble_h}" fill="url(#{grad_id})"/>\n'
+            f'      <!-- Left/Right accent stripe -->\n'
+            f'      <rect x="{bx if is_left else bx + max_bubble_w - 4}" y="{bubble_y}" width="4" height="{bubble_h}" fill="{ca}" opacity="0.85"/>\n'
+            f'    </g>'
+        )
+        
+        # Outer bubble frame
+        bubble_parts.append(
+            f'    <rect x="{bx}" y="{bubble_y}" width="{max_bubble_w}" height="{bubble_h}" rx="14" fill="none" '
+            f'stroke="{ca}" stroke-opacity="{cs["stroke_opacity"]}" stroke-width="{cs["stroke_width"]}" '
+            f'filter="url(#card-shadow-{plan.index:02d})"/>'
         )
 
-        # Speech bubble
-        fill = p["surface"] if is_left else p["accent"]
-        text_fill = p["text"] if is_left else p["background"]
-        bubble_parts.append(
-            f'    <rect x="{bx}" y="{bubble_y}" width="{max_bubble_w}" '
-            f'height="{bubble_h}" rx="14" fill="{fill}"/>'
-        )
-        bubble_parts.append(
-            f'    <text x="{text_x}" y="{bubble_y + 32}" font-family="{font}" '
-            f'font-size="22" fill="{text_fill}">{text}</text>'
-        )
-
-        # Annotation (translation) below the main text
-        if annotation:
+        if cs["inner_border"]:
             bubble_parts.append(
-                f'    <text x="{text_x}" y="{bubble_y + 55}" font-family="{font}" '
-                f'font-size="14" font-style="italic" fill="{p["body"]}">{annotation}</text>'
+                f'    <rect x="{bx + 5}" y="{bubble_y + 5}" width="{max_bubble_w - 10}" height="{bubble_h - 10}" rx="10" fill="none" '
+                f'stroke="{ca}" stroke-opacity="{cs["inner_stroke_opacity"]}" stroke-width="{cs["inner_stroke_width"]}"/>'
             )
+        
+        # Text Y position logic: vertically centered
+        text_padding = (bubble_h - text_h) // 2
+        py = bubble_y + text_padding + 16 # shift down by font size baseline
+        
+        bubble_parts.append(
+            f'    <text x="{text_x}" y="{py}" font-family="{font}" '
+            f'font-size="22" font-weight="600" fill="{p["text"]}">{p_tspans}</text>'
+        )
 
+        if s_tspans:
+            sy = py + p_h + 8 - 3
+            bubble_parts.append(
+                f'    <text x="{text_x}" y="{sy}" font-family="{font}" '
+                f'font-size="17" font-style="italic" fill="{p["body"]}" opacity="0.9">{s_tspans}</text>'
+            )
+            
         bubble_y += bubble_h + gap
 
     bubble_content = "\n".join(bubble_parts)
+    defs_content = "\n".join(defs_parts)
     return (
         f'{_svg_open(w, h)}\n'
-        f'  <defs>\n{orb_defs}\n  </defs>\n'
+        f'  <defs>\n'
+        f'{defs_content}\n'
+        f'  </defs>\n'
         f'  <g id="background"><rect x="0" y="0" width="{w}" height="{h}" fill="{p["background"]}"/></g>\n'
         f'{orb_body}\n'
         f'{chrome}\n'
-        f'  <g id="content-title-{plan.index:02d}">\n'
-        f'    <text x="96" y="108" font-family="{font}" font-size="36" '
-        f'font-weight="700" fill="{p["text"]}">{title}</text>\n'
-        f'    <rect x="96" y="120" width="60" height="4" fill="{p["accent"]}"/>\n'
-        f'  </g>\n'
+        f'{_title_block(plan.index, plan.title, lock, w, h)}\n'
         f'  <g id="content-dialogue-{plan.index:02d}">\n'
         f'{bubble_content}\n'
         f'  </g>\n'
@@ -280,63 +402,155 @@ def render_sentence_example(plan: SlidePlan, lock: dict, total: int) -> str:
     w, h = int(canvas["width"]), int(canvas["height"])
     p = lock["palette"]
     font = lock["font_family"]
+    t = _tokens(w, h)
     chrome = _chrome(plan.index, total, lock, w, h)
     orb_defs, orb_body = _decor_orbs(plan.index, lock, w, h)
     title = xml_escape(plan.title)
 
     items = plan.items
     parts: list[str] = []
-    y = 180
-    card_h = 90
-    gap = 16
+    
     card_w = w - 180
+    text_w = card_w - 96
+    
+    defs_parts: list[str] = [
+        _shadow_filter_def(plan.index),
+        orb_defs
+    ]
 
-    for idx, item in enumerate(items[:5]):
+    from .svg_pipeline import _wrap_to_tspans
+    
+    sentence_data = []
+    total_card_h = 0
+    count = min(len(items), 5)
+    if count == 0:
+        return _render_text_fallback(plan, lock, total)
+        
+    for idx, item in enumerate(items[:count]):
         cx = 90
-        text = xml_escape(item.primary[:100])
-        trans = xml_escape(item.secondary[:100]) if item.secondary else ""
+        text_x = cx + 72
+        
+        p_tspans, p_lines = _wrap_to_tspans(item.primary, text_x, 22, text_w, line_height=1.3)
+        p_h = p_lines * 28
+        
+        s_tspans, s_lines = "", 0
+        s_h = 0
+        if item.secondary:
+            s_tspans, s_lines = _wrap_to_tspans(item.secondary, text_x, 15, text_w, line_height=1.3)
+            s_h = s_lines * 19
+            
+        text_h = p_h + (s_h + 8 if item.secondary else 0)
+        curr_card_h = max(80, text_h + 28)
+        
+        total_card_h += curr_card_h
+        sentence_data.append({
+            "item": item,
+            "cx": cx,
+            "text_x": text_x,
+            "p_tspans": p_tspans,
+            "s_tspans": s_tspans,
+            "text_h": text_h,
+            "p_h": p_h,
+            "card_h": curr_card_h
+        })
+        
+    # Calculate starting y and gaps
+    content_h = h - 220
+    gap = min(16, max(10, (content_h - total_card_h) // max(count - 1, 1))) if count > 1 else 16
+    y = 150 + max(0, (content_h - (total_card_h + gap * (count - 1))) // 2)
 
-        # Card background
-        parts.append(
-            f'    <rect x="{cx}" y="{y}" width="{card_w}" height="{card_h}" '
-            f'rx="12" fill="{p["surface"]}"/>'
+    for idx, data in enumerate(sentence_data):
+        cx = data["cx"]
+        text_x = data["text_x"]
+        card_h = data["card_h"]
+        p_tspans = data["p_tspans"]
+        s_tspans = data["s_tspans"]
+        text_h = data["text_h"]
+        p_h = data["p_h"]
+        
+        ca = _hex_shift(p["accent"], idx * 15 - 30)
+        cs = card_style_params(lock, idx)
+        grad_id = f"sent-card-grad-{plan.index:02d}-{idx}"
+        clip_id = f"sent-card-clip-{plan.index:02d}-{idx}"
+
+        defs_parts.append(
+            f'    <linearGradient id="{grad_id}" x1="0%" y1="0%" x2="100%" y2="100%">\n'
+            f'      <stop offset="0%" stop-color="{p["surface"]}" stop-opacity="{cs["fill_opacity_start"]}"/>\n'
+            f'      <stop offset="100%" stop-color="{_hex_shift(p["surface"], -10)}" stop-opacity="{cs["fill_opacity_end"]}"/>\n'
+            f'    </linearGradient>'
         )
-        # Number badge
+        defs_parts.append(
+            f'    <clipPath id="{clip_id}">\n'
+            f'      <rect x="{cx}" y="{y}" width="{card_w}" height="{card_h}" rx="14" />\n'
+            f'    </clipPath>'
+        )
+
         parts.append(
-            f'    <circle cx="{cx + 30}" cy="{y + card_h // 2}" r="16" '
-            f'fill="{p["accent"]}" opacity="0.15"/>'
+            f'    <g clip-path="url(#{clip_id})">\n'
+            f'      <rect x="{cx}" y="{y}" width="{card_w}" height="{card_h}" fill="url(#{grad_id})"/>\n'
+            f'      <rect x="{cx}" y="{y}" width="5" height="{card_h}" fill="{ca}" opacity="0.85"/>\n'
+            f'    </g>'
+        )
+
+        parts.append(
+            f'    <rect x="{cx}" y="{y}" width="{card_w}" height="{card_h}" rx="14" fill="none" '
+            f'stroke="{ca}" stroke-opacity="{cs["stroke_opacity"]}" stroke-width="{cs["stroke_width"]}" '
+            f'filter="url(#card-shadow-{plan.index:02d})"/>'
+        )
+
+        if cs["inner_border"]:
+            parts.append(
+                f'    <rect x="{cx + 5}" y="{y + 5}" width="{card_w - 10}" height="{card_h - 10}" rx="10" fill="none" '
+                f'stroke="{ca}" stroke-opacity="{cs["inner_stroke_opacity"]}" stroke-width="{cs["inner_stroke_width"]}"/>'
+            )
+        
+        # Number badge (Concentric rings)
+        badge_cx = cx + 36
+        badge_cy = y + card_h // 2
+        parts.append(
+            f'    <circle cx="{badge_cx}" cy="{badge_cy}" r="20" '
+            f'fill="{ca}" fill-opacity="0.05" stroke="{ca}" stroke-opacity="0.1" stroke-width="1"/>'
         )
         parts.append(
-            f'    <text x="{cx + 30}" y="{y + card_h // 2 + 6}" font-family="{font}" '
-            f'font-size="14" font-weight="700" fill="{p["accent"]}" '
+            f'    <circle cx="{badge_cx}" cy="{badge_cy}" r="15" '
+            f'fill="{ca}" fill-opacity="0.12" stroke="{ca}" stroke-opacity="0.25" stroke-width="1"/>'
+        )
+        parts.append(
+            f'    <text x="{badge_cx}" y="{badge_cy + 5}" font-family="{font}" '
+            f'font-size="16" font-weight="700" fill="{ca}" '
             f'text-anchor="middle">{idx + 1}</text>'
         )
+        
+        # Text Y positioning: centered
+        text_padding = (card_h - text_h) // 2
+        py = y + text_padding + 20
+        
         # Main sentence
         parts.append(
-            f'    <text x="{cx + 64}" y="{y + 36}" font-family="{font}" '
-            f'font-size="24" font-weight="600" fill="{p["text"]}">{text}</text>'
+            f'    <text x="{text_x}" y="{py}" font-family="{font}" '
+            f'font-size="26" font-weight="600" fill="{p["text"]}">{p_tspans}</text>'
         )
         # Translation
-        if trans:
+        if s_tspans:
+            sy = py + p_h + 8 - 4
             parts.append(
-                f'    <text x="{cx + 64}" y="{y + 64}" font-family="{font}" '
-                f'font-size="16" font-style="italic" fill="{p["body"]}">{trans}</text>'
+                f'    <text x="{text_x}" y="{sy}" font-family="{font}" '
+                f'font-size="19" font-style="italic" fill="{p["body"]}" opacity="0.9">{s_tspans}</text>'
             )
-
+            
         y += card_h + gap
 
     content = "\n".join(parts)
+    defs_content = "\n".join(defs_parts)
     return (
         f'{_svg_open(w, h)}\n'
-        f'  <defs>\n{orb_defs}\n  </defs>\n'
+        f'  <defs>\n'
+        f'{defs_content}\n'
+        f'  </defs>\n'
         f'  <g id="background"><rect x="0" y="0" width="{w}" height="{h}" fill="{p["background"]}"/></g>\n'
         f'{orb_body}\n'
         f'{chrome}\n'
-        f'  <g id="content-title-{plan.index:02d}">\n'
-        f'    <text x="96" y="108" font-family="{font}" font-size="36" '
-        f'font-weight="700" fill="{p["text"]}">{title}</text>\n'
-        f'    <rect x="96" y="120" width="60" height="4" fill="{p["accent"]}"/>\n'
-        f'  </g>\n'
+        f'{_title_block(plan.index, plan.title, lock, w, h)}\n'
         f'  <g id="content-examples-{plan.index:02d}">\n'
         f'{content}\n'
         f'  </g>\n'
@@ -351,64 +565,138 @@ def render_sentence_example(plan: SlidePlan, lock: dict, total: int) -> str:
 def render_exercise(plan: SlidePlan, lock: dict, total: int) -> str:
     """Render a practice/exercise slide.
 
-    Clean layout with numbered exercise items. Each item gets a
-    translucent card with enough space for students to think.
+    Clean layout with numbered exercise items inside frosted glass cards.
     """
     canvas = lock["canvas"]
     w, h = int(canvas["width"]), int(canvas["height"])
     p = lock["palette"]
     font = lock["font_family"]
+    t = _tokens(w, h)
     chrome = _chrome(plan.index, total, lock, w, h)
+    orb_defs, orb_body = _decor_orbs(plan.index, lock, w, h, intensity=0.08)
     title = xml_escape(plan.title)
 
     items = plan.items
     parts: list[str] = []
-    y = 200
-    item_h = 70
-    gap = 20
-
-    # Section label
+    
+    # Top Section label (PRACTICE badge)
     parts.append(
-        f'    <rect x="80" y="150" width="120" height="28" rx="14" fill="{p["accent"]}"/>'
+        f'    <rect x="90" y="145" width="100" height="24" rx="12" fill="{p["accent"]}" fill-opacity="0.12" stroke="{p["accent"]}" stroke-opacity="0.25" stroke-width="1"/>'
     )
     parts.append(
-        f'    <text x="140" y="170" font-family="{font}" font-size="13" '
-        f'font-weight="600" fill="{p["background"]}" text-anchor="middle">PRACTICE</text>'
+        f'    <text x="140" y="161" font-family="{font}" font-size="15" '
+        f'font-weight="700" fill="{p["accent"]}" text-anchor="middle" letter-spacing="1">PRACTICE</text>'
     )
 
-    for idx, item in enumerate(items[:6]):
-        text = xml_escape(item.primary[:120])
+    card_w = w - 180
+    text_w = card_w - 88
+    
+    defs_parts: list[str] = [
+        _shadow_filter_def(plan.index),
+        orb_defs
+    ]
 
+    from .svg_pipeline import _wrap_to_tspans
+    
+    exercise_data = []
+    total_card_h = 0
+    count = min(len(items), 6)
+    if count == 0:
+        return _render_text_fallback(plan, lock, total)
+        
+    for idx, item in enumerate(items[:count]):
+        cx = 90
+        text_x = cx + 64
+        
+        tspans, lines = _wrap_to_tspans(item.primary, text_x, 18, text_w, line_height=1.3)
+        text_h = lines * 23
+        curr_card_h = max(56, text_h + 20)
+        
+        total_card_h += curr_card_h
+        exercise_data.append({
+            "item": item,
+            "cx": cx,
+            "text_x": text_x,
+            "tspans": tspans,
+            "text_h": text_h,
+            "card_h": curr_card_h
+        })
+        
+    # Calculate starting y and gaps
+    content_h = h - 240
+    gap = min(12, max(8, (content_h - total_card_h) // max(count - 1, 1))) if count > 1 else 12
+    y = 185 + max(0, (content_h - (total_card_h + gap * (count - 1))) // 2)
+
+    for idx, data in enumerate(exercise_data):
+        cx = data["cx"]
+        text_x = data["text_x"]
+        card_h = data["card_h"]
+        tspans = data["tspans"]
+        text_h = data["text_h"]
+        
+        ca = _hex_shift(p["accent"], idx * 10 - 25)
+        cs = card_style_params(lock, idx)
+        grad_id = f"exercise-card-grad-{plan.index:02d}-{idx}"
+        clip_id = f"exercise-card-clip-{plan.index:02d}-{idx}"
+
+        defs_parts.append(
+            f'    <linearGradient id="{grad_id}" x1="0%" y1="0%" x2="100%" y2="100%">\n'
+            f'      <stop offset="0%" stop-color="{p["surface"]}" stop-opacity="{cs["fill_opacity_start"]}"/>\n'
+            f'      <stop offset="100%" stop-color="{_hex_shift(p["surface"], -8)}" stop-opacity="{cs["fill_opacity_end"]}"/>\n'
+            f'    </linearGradient>'
+        )
+        defs_parts.append(
+            f'    <clipPath id="{clip_id}">\n'
+            f'      <rect x="{cx}" y="{y}" width="{card_w}" height="{card_h}" rx="10" />\n'
+            f'    </clipPath>'
+        )
+
+        parts.append(
+            f'    <g clip-path="url(#{clip_id})">\n'
+            f'      <rect x="{cx}" y="{y}" width="{card_w}" height="{card_h}" fill="url(#{grad_id})"/>\n'
+            f'      <rect x="{cx}" y="{y}" width="4" height="{card_h}" fill="{ca}" opacity="0.85"/>\n'
+            f'    </g>'
+        )
+
+        parts.append(
+            f'    <rect x="{cx}" y="{y}" width="{card_w}" height="{card_h}" rx="10" fill="none" '
+            f'stroke="{ca}" stroke-opacity="{cs["stroke_opacity"]}" stroke-width="{cs["stroke_width"]}" '
+            f'filter="url(#card-shadow-{plan.index:02d})"/>'
+        )
+
+        if cs["inner_border"]:
+            parts.append(
+                f'    <rect x="{cx + 5}" y="{y + 5}" width="{card_w - 10}" height="{card_h - 10}" rx="8" fill="none" '
+                f'stroke="{ca}" stroke-opacity="{cs["inner_stroke_opacity"]}" stroke-width="{cs["inner_stroke_width"]}"/>'
+            )
+        
+        text_padding = (card_h - text_h) // 2
+        py = y + text_padding + 15
+        
         # Exercise number
         parts.append(
-            f'    <text x="96" y="{y + 30}" font-family="{font}" font-size="28" '
-            f'font-weight="700" fill="{p["accent"]}">{idx + 1}.</text>'
+            f'    <text x="{cx + 24}" y="{py}" font-family="{font}" font-size="24" '
+            f'font-weight="700" fill="{ca}">{idx + 1}.</text> '
         )
         # Exercise text
         parts.append(
-            f'    <text x="140" y="{y + 30}" font-family="{font}" font-size="22" '
-            f'fill="{p["text"]}">{text}</text>'
+            f'    <text x="{cx + 64}" y="{py - 1}" font-family="{font}" font-size="22" '
+            f'font-weight="500" fill="{p["text"]}">{tspans}</text>'
         )
-        # Subtle separator
-        if idx < len(items) - 1:
-            parts.append(
-                f'    <rect x="96" y="{y + item_h - 8}" width="{w - 200}" '
-                f'height="1" fill="{p["muted"]}" opacity="0.3"/>'
-            )
-
-        y += item_h + gap
+        
+        y += card_h + gap
 
     content = "\n".join(parts)
+    defs_content = "\n".join(defs_parts)
     return (
         f'{_svg_open(w, h)}\n'
-        f'  <defs></defs>\n'
+        f'  <defs>\n'
+        f'{defs_content}\n'
+        f'  </defs>\n'
         f'  <g id="background"><rect x="0" y="0" width="{w}" height="{h}" fill="{p["background"]}"/></g>\n'
+        f'{orb_body}\n'
         f'{chrome}\n'
-        f'  <g id="content-title-{plan.index:02d}">\n'
-        f'    <text x="96" y="108" font-family="{font}" font-size="36" '
-        f'font-weight="700" fill="{p["text"]}">{title}</text>\n'
-        f'    <rect x="96" y="120" width="60" height="4" fill="{p["accent"]}"/>\n'
-        f'  </g>\n'
+        f'{_title_block(plan.index, plan.title, lock, w, h)}\n'
         f'  <g id="content-exercise-{plan.index:02d}">\n'
         f'{content}\n'
         f'  </g>\n'
@@ -426,30 +714,82 @@ def _render_text_fallback(plan: SlidePlan, lock: dict, total: int) -> str:
     w, h = int(canvas["width"]), int(canvas["height"])
     p = lock["palette"]
     font = lock["font_family"]
+    t = _tokens(w, h)
     chrome = _chrome(plan.index, total, lock, w, h)
+    orb_defs, orb_body = _decor_orbs(plan.index, lock, w, h, intensity=0.08)
     title = xml_escape(plan.title)
 
+    card_x = 90
+    card_y = 160
+    card_w = w - 180
+    card_h = h - 230
+
+    ca = p["accent"]
+    cs = card_style_params(lock, 0)
+    grad_id = f"fallback-card-grad-{plan.index:02d}"
+    clip_id = f"fallback-card-clip-{plan.index:02d}"
+
+    defs_parts: list[str] = [
+        orb_defs,
+        f'    <linearGradient id="{grad_id}" x1="0%" y1="0%" x2="100%" y2="100%">\n'
+        f'      <stop offset="0%" stop-color="{p["surface"]}" stop-opacity="{cs["fill_opacity_start"]}"/>\n'
+        f'      <stop offset="100%" stop-color="{_hex_shift(p["surface"], -10)}" stop-opacity="{cs["fill_opacity_end"]}"/>\n'
+        f'    </linearGradient>',
+        f'    <clipPath id="{clip_id}">\n'
+        f'      <rect x="{card_x}" y="{card_y}" width="{card_w}" height="{card_h}" rx="16" />\n'
+        f'    </clipPath>'
+    ]
+
     body_parts: list[str] = []
-    y = 200
-    for item in plan.items[:8]:
-        text = xml_escape(item.primary[:120])
+    body_parts.append(
+        f'    <g clip-path="url(#{clip_id})">\n'
+        f'      <rect x="{card_x}" y="{card_y}" width="{card_w}" height="{card_h}" fill="url(#{grad_id})"/>\n'
+        f'      <rect x="{card_x}" y="{card_y}" width="4" height="{card_h}" fill="{ca}" opacity="0.85"/>\n'
+        f'    </g>'
+    )
+    body_parts.append(
+        f'    <rect x="{card_x}" y="{card_y}" width="{card_w}" height="{card_h}" rx="16" fill="none" '
+        f'stroke="{ca}" stroke-opacity="{cs["stroke_opacity"]}" stroke-width="{cs["stroke_width"]}"/>'
+    )
+    if cs["inner_border"]:
         body_parts.append(
-            f'    <text x="96" y="{y}" font-family="{font}" font-size="22" '
-            f'fill="{p["text"]}">{text}</text>'
+            f'    <rect x="{card_x + 6}" y="{card_y + 6}" width="{card_w - 12}" height="{card_h - 12}" rx="12" fill="none" '
+            f'stroke="{ca}" stroke-opacity="{cs["inner_stroke_opacity"]}" stroke-width="{cs["inner_stroke_width"]}"/>'
         )
-        y += 36
+
+    from .svg_pipeline import _wrap_to_tspans
+    
+    y = card_y + 36
+    max_y = card_y + card_h - 24
+    
+    for item in plan.items:
+        if y >= max_y:
+            break
+        text_w = card_w - 72
+        text_x = card_x + 36
+        tspans, lines = _wrap_to_tspans(item.primary, text_x, 20, text_w, line_height=1.3)
+        item_h = lines * 26
+        
+        if y + item_h > max_y:
+            break
+            
+        body_parts.append(
+            f'    <text x="{text_x}" y="{y}" font-family="{font}" font-size="20" '
+            f'fill="{p["text"]}">{tspans}</text>'
+        )
+        y += item_h + 12
 
     body_content = "\n".join(body_parts)
+    defs_content = "\n".join(defs_parts)
     return (
         f'{_svg_open(w, h)}\n'
-        f'  <defs></defs>\n'
+        f'  <defs>\n'
+        f'{defs_content}\n'
+        f'  </defs>\n'
         f'  <g id="background"><rect x="0" y="0" width="{w}" height="{h}" fill="{p["background"]}"/></g>\n'
+        f'{orb_body}\n'
         f'{chrome}\n'
-        f'  <g id="content-title-{plan.index:02d}">\n'
-        f'    <text x="96" y="108" font-family="{font}" font-size="36" '
-        f'font-weight="700" fill="{p["text"]}">{title}</text>\n'
-        f'    <rect x="96" y="120" width="60" height="4" fill="{p["accent"]}"/>\n'
-        f'  </g>\n'
+        f'{_title_block(plan.index, plan.title, lock, w, h)}\n'
         f'  <g id="content-body-{plan.index:02d}">\n'
         f'{body_content}\n'
         f'  </g>\n'

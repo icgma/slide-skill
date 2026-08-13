@@ -1,0 +1,49 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"><rect x="0" y="0" width="1280" height="720" fill="{background}" /></g>
+  <g id="chrome-stripe"><rect x="0" y="0" width="6" height="720" fill="{accent}" /></g>
+  <g id="content-title">
+    <text x="96" y="72" font-family="{font}" font-size="32" font-weight="700" fill="{text}">Feature Comparison</text>
+    <rect x="96" y="82" width="60" height="3" fill="{accent}" />
+  </g>
+  <g id="content-body">
+    <rect x="80" y="100" width="1120" height="560" rx="16" fill="{surface}" />
+    <!-- Header row -->
+    <rect x="80" y="100" width="1120" height="56" rx="16" fill="{accent}" />
+    <rect x="80" y="140" width="1120" height="16" fill="{accent}" />
+    <text x="240" y="134" font-family="{font}" font-size="16" font-weight="700" fill="{background}" text-anchor="middle">Feature</text>
+    <text x="520" y="134" font-family="{font}" font-size="16" font-weight="700" fill="{background}" text-anchor="middle">Ours</text>
+    <text x="760" y="134" font-family="{font}" font-size="16" font-weight="700" fill="{background}" text-anchor="middle">Competitor A</text>
+    <text x="1000" y="134" font-family="{font}" font-size="16" font-weight="700" fill="{background}" text-anchor="middle">Competitor B</text>
+    <!-- Row 1 -->
+    <text x="160" y="190" font-family="{font}" font-size="16" fill="{text}">Feature 1</text>
+    <text x="520" y="190" font-family="{font}" font-size="20" fill="{accent}" text-anchor="middle">✓</text>
+    <text x="760" y="190" font-family="{font}" font-size="20" fill="{accent}" text-anchor="middle">✓</text>
+    <text x="1000" y="190" font-family="{font}" font-size="20" fill="{secondary_accent}" text-anchor="middle">✗</text>
+    <!-- Row 2 -->
+    <rect x="80" y="208" width="1120" height="48" fill="{bg_secondary}" />
+    <text x="160" y="238" font-family="{font}" font-size="16" fill="{text}">Feature 2</text>
+    <text x="520" y="238" font-family="{font}" font-size="20" fill="{accent}" text-anchor="middle">✓</text>
+    <text x="760" y="238" font-family="{font}" font-size="20" fill="{secondary_accent}" text-anchor="middle">✗</text>
+    <text x="1000" y="238" font-family="{font}" font-size="20" fill="{accent}" text-anchor="middle">✓</text>
+    <!-- Row 3 -->
+    <text x="160" y="286" font-family="{font}" font-size="16" fill="{text}">Feature 3</text>
+    <text x="520" y="286" font-family="{font}" font-size="20" fill="{accent}" text-anchor="middle">✓</text>
+    <text x="760" y="286" font-family="{font}" font-size="20" fill="{secondary_accent}" text-anchor="middle">✗</text>
+    <text x="1000" y="286" font-family="{font}" font-size="20" fill="{secondary_accent}" text-anchor="middle">✗</text>
+    <!-- Row 4 -->
+    <rect x="80" y="304" width="1120" height="48" fill="{bg_secondary}" />
+    <text x="160" y="334" font-family="{font}" font-size="16" fill="{text}">Feature 4</text>
+    <text x="520" y="334" font-family="{font}" font-size="20" fill="{accent}" text-anchor="middle">✓</text>
+    <text x="760" y="334" font-family="{font}" font-size="20" fill="{accent}" text-anchor="middle">✓</text>
+    <text x="1000" y="334" font-family="{font}" font-size="20" fill="{accent}" text-anchor="middle">✓</text>
+    <!-- Row 5 -->
+    <text x="160" y="382" font-family="{font}" font-size="16" fill="{text}">Feature 5</text>
+    <text x="520" y="382" font-family="{font}" font-size="20" fill="{accent}" text-anchor="middle">✓</text>
+    <text x="760" y="382" font-family="{font}" font-size="20" fill="{secondary_accent}" text-anchor="middle">✗</text>
+    <text x="1000" y="382" font-family="{font}" font-size="20" fill="{secondary_accent}" text-anchor="middle">✗</text>
+  </g>
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
+    <text x="1184" y="708" font-family="{font}" font-size="12" fill="{muted}" text-anchor="end">NN / TT</text>
+  </g>
+</svg>
