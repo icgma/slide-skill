@@ -68,8 +68,17 @@ class DesignGuideTest(unittest.TestCase):
             project = self._make_project(Path(tmp))
             guide_path = build_design_guide(project, "dark-tech")
             content = guide_path.read_text(encoding="utf-8")
-            self.assertIn('width="6"', content, "Accent stripe spec should be in guide")
-            self.assertIn('y="688"', content, "Footer bar y-position should be in guide")
+            # Chrome survives only as an optional deck-level motif (BENCH-01).
+            self.assertIn("Optional Deck Motif", content,
+                          "Guide must present chrome as an optional deck motif")
+            self.assertNotIn("required on EVERY slide", content,
+                             "Guide must not require chrome on every slide")
+            self.assertNotIn("stripe (required)", content)
+            self.assertNotIn("bar (required)", content)
+            self.assertIn('width="6"', content,
+                          "Stripe snippet stays available inside the optional motif example")
+            self.assertIn('y="688"', content,
+                          "Footer snippet stays available inside the optional motif example")
 
     def test_all_themes_produce_valid_guides(self) -> None:
         from slide_skill.themes import list_themes

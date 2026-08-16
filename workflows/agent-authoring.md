@@ -87,6 +87,13 @@ because its violation has produced broken decks.
    slide-skill qa projects/<name> --strict        # strict QA with evidence
    ```
 
+   `export` runs the render-convergence publish gate before assembling the
+   PPTX: every page must pass structural QA, DOM-geometry arbitration, and a
+   Chrome render check, plus deck-level rhythm/variety QA — a failing page
+   blocks the export (no partial PPTX). Per-page verdicts and any capability
+   gaps land in `qa/PUBLISH-GATE.json`; on Windows with PowerPoint the
+   optional COM smoke render appends its verdict (`--no-com-smoke` to skip).
+
    Inspect every rendered page and write `qa/VISUAL-REVIEW.md`. Record the fix
    cycle (or “no fixes required”) in `qa/FIX-VERIFY.md`. If LibreOffice/Poppler
    is unavailable, capture every `svg_final/slide_NN.svg` at 1280×720 with

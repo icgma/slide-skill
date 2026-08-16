@@ -157,7 +157,9 @@ def generate_guide(
         "1. Read `design_guide.md` in this project directory BEFORE writing any SVG.",
         "2. Write each slide as a separate `.svg` file in `svg_output/`.",
         f"3. Canvas: **{w} x {h} px**. Always set width, height, viewBox on root `<svg>`.",
-        "4. Every slide MUST include the left accent stripe and footer bar.",
+        "4. Chrome (accent stripe / footer bar) is an OPTIONAL deck-level motif: "
+        "choose it once per deck for visual consistency, or omit it entirely — "
+        "it is never required on every slide. Compose each slide from its content.",
         "5. Every top-level `<g>` MUST have an `id` attribute.",
         "6. Choose the appropriate layout template from design_guide.md for each slide.",
         "7. Use ONLY palette colours from the spec lock below.",

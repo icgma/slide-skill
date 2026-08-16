@@ -85,7 +85,7 @@ If the answer to any is "no," go back and revise.
 
 ---
 
-## 3. Canvas & Chrome
+## 3. Canvas & Optional Deck Motif
 
 ### 3.1 Canvas Dimensions
 
@@ -102,19 +102,16 @@ All text and interactive content must stay within:
 The safe area is 1120 × 600 px. Background elements (gradients, images, decorative shapes)
 may extend to the full canvas edge.
 
-### 3.3 Required Chrome Elements
+### 3.3 Optional Deck Motif
 
-Every slide MUST have these chrome elements:
+Chrome (accent stripe / footer bar) is NOT required on any slide. You may
+adopt ONE motif per deck for visual consistency — for example a left accent
+stripe plus a footer bar with the page number:
 
-**Left accent stripe:**
 ```xml
 <g id="chrome-stripe">
   <rect x="0" y="0" width="6" height="720" fill="{accent}" />
 </g>
-```
-
-**Footer bar with page number:**
-```xml
 <g id="chrome-footer">
   <rect x="0" y="688" width="1280" height="32" fill="{surface}" />
   <text x="1184" y="708" font-family="{body_family}" font-size="12"
@@ -122,13 +119,10 @@ Every slide MUST have these chrome elements:
 </g>
 ```
 
-Replace `NN` with zero-padded slide number (01, 02, ...) and `TT` with total count.
+`NN` = zero-padded slide number (01, 02, ...), `TT` = total count.
 
-### 3.4 Chrome Exceptions
-
-- **Cover slide:** Footer bar is present but page number text is optional.
-- **Section divider:** Full chrome required.
-- **Closing slide:** Footer bar present, page number = final.
+Choose a motif only if it serves the deck's tone; never apply it
+mechanically to every slide. Compose each slide from its content.
 
 ---
 
@@ -143,10 +137,9 @@ Every SVG file must use semantic `<g id="...">` groups. Minimum structure:
      xmlns="http://www.w3.org/2000/svg">
   <defs><!-- gradients, filters, clip-paths --></defs>
   <g id="background"><!-- full-bleed background --></g>
-  <g id="chrome-stripe"><!-- left accent stripe --></g>
   <g id="content-title-NN"><!-- title text --></g>
   <g id="content-body-NN"><!-- body content --></g>
-  <g id="chrome-footer"><!-- footer bar + page number --></g>
+  <!-- optional deck motif groups (chrome-stripe / chrome-footer) if chosen -->
 </svg>
 ```
 
@@ -155,8 +148,8 @@ Every SVG file must use semantic `<g id="...">` groups. Minimum structure:
 | Pattern | Usage |
 |---------|-------|
 | `background` | Full-canvas background fill |
-| `chrome-stripe` | Left accent stripe |
-| `chrome-footer` | Bottom footer bar |
+| `chrome-stripe` | Left accent stripe (optional deck motif) |
+| `chrome-footer` | Bottom footer bar (optional deck motif) |
 | `content-title-NN` | Title/heading area |
 | `content-body-NN` | Main content area |
 | `content-left-NN` | Left column (two-column layout) |
@@ -222,9 +215,14 @@ A card with a coloured top strip:
 <rect x="80" y="140" width="520" height="400" rx="16" fill="url(#card-grad)" />
 ```
 
-### 5.5 Card Grid Patterns
+### 5.5 Card Grid Patterns — Example, not a contract
 
-**2-column grid** (equal width):
+> Derive card coordinates from the actual content and the canvas safe area;
+> the grids below are illustrative starting points only. Cards are the right
+> device only when the content demands comparison or enumeration — never
+> default a non-comparison slide into equal-width card columns.
+
+**2-column grid** (example):
 - Left card: x=80, width=560
 - Right card: x=680, width=520
 - Gap: 40px
@@ -408,9 +406,8 @@ Before saving EVERY SVG file, verify:
 
 - [ ] `width="1280" height="720" viewBox="0 0 1280 720"` on root `<svg>`
 - [ ] `<defs>` block at top if gradients/filters used
-- [ ] Left accent stripe present (6px wide, full height)
-- [ ] Footer bar present (32px tall, at y=688)
-- [ ] Page number in footer matches slide position
+- [ ] Optional deck motif (if chosen) consistent across slides that carry it
+- [ ] Page number in footer (if footer motif chosen) matches slide position
 - [ ] All top-level `<g>` elements have `id` attribute
 - [ ] All text within safe area (x 80–1200, y 80–680)
 - [ ] No banned tags (`script`, `foreignObject`, `animate`, etc.)

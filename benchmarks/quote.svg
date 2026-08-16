@@ -1,0 +1,82 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad-01" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" stop-opacity="0.4" />
+    </linearGradient>
+    <linearGradient id="card-grad-01" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <radialGradient id="orb-01" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="url(#bg-grad-01)" />
+    <circle cx="1080" cy="200" r="260" fill="url(#orb-01)" />
+    <circle cx="120" cy="600" r="200" fill="url(#orb-01)" />
+  </g>
+
+  <g id="chrome-stripe">
+    <rect x="0" y="0" width="6" height="720" fill="#3B82F6" />
+  </g>
+
+  <g id="decor-01">
+    <text x="130" y="310" font-family="Aptos, Arial, sans-serif" font-size="220" font-weight="700" fill="#3B82F6" opacity="0.2">"</text>
+    <line x1="96" y1="500" x2="180" y2="500" stroke="#3B82F6" stroke-width="3" />
+  </g>
+
+  <g id="content-title-01">
+    <text x="96" y="320" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="44" font-weight="700" fill="#F1F5F9">
+      <tspan x="96" dy="0">Simplicity is the</tspan>
+      <tspan x="96" dy="60">ultimate sophistication</tspan>
+    </text>
+    <text x="96" y="480" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="24" fill="#94A3B8">
+      — Leonardo da Vinci (attributed)
+    </text>
+  </g>
+
+  <g id="content-body-01">
+    <rect x="680" y="170" width="460" height="380" rx="16" fill="url(#card-grad-01)" stroke="#29374B" stroke-width="1" />
+    <rect x="680" y="170" width="460" height="4" fill="#3B82F6" rx="2" />
+
+    <text x="720" y="220" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="14" font-weight="600" fill="#3B82F6">
+      QUOTE RECORD
+    </text>
+
+    <text x="720" y="260" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" fill="#94A3B8">
+      <tspan x="720" dy="0">Quote:</tspan>
+      <tspan x="720" dy="26">"Simplicity is the ultimate</tspan>
+      <tspan x="720" dy="26">sophistication.</tspan>
+    </text>
+
+    <line x1="720" y1="350" x2="1100" y2="350" stroke="#29374B" stroke-width="1" />
+
+    <text x="720" y="380" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" fill="#94A3B8">
+      <tspan x="720" dy="0">Attribution:</tspan>
+      <tspan x="720" dy="26">— Leonardo da Vinci (attributed)</tspan>
+    </text>
+
+    <line x1="720" y1="440" x2="1100" y2="440" stroke="#29374B" stroke-width="1" />
+
+    <text x="720" y="470" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="14" fill="#94A3B8">
+      <tspan x="720" dy="0">One dominant quotation with an</tspan>
+      <tspan x="720" dy="22">attribution. Minimal element count,</tspan>
+      <tspan x="720" dy="22">generous whitespace, no cards — the</tspan>
+      <tspan x="720" dy="22">Latin italic/serif path.</tspan>
+    </text>
+  </g>
+
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="#1E293B" />
+    <circle cx="24" cy="704" r="3" fill="#3B82F6" />
+    <circle cx="40" cy="704" r="3" fill="#3B82F6" opacity="0.3" />
+    <circle cx="56" cy="704" r="3" fill="#3B82F6" opacity="0.3" />
+    <text x="1240" y="708" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="12" fill="#94A3B8" text-anchor="end">
+      01 / 01
+    </text>
+  </g>
+</svg>

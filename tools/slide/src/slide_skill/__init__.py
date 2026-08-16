@@ -1,4 +1,4 @@
 """Slide Skill toolkit."""
 
-__version__ = "5.0.0a1"
+__version__ = "5.1.0"
 

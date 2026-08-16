@@ -3,7 +3,7 @@ name: slide-skill
 description: Convert any source material into a polished, fully-editable PowerPoint (.pptx). Use whenever the user asks for slides, a deck, a presentation, or "做一份 PPT". IMPORTANT — this is a ROUTED skill. Assess the user's scenario first, then follow exactly ONE workflow doc — defense-fill (校方模板), competition (比赛路演), course (课程汇报), fast (deadline 快速出片), or free-design (host agent hand-writes SVG).
 ---
 
-# slide-skill — AI Agent Skill (v5.0.0a1)
+# slide-skill — AI Agent Skill (v5.1.0)
 
 An SVG-first pipeline that turns prose into `.pptx` whose every shape, text run,
 and gradient is natively editable. 32 built-in themes, full CJK support, school

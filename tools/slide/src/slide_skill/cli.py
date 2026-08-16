@@ -66,6 +66,10 @@ def _add_ai_args(parser) -> None:
                         help="OpenAI-compatible API base URL (default: OPENAI_BASE_URL env or https://api.openai.com/v1)")
     parser.add_argument("--ai-api-key", default=None,
                         help="API key (default: OPENAI_API_KEY env)")
+    parser.add_argument("--ai-concurrency", type=int, default=1,
+                        help="Bounded key-slot concurrency for the executor (default 1 = serial). "
+                             "max_workers = min(N, usable keys, slide count); pool keys come only "
+                             "from OPENAI_API_KEYS / OPENAI_API_KEY env")
     parser.add_argument("--ai-temperature", type=float, default=0.7,
                         help="Sampling temperature 0.0-2.0 (default: 0.7)")
     parser.add_argument("--ai-max-tokens", type=int, default=None,
@@ -156,6 +160,9 @@ def _executor_kwargs_from_args(args) -> dict:
     retries = getattr(args, "executor_qa_retries", None)
     if retries is not None:
         kwargs["qa_retries"] = retries
+    concurrency = getattr(args, "ai_concurrency", None)
+    if concurrency is not None:
+        kwargs["ai_concurrency"] = max(1, int(concurrency))
     return kwargs
 
 
@@ -385,6 +392,10 @@ def main(argv: list[str] | None = None) -> int:
     p_export.add_argument("project")
     p_export.add_argument("-o", "--output")
     p_export.add_argument("--stage", default="final", choices=["output", "final"])
+    p_export.add_argument("--com-smoke", dest="com_smoke", action="store_true", default=None,
+                          help="Run the optional PowerPoint COM final smoke render after export")
+    p_export.add_argument("--no-com-smoke", dest="com_smoke", action="store_false",
+                          help="Skip the PowerPoint COM smoke render (auto-on on Windows)")
 
     p_qa = sub.add_parser("qa", help="Run QA checks")
     p_qa.add_argument("project")
@@ -692,6 +703,24 @@ def main(argv: list[str] | None = None) -> int:
     p_pf.add_argument("--theme", default=None, help="Theme name; defaults to spec_lock.json theme")
     p_pf.add_argument("--lang", default=None, help="Force language code (else autodetected)")
 
+    p_bench = sub.add_parser(
+        "benchmark-briefs",
+        help="Run the six-family composition benchmark (dry-run by default; --yes gates the provider run)",
+    )
+    p_bench.add_argument("--briefs-dir", default="benchmarks/briefs",
+                         help="Directory with the six family brief files (default: benchmarks/briefs)")
+    p_bench.add_argument("--out", default="benchmarks",
+                         help="Output directory for manifest + evidence (default: benchmarks)")
+    p_bench.add_argument("--theme", default="dark-tech",
+                         help="Single theme across all six briefs (default: dark-tech)")
+    p_bench.add_argument("--yes", action="store_true",
+                         help="Gated provider run: 6 briefs, serial, one provider key; "
+                              "atomically replaces benchmarks/six-family-manifest.json")
+    p_bench.add_argument("--dry-run", action="store_true",
+                         help="Explicit dry-run alias (validate briefs + classifier self-test, no provider call)")
+    p_bench.add_argument("--base", default=None,
+                         help="Scratch base directory for benchmark projects (default: temp dir)")
+
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -763,7 +792,7 @@ def _dispatch(args: argparse.Namespace) -> int:
         for path in finalize_svg(args.project, quality=args.quality):
             print(path)
     elif args.command == "export":
-        print(export_project(args.project, args.output, args.stage))
+        print(export_project(args.project, args.output, args.stage, com_smoke=args.com_smoke))
     elif args.command == "qa":
         ok, report = run_qa(
             args.project,
@@ -1441,6 +1470,16 @@ def _dispatch(args: argparse.Namespace) -> int:
         for f in report.findings:
             print(f"- {f.severity} {f.code}: {f.message}")
         return 0 if not any(f.severity in {"error", "warn"} for f in report.findings) else 1
+    elif args.command == "benchmark-briefs":
+        from .benchmark import run_benchmark
+        manifest, code = run_benchmark(
+            args.briefs_dir,
+            args.out,
+            theme=args.theme,
+            yes=args.yes and not args.dry_run,
+            base_dir=args.base,
+        )
+        return code
     elif args.command == "draft-notes":
         from .draft_notes import draft_notes
         created = draft_notes(args.project, overwrite=args.overwrite)

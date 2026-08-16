@@ -1,0 +1,266 @@
+{
+  "benchmark": "six-family",
+  "theme": "dark-tech",
+  "brief_count": 6,
+  "passed": 1,
+  "machine_recognized": 0,
+  "blind_review_reference": "blind-review-results.md",
+  "entries": [
+    {
+      "brief_id": "comparison",
+      "family": "comparison",
+      "language": "zh",
+      "title": "三种提示词策略对比",
+      "model": "sensenova-6.7-flash-lite",
+      "prompt_bytes": 7274,
+      "prompt_tokens": 21500,
+      "completion_tokens": 7739,
+      "reasoning_chars": 13240,
+      "content_chars": 6462,
+      "finish_reason": "stop",
+      "latency_ms": 177883,
+      "status": "failed",
+      "generation_error": "RuntimeError: AI SVG generation failed QA for slide_01.svg after 4 attempts:\n- WARNING slide_01_attempt_04.svg: Text overlap: \"THREE APPROACHES\" (430-443y) overlaps \"03\" (428-524y)\n- WARNING slide_01_attempt_04.svg: Low text contrast: body text #94A3B8 on #3B82F6 is 1.43:1 (need ≥4.5); use a higher-contrast palette role\n- WARNING slide_01_attempt_04.svg: Low text contrast: body text #3B82F6 on #3B82F6 is 1.00:1 (need ≥4.5); use a higher-contrast palette role\n- ERROR slide_01_attempt_04.svg: Content fidelity: unsupported-visible-text 'PROMPTING STRATEGIES' is not part of the slide plan or an approved derived label; remove it or add it to the plan\n- ERROR slide_01_attempt_04.svg: Content fidelity: unsupported-visible-text 'THREE APPROACHES' is not part of the slide plan or an approved derived label; remove it or add it to the plan\n- ERROR slide_01_attempt_04.svg: Content fidelity: unsupported-visible-text '从简单提问到复杂推理' is not part of the slide plan or an approved derived label; remove it or add it to the plan\n- ERROR slide_01_attempt_04.svg: Content fidelity: unsupported-visible-text '按需选择最优策略' is not part of the slide plan or an approved derived label; remove it or add it to the plan",
+      "static_qa": {
+        "verdict": "failed",
+        "defect_count": 1,
+        "geometry_verdict": "confirmed"
+      },
+      "chrome_render": {
+        "status": "rendered",
+        "detail": "clean"
+      },
+      "machine_family_verdict": {
+        "recognized": false,
+        "classified_as": "hierarchy-definition",
+        "signature_metrics": {
+          "text_count": 17,
+          "card_count": 4,
+          "connector_count": 3,
+          "font_tiers": [
+            12,
+            18,
+            52,
+            96
+          ]
+        }
+      },
+      "non_degeneration": "ok",
+      "svg_evidence": "comparison.svg",
+      "svg_evidence_is_failed_attempt": true
+    },
+    {
+      "brief_id": "enumeration",
+      "family": "enumeration",
+      "language": "zh",
+      "title": "评审一份幻灯片的五个维度",
+      "model": "sensenova-6.7-flash-lite",
+      "prompt_bytes": 7465,
+      "prompt_tokens": 23561,
+      "completion_tokens": 8821,
+      "reasoning_chars": 18147,
+      "content_chars": 4380,
+      "finish_reason": "stop",
+      "latency_ms": 220853,
+      "status": "passed",
+      "generation_error": null,
+      "static_qa": {
+        "verdict": "passed",
+        "defect_count": 0,
+        "geometry_verdict": null
+      },
+      "chrome_render": {
+        "status": "rendered",
+        "detail": "clean"
+      },
+      "machine_family_verdict": {
+        "recognized": false,
+        "classified_as": "hierarchy-definition",
+        "signature_metrics": {
+          "text_count": 13,
+          "card_count": 1,
+          "connector_count": 3,
+          "font_tiers": [
+            12,
+            18,
+            56
+          ]
+        }
+      },
+      "non_degeneration": "ok",
+      "svg_evidence": "enumeration.svg",
+      "svg_evidence_is_failed_attempt": null
+    },
+    {
+      "brief_id": "hierarchy-definition",
+      "family": "hierarchy-definition",
+      "language": "zh",
+      "title": "什么是检索增强生成",
+      "model": "sensenova-6.7-flash-lite",
+      "prompt_bytes": 7004,
+      "prompt_tokens": 29635,
+      "completion_tokens": 14783,
+      "reasoning_chars": 33872,
+      "content_chars": 3964,
+      "finish_reason": "stop",
+      "latency_ms": 215609,
+      "status": "failed",
+      "generation_error": "RuntimeError: AI SVG generation failed QA for slide_01.svg after 4 attempts:\n- WARNING slide_01_attempt_04.svg: Low text contrast: body text #3B82F6 on #3B82F6 is 1.00:1 (need ≥4.5); use a higher-contrast palette role\n- WARNING slide_01_attempt_04.svg: Low text contrast: body text #94A3B8 on #3B82F6 is 1.43:1 (need ≥4.5); use a higher-contrast palette role",
+      "static_qa": {
+        "verdict": "failed",
+        "defect_count": 0,
+        "geometry_verdict": null
+      },
+      "chrome_render": {
+        "status": "rendered",
+        "detail": "clean"
+      },
+      "machine_family_verdict": {
+        "recognized": false,
+        "classified_as": "hierarchy-definition",
+        "signature_metrics": {
+          "text_count": 11,
+          "card_count": 1,
+          "connector_count": 1,
+          "font_tiers": [
+            12,
+            22,
+            48
+          ]
+        }
+      },
+      "non_degeneration": "ok",
+      "svg_evidence": "hierarchy-definition.svg",
+      "svg_evidence_is_failed_attempt": true
+    },
+    {
+      "brief_id": "metric",
+      "family": "metric",
+      "language": "zh",
+      "title": "质量门禁必须前置",
+      "model": "sensenova-6.7-flash-lite",
+      "prompt_bytes": 7335,
+      "prompt_tokens": 23522,
+      "completion_tokens": 9717,
+      "reasoning_chars": 19518,
+      "content_chars": 3903,
+      "finish_reason": "stop",
+      "latency_ms": 145019,
+      "status": "failed",
+      "generation_error": "RuntimeError: AI SVG generation failed QA for slide_01.svg after 4 attempts:\n- WARNING slide_01_attempt_04.svg: Low text contrast: body text #94A3B8 on #3B82F6 is 1.43:1 (need ≥4.5); use a higher-contrast palette role\n- ERROR slide_01_attempt_04.svg: Content fidelity: unsupported-visible-text '在导出流程中设置强制拦截点，' is not part of the slide plan or an approved derived label; remove it or add it to the plan\n- ERROR slide_01_attempt_04.svg: Content fidelity: unsupported-visible-text '确保低对比度问题不进入交付环节。' is not part of the slide plan or an approved derived label; remove it or add it to the plan",
+      "static_qa": {
+        "verdict": "failed",
+        "defect_count": 0,
+        "geometry_verdict": null
+      },
+      "chrome_render": {
+        "status": "rendered",
+        "detail": "clean"
+      },
+      "machine_family_verdict": {
+        "recognized": false,
+        "classified_as": "hierarchy-definition",
+        "signature_metrics": {
+          "text_count": 9,
+          "card_count": 3,
+          "connector_count": 1,
+          "font_tiers": [
+            12,
+            18,
+            36,
+            150
+          ]
+        }
+      },
+      "non_degeneration": "ok",
+      "svg_evidence": "metric.svg",
+      "svg_evidence_is_failed_attempt": true
+    },
+    {
+      "brief_id": "quote",
+      "family": "quote",
+      "language": "en",
+      "title": "Simplicity is the ultimate sophistication",
+      "model": "sensenova-6.7-flash-lite",
+      "prompt_bytes": 7271,
+      "prompt_tokens": 27498,
+      "completion_tokens": 12871,
+      "reasoning_chars": 33082,
+      "content_chars": 4090,
+      "finish_reason": "stop",
+      "latency_ms": 218412,
+      "status": "failed",
+      "generation_error": "RuntimeError: AI SVG generation failed QA for slide_01.svg after 4 attempts:\n- WARNING slide_01_attempt_04.svg: Text overlap: \"\"\" (145-365y) overlaps \"Simplicity is the\" (287-331y)\n- WARNING slide_01_attempt_04.svg: Text overlap: \"\"\" (145-365y) overlaps \"ultimate sophistication\" (347-391y)\n- WARNING slide_01_attempt_04.svg: Low text contrast: body text #3B82F6 on #3B82F6 is 1.00:1 (need ≥4.5); use a higher-contrast palette role\n- WARNING slide_01_attempt_04.svg: Low text contrast: body text #94A3B8 on #3B82F6 is 1.43:1 (need ≥4.5); use a higher-contrast palette role",
+      "static_qa": {
+        "verdict": "failed",
+        "defect_count": 2,
+        "geometry_verdict": "unavailable"
+      },
+      "chrome_render": {
+        "status": "rendered",
+        "detail": "clean"
+      },
+      "machine_family_verdict": {
+        "recognized": false,
+        "classified_as": "hierarchy-definition",
+        "signature_metrics": {
+          "text_count": 8,
+          "card_count": 2,
+          "connector_count": 3,
+          "font_tiers": [
+            12,
+            24,
+            44,
+            220
+          ]
+        }
+      },
+      "non_degeneration": "ok",
+      "svg_evidence": "quote.svg",
+      "svg_evidence_is_failed_attempt": true
+    },
+    {
+      "brief_id": "sequence",
+      "family": "sequence",
+      "language": "zh",
+      "title": "提示词策略选择流程",
+      "model": "sensenova-6.7-flash-lite",
+      "prompt_bytes": 7650,
+      "prompt_tokens": 27721,
+      "completion_tokens": 12474,
+      "reasoning_chars": 26354,
+      "content_chars": 4329,
+      "finish_reason": "stop",
+      "latency_ms": 168905,
+      "status": "failed",
+      "generation_error": "RuntimeError: AI SVG generation failed QA for slide_01.svg after 4 attempts:\n- WARNING slide_01_attempt_04.svg: Low text contrast: body text #F1F5F9 on #3B82F6 is 3.36:1 (need ≥4.5); use a higher-contrast palette role\n- WARNING slide_01_attempt_04.svg: Low text contrast: body text #94A3B8 on #3B82F6 is 1.43:1 (need ≥4.5); use a higher-contrast palette role\n- WARNING slide_01_attempt_04.svg: Low text contrast: large/title text #3B82F6 on #3B82F6 is 1.00:1 (need ≥3.0); use a higher-contrast palette role",
+      "static_qa": {
+        "verdict": "failed",
+        "defect_count": 0,
+        "geometry_verdict": null
+      },
+      "chrome_render": {
+        "status": "rendered",
+        "detail": "clean"
+      },
+      "machine_family_verdict": {
+        "recognized": false,
+        "classified_as": "hierarchy-definition",
+        "signature_metrics": {
+          "text_count": 12,
+          "card_count": 4,
+          "connector_count": 2,
+          "font_tiers": [
+            12,
+            20,
+            48
+          ]
+        }
+      },
+      "non_degeneration": "ok",
+      "svg_evidence": "sequence.svg",
+      "svg_evidence_is_failed_attempt": true
+    }
+  ],
+  "classifier_revision": "re-classified 2026-08-17 with uniform-row hierarchy guard (live-run classifier over-matched hierarchy on title+bullets); same SVG evidence, same provider run"
+}

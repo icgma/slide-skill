@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import threading
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -12,6 +13,12 @@ from .util import ensure_dir
 TRACE_FILE = "ai-trace.jsonl"
 TRACE_ARTIFACT_DIR = "ai-trace-artifacts"
 MAX_EXCERPT_CHARS = 700
+
+# CONC-02 (v5.1 phase 58): event-numbering + append must be single-writer.
+# The index is derived by counting existing lines, so an interleaved append
+# would produce duplicate event indexes and torn artifact names. One
+# process-wide lock makes write_ai_trace atomic for all threads.
+_TRACE_LOCK = threading.Lock()
 
 
 def write_ai_trace(
@@ -32,33 +39,34 @@ def write_ai_trace(
     project = Path(project_path)
     qa_dir = ensure_dir(project / "qa")
     path = qa_dir / TRACE_FILE
-    event_index = _next_event_index(path)
-    artifact_paths = _write_trace_artifacts(
-        qa_dir,
-        event_index=event_index,
-        stage=stage,
-        attempt=attempt,
-        prompt=prompt,
-        raw=raw,
-        request=request,
-    )
     request_text = json.dumps(request or {}, ensure_ascii=False, indent=2) if request else ""
-    payload = {
-        "ts": datetime.now(timezone.utc).isoformat(),
-        "stage": stage,
-        "model": model,
-        "status": status,
-        "attempt": attempt,
-        "prompt_chars": len(prompt or ""),
-        "raw_chars": len(raw or ""),
-        "request_chars": len(request_text),
-        "prompt_excerpt": _excerpt(prompt),
-        "raw_excerpt": _excerpt(raw),
-        **artifact_paths,
-        "metadata": metadata or {},
-    }
-    with path.open("a", encoding="utf-8") as handle:
-        handle.write(json.dumps(payload, ensure_ascii=False) + "\n")
+    with _TRACE_LOCK:
+        event_index = _next_event_index(path)
+        artifact_paths = _write_trace_artifacts(
+            qa_dir,
+            event_index=event_index,
+            stage=stage,
+            attempt=attempt,
+            prompt=prompt,
+            raw=raw,
+            request=request,
+        )
+        payload = {
+            "ts": datetime.now(timezone.utc).isoformat(),
+            "stage": stage,
+            "model": model,
+            "status": status,
+            "attempt": attempt,
+            "prompt_chars": len(prompt or ""),
+            "raw_chars": len(raw or ""),
+            "request_chars": len(request_text),
+            "prompt_excerpt": _excerpt(prompt),
+            "raw_excerpt": _excerpt(raw),
+            **artifact_paths,
+            "metadata": metadata or {},
+        }
+        with path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(payload, ensure_ascii=False) + "\n")
 
 
 def ai_response_metadata(response) -> dict:

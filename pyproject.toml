@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "slide-skill"
-version = "5.0.0a1"
+version = "5.1.0"
 description = "SVG-first slide generation toolkit with intelligent content planning and domain-specific layouts"
 requires-python = ">=3.11"
 license = "MIT"
@@ -29,6 +29,11 @@ image = [
 ]
 pdf = [
   "fpdf2>=2.8.0",
+]
+com = [
+  # Optional: enables the PowerPoint COM final smoke render (GATE-04) on
+  # Windows hosts with Office installed. Absent -> capability gap logged.
+  "pywin32>=306; platform_system == 'Windows'",
 ]
 
 [project.scripts]

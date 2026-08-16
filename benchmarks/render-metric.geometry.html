@@ -1,0 +1,116 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;width:1280px;height:720px;overflow:hidden}svg{width:1280px;height:720px;display:block}</style><svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="card-grad-01" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="card-grad-02" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <radialGradient id="orb-glow-01" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <g id="background">
+    <rect x="0" y="0" width="1280" height="720" fill="#0F172A" />
+  </g>
+
+  <g id="decor-01">
+    <rect x="0" y="0" width="6" height="720" fill="#3B82F6" />
+    <circle cx="1120" cy="100" r="200" fill="url(#orb-glow-01)" />
+    <circle cx="80" cy="660" r="180" fill="url(#orb-glow-01)" />
+    <line x1="80" y1="220" x2="1200" y2="220" stroke="#29374B" stroke-width="1" />
+  </g>
+
+  <g id="content-title-01">
+    <text x="80" y="115" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="52" font-weight="700" fill="#F1F5F9">
+      质量门禁必须前置
+    </text>
+    <rect x="80" y="133" width="80" height="4" fill="#3B82F6" rx="2" />
+  </g>
+
+  <g id="content-body-01">
+    <text x="80" y="185" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="20" fill="#94A3B8">
+      一个压倒性的核心数字支撑一句结论。大数字是页面唯一的视觉重心。
+    </text>
+
+    <rect x="80" y="240" width="520" height="400" rx="16" fill="url(#card-grad-01)" />
+    <rect x="80" y="240" width="520" height="4" rx="2" fill="#3B82F6" />
+    <text x="120" y="310" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="600" fill="#94A3B8">
+      核心数字
+    </text>
+    <text x="340" y="440" text-anchor="middle" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif"><tspan font-size="150" font-weight="700" fill="#F1F5F9">73</tspan><tspan x="340" dy="40" font-size="20" fill="#94A3B8">（个低对比度问题）</tspan></text>
+
+    <rect x="640" y="240" width="560" height="400" rx="16" fill="url(#card-grad-02)" />
+    <rect x="640" y="240" width="560" height="4" rx="2" fill="#3B82F6" />
+    <text x="680" y="310" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="16" font-weight="600" fill="#94A3B8">
+      结论
+    </text>
+    <text x="680" y="420" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="36" font-weight="600" fill="#F1F5F9">
+      必须在导出前被拦截
+    </text>
+    <rect x="680" y="450" width="60" height="3" fill="#3B82F6" rx="2" />
+    <text x="680" y="490" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#94A3B8">
+      在导出流程中设置强制拦截点，
+    </text>
+    <text x="680" y="520" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="18" fill="#94A3B8">
+      确保低对比度问题不进入交付环节。
+    </text>
+  </g>
+
+  <g id="chrome-footer">
+    <rect x="0" y="688" width="1280" height="32" fill="#1E293B" />
+    <circle cx="24" cy="704" r="3" fill="#3B82F6" />
+    <circle cx="40" cy="704" r="3" fill="#3B82F6" />
+    <circle cx="56" cy="704" r="3" fill="#3B82F6" />
+    <text x="1240" y="708" font-family="Aptos, Arial, 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', sans-serif" font-size="12" fill="#94A3B8" text-anchor="end">
+      01 / 01
+    </text>
+  </g>
+</svg><script>
+    const svg = document.querySelector('svg');
+    const svgRect = svg.getBoundingClientRect();
+    const bounds = [...document.querySelectorAll('svg text')].map((node) => {
+      const rect = node.getBoundingClientRect();
+      const style = getComputedStyle(node);
+      let ancestor = node;
+      let hasClipOrMask = false;
+      while (ancestor && ancestor !== svg) {
+        const ancestorStyle = getComputedStyle(ancestor);
+        if (ancestorStyle.clipPath !== 'none' || ancestorStyle.maskImage !== 'none'
+            || ancestor.getAttribute('clip-path') || ancestor.getAttribute('mask')) {
+          hasClipOrMask = true;
+          break;
+        }
+        ancestor = ancestor.parentElement;
+      }
+      const opacity = Number(style.opacity);
+      const fillOpacity = Number(style.fillOpacity);
+      const visible = style.display !== 'none' && style.visibility !== 'hidden'
+        && opacity >= 0.1 && fillOpacity >= 0.1 && style.fill !== 'none';
+      const intersection = Math.max(0, Math.min(rect.right, svgRect.right) - Math.max(rect.left, svgRect.left))
+        * Math.max(0, Math.min(rect.bottom, svgRect.bottom) - Math.max(rect.top, svgRect.top));
+      let group = node.parentElement;
+      while (group && group.parentElement !== svg) group = group.parentElement;
+      const rects = group ? [...group.querySelectorAll('rect')]
+        .filter((item) => {
+          const rectStyle = getComputedStyle(item);
+          const painted = rectStyle.fill !== 'none' || rectStyle.stroke !== 'none';
+          return rectStyle.display !== 'none' && rectStyle.visibility !== 'hidden'
+            && Number(rectStyle.opacity) >= 0.1 && painted
+            && Math.max(Number(rectStyle.fillOpacity), Number(rectStyle.strokeOpacity)) >= 0.1;
+        })
+        .map((item) => item.getBoundingClientRect()) : [];
+      const card = rects.sort((a, b) => b.width * b.height - a.width * a.height)[0];
+      return {text: node.textContent.trim(), left: rect.left, top: rect.top,
+              right: rect.right, bottom: rect.bottom, width: rect.width, height: rect.height,
+              visible, hasClipOrMask, intersection, area: rect.width * rect.height,
+              groupText: group ? group.textContent.trim() : '',
+              groupId: group ? group.id : '',
+              card: card ? {left: card.left, top: card.top, right: card.right, bottom: card.bottom} : null};
+    });
+    document.body.textContent = JSON.stringify(bounds);
+    </script>

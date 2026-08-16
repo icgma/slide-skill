@@ -1452,3 +1452,164 @@ def _parse_fit_box(value: str) -> tuple[int, int, int, int] | None:
     if w <= 0 or h <= 0:
         return None
     return x, y, w, h
+
+
+# =====================================================================
+# Browser DOM geometry arbitration (BENCH-03)
+# =====================================================================
+#
+# The character-width model above is a cheap pre-screen; the browser's
+# getBBox()/getComputedTextLength() measurements are the final arbiter for
+# every text-geometry verdict class: cross-element overlap (including
+# horizontal <tspan dx> flows and large display numerals), and canvas-edge
+# overflow (which is where text-anchor width errors surface). Measured
+# clean -> the static issue is dropped; measured colliding -> kept
+# (confirmed); no browser -> kept (unavailable) — never a silent pass.
+# Fit-box constraints stay static-only: the fit box is a layout intent the
+# browser cannot see. (v5.0 QA-02 arbitrated big texts only; v5.1 BENCH-03
+# extends the same mechanism to all text sizes.)
+
+_GEOMETRY_ARBITRABLE_PREFIXES = (
+    "Text overlap:",
+    "Text may overflow right edge:",
+    "Text may overflow bottom edge:",
+)
+
+_GEOMETRY_QUOTED_RE = re.compile(r'"([^"]{1,80})"')
+
+
+def _compact_ws(text) -> str:
+    return " ".join(str(text or "").split())
+
+
+def _issue_quoted_snippets(message: str) -> list[str]:
+    """Quoted text fragments from a static QA message (truncation stripped)."""
+    snippets: list[str] = []
+    for quoted in _GEOMETRY_QUOTED_RE.findall(message or ""):
+        snippet = _compact_ws(quoted)
+        if snippet.endswith("..."):
+            snippet = snippet[:-3].rstrip()
+        if snippet:
+            snippets.append(snippet)
+    return snippets
+
+
+def _measured_text_nodes(measurements: list[dict]) -> list[tuple[str, float, float, float, float]]:
+    """(compact_text, x1, y1, x2, y2) for measured <text>-level nodes."""
+    nodes: list[tuple[str, float, float, float, float]] = []
+    for entry in measurements:
+        if not isinstance(entry, dict):
+            continue
+        tag = str(entry.get("tag") or "text").lower()
+        if tag != "text":
+            continue
+        bbox = entry.get("bbox") if isinstance(entry.get("bbox"), dict) else {}
+        try:
+            x = float(bbox.get("x", 0))
+            y = float(bbox.get("y", 0))
+            w = float(bbox.get("width", 0))
+            h = float(bbox.get("height", 0))
+        except (TypeError, ValueError):
+            continue
+        nodes.append((_compact_ws(entry.get("text")), x, y, x + w, y + h))
+    return nodes
+
+
+def _measured_issue_confirmed(
+    message: str,
+    nodes: list[tuple[str, float, float, float, float]],
+    canvas_w: int,
+    canvas_h: int,
+) -> bool | None:
+    """Re-verdict one static issue from measured rects.
+
+    Returns True (confirmed), False (cleared), or None when the quoted texts
+    cannot be matched to measured nodes (keep the static verdict).
+    """
+    snippets = _issue_quoted_snippets(message)
+    if message.startswith("Text overlap:"):
+        if len(snippets) < 2:
+            return None
+        set_a = [node for node in nodes if snippets[0] in node[0]]
+        set_b = [node for node in nodes if snippets[1] in node[0]]
+        if not set_a or not set_b:
+            return None
+        for a in set_a:
+            for b in set_b:
+                if a is b:
+                    continue
+                if text_boxes_overlap(a[1], a[2], a[3], a[4], b[1], b[2], b[3], b[4]):
+                    return True
+        return False
+    if not snippets:
+        return None
+    matched = [node for node in nodes if snippets[0] in node[0]]
+    if not matched:
+        return None
+    x_margin, y_margin = canvas_overflow_margins(canvas_w, canvas_h)
+    if "right edge" in message:
+        return any(node[3] > canvas_w + x_margin for node in matched)
+    return any(node[4] > canvas_h + y_margin for node in matched)
+
+
+def arbitrate_text_geometry(svg_text: str, issues: list) -> tuple[list, dict | None]:
+    """Browser-arbitrate every text-geometry static verdict (BENCH-03).
+
+    Returns ``(issues, trace_metadata)``. ``trace_metadata`` is ``None`` when
+    no qualifying issue existed (no browser invoked); otherwise it carries
+    ``geometry_verdict`` (cleared | confirmed | unavailable) plus counts, and
+    cleared issues are removed from the returned list. All text sizes
+    qualify — the static character-width model is pre-screen only.
+    """
+    if not issues:
+        return issues, None
+    qualifying = [
+        issue for issue in issues
+        if str(getattr(issue, "message", "")).startswith(_GEOMETRY_ARBITRABLE_PREFIXES)
+    ]
+    if not qualifying:
+        return issues, None
+    try:
+        root = ET.fromstring(svg_text)
+    except ET.ParseError:
+        return issues, None
+    try:
+        canvas_w = int(float(root.attrib.get("width", "1280")))
+        canvas_h = int(float(root.attrib.get("height", "720")))
+    except (ValueError, TypeError):
+        canvas_w, canvas_h = 1280, 720
+
+    from .chrome_geometry import measure_svg_text_geometry
+
+    measurements = measure_svg_text_geometry(svg_text)
+    if measurements is None:
+        return issues, {
+            "geometry_verdict": "unavailable",
+            "geometry_checked": len(qualifying),
+        }
+
+    nodes = _measured_text_nodes(measurements)
+    cleared_ids: set[int] = set()
+    confirmed = 0
+    for issue in qualifying:
+        verdict = _measured_issue_confirmed(
+            str(getattr(issue, "message", "")), nodes, canvas_w, canvas_h,
+        )
+        if verdict is False:
+            cleared_ids.add(id(issue))
+        elif verdict is True:
+            confirmed += 1
+    if cleared_ids:
+        issues = [issue for issue in issues if id(issue) not in cleared_ids]
+    if confirmed:
+        verdict_label = "confirmed"
+    elif cleared_ids:
+        verdict_label = "cleared"
+    else:
+        verdict_label = "unavailable"
+    return issues, {
+        "geometry_verdict": verdict_label,
+        "geometry_checked": len(qualifying),
+        "geometry_cleared": len(cleared_ids),
+        "geometry_confirmed": confirmed,
+    }

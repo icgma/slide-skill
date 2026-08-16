@@ -168,6 +168,7 @@ class TestMeasureWithMockedChrome:
 
 
 @pytest.mark.skipif(find_chrome() is None, reason="no local Chrome/Edge installed")
+@pytest.mark.real_browser
 class TestRealChromeIntegration:
 
     def test_real_browser_measures_two_text_svg(self):
@@ -292,9 +293,16 @@ class TestGeometryArbitration:
         assert info is not None
         assert info["geometry_verdict"] == "unavailable"
 
-    def test_small_text_issues_never_invoke_the_browser(self, monkeypatch):
+    def test_small_text_issues_now_qualify_for_arbitration(self, monkeypatch):
+        # BENCH-03 flipped the v5.0 QA-02 gate: DOM geometry is the final
+        # arbiter for ALL text sizes, not only big numerals — small-text
+        # phantom overlaps must also be re-verdicted from measured bboxes.
         calls: list = []
-        self._patch_measure(monkeypatch, [], calls)
+        self._patch_measure(monkeypatch, _measured([
+            ("Big Metric", 96, 66, 240, 24),
+            ("97%", 100, 212, 60, 24),
+            ("uptime", 110, 396, 80, 24),
+        ]), calls)
         small_svg = _big_numeral_svg().replace('font-size="120"', 'font-size="24"').replace(
             'font-size="44"', 'font-size="20"'
         )
@@ -303,9 +311,11 @@ class TestGeometryArbitration:
             'Text overlap: "97%" (282-306y) overlaps "uptime" (292-316y)',
         )
         issues, info = _arbitrate_static_text_geometry(small_svg, [small_issue])
-        assert issues == [small_issue]
-        assert info is None
-        assert calls == []
+        assert issues == []
+        assert info is not None
+        assert info["geometry_verdict"] == "cleared"
+        assert info["geometry_checked"] == 1
+        assert calls  # the browser path was invoked
 
     def test_overflow_verdicts_follow_measured_canvas_edges(self, monkeypatch):
         overflow = SvgIssue(

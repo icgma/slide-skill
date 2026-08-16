@@ -24,6 +24,7 @@ import os
 import re
 import shutil
 import sys
+import time
 import unicodedata
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -49,6 +50,66 @@ _VISUAL_FEEDBACK_MD = "VISUAL-REVIEW.md"
 _VISUAL_FEEDBACK_JSON = "visual-feedback.json"
 
 
+class ProviderAuthError(RuntimeError):
+    """A provider rejected a key's credentials (CONC-04).
+
+    Raised after key isolation so the pool owner can rotate to a surviving
+    key. Never carries key material — only the class signal.
+    """
+
+
+def _classify_provider_error(exc: Exception) -> str:
+    """Classify a provider exception for the CONC-04 error policy.
+
+    ``auth``       -> isolate the key, never retry it.
+    ``rate_limit`` -> honor Retry-After, then retry the same key.
+    ``transient``  -> retry by the normal attempt policy.
+    ``fatal``      -> anything else (surfaces through the retry policy).
+    """
+    name = type(exc).__name__
+    status = getattr(exc, "status_code", None)
+    if "Authentication" in name or "PermissionDenied" in name or status == 401:
+        return "auth"
+    if "RateLimit" in name or status == 429:
+        return "rate_limit"
+    if (
+        "Connection" in name
+        or "Timeout" in name
+        or isinstance(exc, (TimeoutError, OSError))
+    ):
+        return "transient"
+    return "fatal"
+
+
+def _retry_after_seconds(exc: Exception, *, default: float = 5.0, cap: float = 60.0) -> float:
+    """Honor the provider's Retry-After when present (CONC-04)."""
+    response = getattr(exc, "response", None)
+    headers = getattr(response, "headers", None) or {}
+    raw = headers.get("retry-after") if hasattr(headers, "get") else None
+    try:
+        value = float(raw)
+    except (TypeError, ValueError):
+        value = default
+    return min(max(value, 0.0), cap)
+
+
+def _concurrency_key_pool() -> list[str]:
+    """Usable provider keys for the concurrency pool (CONC-01).
+
+    Keys are read ONLY from the environment: ``OPENAI_API_KEYS`` (comma-
+    separated) falling back to ``OPENAI_API_KEY``. Never from CLI args,
+    source files, fixtures, or examples — a key must never be able to leak
+    through a command line or a committed artifact.
+    """
+    raw = os.environ.get("OPENAI_API_KEYS", "") or os.environ.get("OPENAI_API_KEY", "")
+    seen: dict[str, None] = {}
+    for key in raw.split(","):
+        key = key.strip()
+        if key:
+            seen.setdefault(key, None)
+    return list(seen)
+
+
 def generate_svg_with_ai(
     project_path: Path | str,
     plans: list,
@@ -65,6 +126,7 @@ def generate_svg_with_ai(
     strict_quality: bool = True,
     clear_output: bool = True,
     deck_total: int | None = None,
+    ai_concurrency: int = 1,
 ) -> list[Path]:
     """Generate SVG pages using an LLM via OpenAI-compatible API.
 
@@ -84,6 +146,11 @@ def generate_svg_with_ai(
         strict_quality: Treat design-quality warnings as blocking feedback.
         clear_output: Remove existing SVG output before generation.
         deck_total: Total deck slide count for targeted repairs.
+        ai_concurrency: Bounded worker count for the key-slot pool
+                        (CONC-01). Default 1 = serial. Pool keys come ONLY
+                        from the environment (OPENAI_API_KEYS comma-
+                        separated, else OPENAI_API_KEY) — never CLI args,
+                        source files, or fixtures.
 
     Returns:
         List of paths to generated SVG files.
@@ -110,19 +177,25 @@ def generate_svg_with_ai(
     _base = base_url or os.environ.get("OPENAI_BASE_URL", _DEFAULT_BASE_URL)
     _model = model or os.environ.get("OPENAI_MODEL", _DEFAULT_MODEL)
 
-    client = OpenAI(api_key=_key, base_url=_base)
-
     total = deck_total or _infer_deck_total(project, plans, include_existing=not clear_output)
     paths: list[Path] = []
 
-    for plan in plans:
+    def _generate_plan(plan, client, previous_paths, *, attempt_dir=None):
+        """Generate one slide through the attempt/repair loop.
+
+        CONC-02: ``previous_paths`` is an immutable snapshot owned by the
+        caller - the serial path passes completed pages for the layout
+        diversity hint; concurrent workers pass [] so no page depends on
+        another page being finished first. ``attempt_dir`` isolates a
+        worker attempt directory (CONC-03).
+        """
         path = out_dir / f"slide_{plan.index:02d}.svg"
         feedback = ""
         final_issues = []
         current_max_tokens = max_tokens
 
         for attempt in range(qa_retries + 1):
-            attempt_path = attempt_svg_dir / f"slide_{plan.index:02d}_attempt_{attempt + 1:02d}.svg"
+            attempt_path = (attempt_dir or attempt_svg_dir) / f"slide_{plan.index:02d}_attempt_{attempt + 1:02d}.svg"
             try:
                 spec_lock, spec_lock_text = _load_spec_lock(project)
                 print(f"[executor] slide {plan.index:02d} attempt {attempt + 1}: spec_lock re-read from disk", file=sys.stderr)
@@ -141,7 +214,7 @@ def generate_svg_with_ai(
             executor_brief = _load_executor_brief(project, plan.index)
             visual_feedback = _load_visual_feedback(project, plan.index)
             user_prompt = _build_page_prompt(
-                plan, total, spec_lock, design_guide, prompt_w, prompt_h, paths,
+                plan, total, spec_lock, design_guide, prompt_w, prompt_h, previous_paths,
                 spec_lock_text=spec_lock_text,
                 executor_brief=executor_brief,
                 feedback=feedback,
@@ -209,6 +282,22 @@ def generate_svg_with_ai(
                 current_max_tokens = escalated
                 continue
             except Exception as exc:  # noqa: BLE001 - provider SDKs expose many exception classes.
+                # CONC-04 error policy: auth failures isolate the key
+                # (surfaced for pool rotation, never retried in place);
+                # rate limits honor Retry-After before the retry proceeds.
+                error_kind = _classify_provider_error(exc)
+                if error_kind == "auth":
+                    raise ProviderAuthError(
+                        "provider rejected this key's credentials; "
+                        "key isolated from the pool"
+                    ) from exc
+                if error_kind == "rate_limit":
+                    delay = _retry_after_seconds(exc)
+                    print(
+                        f"[executor] rate limited; honoring Retry-After ({delay:.0f}s)",
+                        file=sys.stderr,
+                    )
+                    time.sleep(delay)
                 error = _provider_error_message(exc)
                 write_ai_trace(
                     project,
@@ -265,6 +354,18 @@ def generate_svg_with_ai(
                 svg_content, final_issues,
             )
             blocking = _blocking_issues(final_issues, strict_quality=strict_quality)
+            # GATE-01 (v5.1 phase 57): render-convergence gate at publication.
+            # A page whose structural QA is clean but whose render is a black
+            # frame must not publish — it loops back into repair instead.
+            # Honesty preserved: no browser -> capability gap, never a block.
+            # Not tied to run_qa: render convergence is the publish criterion
+            # itself, not an optional QA step.
+            if not blocking:
+                render_ok, render_reason = _browser_render_gate(attempt_path)
+                if not render_ok:
+                    from .svg_qa import SvgIssue
+
+                    blocking = [SvgIssue("error", str(attempt_path), render_reason)]
             auto_wrap_repaired = False
             auto_contrast_repaired = False
 
@@ -369,7 +470,115 @@ def generate_svg_with_ai(
                 )
             feedback = _format_issue_feedback(blocking)
 
-        paths.append(path)
+        return path
+
+    # -- CONC-01..03 (v5.1 phase 58): bounded key-slot concurrency -----------
+    ai_concurrency = max(1, int(ai_concurrency or 1))
+    key_pool = _concurrency_key_pool() if ai_concurrency > 1 else []
+    max_workers = min(ai_concurrency, len(key_pool), len(plans)) if key_pool else 1
+    if ai_concurrency > 1 and max_workers <= 1:
+        print(
+            "[executor] --ai-concurrency > 1 requested but no usable key pool "
+            "(set OPENAI_API_KEYS as a comma-separated list, or OPENAI_API_KEY); "
+            "running serial with one key",
+            file=sys.stderr,
+        )
+
+    if max_workers > 1:
+        import queue as _queue
+        import threading
+        from concurrent.futures import ThreadPoolExecutor
+
+        key_queue: "_queue.Queue[str]" = _queue.Queue()
+        for _pool_key in key_pool:
+            key_queue.put(_pool_key)
+        clients_by_key: dict[str, object] = {}
+        alive_lock = threading.Lock()
+        alive_keys = [len(key_pool)]
+
+        def _run_plan(plan):
+            # Key-slot discipline: at most one in-flight request per key -
+            # a worker holds its key for the whole page (attempts + QA).
+            # CONC-04: an auth-rejected key is isolated (never returned to
+            # the pool) and the page rotates to a surviving key; when no
+            # keys remain the deck fails wholesale. The get() is bounded:
+            # when every key ends up isolated, blocked getters must wake
+            # up and fail instead of waiting for a key that never returns.
+            while True:
+                try:
+                    key = key_queue.get(timeout=30)
+                except _queue.Empty:
+                    with alive_lock:
+                        remaining = alive_keys[0]
+                    if remaining <= 0:
+                        raise RuntimeError(
+                            "all provider keys isolated after auth failures; "
+                            "deck aborted wholesale"
+                        ) from None
+                    continue
+                if key is None:
+                    # Sentinel pushed when the pool hit zero alive keys.
+                    raise RuntimeError(
+                        "all provider keys isolated after auth failures; "
+                        "deck aborted wholesale"
+                    ) from None
+                isolated = False
+                try:
+                    cl = clients_by_key.get(key)
+                    if cl is None:
+                        cl = OpenAI(api_key=key, base_url=_base)
+                        clients_by_key[key] = cl
+                    page_attempt_dir = attempt_svg_dir / f"slide_{plan.index:02d}"
+                    page_attempt_dir.mkdir(parents=True, exist_ok=True)
+                    return _generate_plan(
+                        plan, cl, [], attempt_dir=page_attempt_dir,
+                    )
+                except ProviderAuthError:
+                    isolated = True
+                    with alive_lock:
+                        alive_keys[0] -= 1
+                        remaining = alive_keys[0]
+                    print(
+                        "[executor] provider key isolated after auth failure; "
+                        f"{remaining} key(s) remain in the pool",
+                        file=sys.stderr,
+                    )
+                    if remaining <= 0:
+                        # Wake every blocked/queued getter so the pool
+                        # drains fast (upper bound: one waiter per plan).
+                        for _ in range(len(plans)):
+                            key_queue.put(None)
+                        raise RuntimeError(
+                            "all provider keys isolated after auth failures; "
+                            "deck aborted wholesale"
+                        ) from None
+                    continue
+                finally:
+                    if not isolated:
+                        key_queue.put(key)
+
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            futures = {pool.submit(_run_plan, plan): plan for plan in plans}
+            errors: list[str] = []
+            for future in futures:
+                try:
+                    paths.append(future.result())
+                except Exception as exc:  # noqa: BLE001 - collect every page failure
+                    errors.append(f"{exc.__class__.__name__}: {exc}")
+            if errors:
+                # CONC-04: a failed page fails the deck wholesale - no
+                # partial export can proceed from a partial page set.
+                raise RuntimeError(
+                    "concurrent executor failed for "
+                    f"{len(errors)} page(s); deck aborted wholesale:\n"
+                    + "\n".join(errors[:5])
+                )
+        paths.sort(key=lambda p: p.name)
+    else:
+        client = OpenAI(api_key=_key, base_url=_base)
+        for plan in plans:
+            paths.append(_generate_plan(plan, client, list(paths)))
+
 
     if run_qa:
         _run_quality_check(project, spec_lock, paths, strict_quality=strict_quality)
@@ -1239,205 +1448,22 @@ def _repair_preserves_visible_text(original_text: str, patched_text: str) -> boo
     return element_texts(original_text) == element_texts(patched_text)
 
 
-# ── QA-02: browser geometry arbitration for big-text static verdicts ─────────
+# ── Browser geometry arbitration (QA-02 -> BENCH-03) ─────────────────────
 #
-# svg_qa's character-width model is a cheap pre-screen, but REDESIGN_v5 F.4
-# showed it lies on metric slides with huge display numerals: static overlap/
-# overflow verdicts that rendered pixels contradict. When a static issue
-# involves text with font-size >= 40 and a local Chrome exists, the browser's
-# getBBox() re-verdicts it with the SAME thresholds svg_qa uses. Measured
-# clean -> the issue is dropped (geometry_verdict: cleared); measured
-# colliding -> kept (confirmed); no browser -> kept (unavailable). Static
-# estimates only pre-screen; the browser is the arbiter whenever present.
-
-_GEOMETRY_BIG_FONT_SIZE = 40.0
-
-# Static issue classes the browser may overrule: cross-element text overlap
-# and canvas-edge overflow. Fit-box constraints stay static-only (the box is
-# a layout intent the browser cannot see).
-_GEOMETRY_ARBITRABLE_PREFIXES = (
-    "Text overlap:",
-    "Text may overflow right edge:",
-    "Text may overflow bottom edge:",
-)
-
-_GEOMETRY_QUOTED_RE = re.compile(r'"([^"]{1,80})"')
-
-
-def _compact_ws(text) -> str:
-    return " ".join(str(text or "").split())
-
-
-def _big_text_contents(root) -> list[str]:
-    """Compact content of every <text> whose own/tspan font-size >= 40."""
-    contents: list[str] = []
-    for elem in root.iter():
-        if _svg_local_name(elem.tag) != "text":
-            continue
-        sizes = [elem.attrib.get("font-size", "")]
-        sizes.extend(child.attrib.get("font-size", "") for child in elem)
-        big = False
-        for fs_str in sizes:
-            try:
-                if fs_str and float(fs_str) >= _GEOMETRY_BIG_FONT_SIZE:
-                    big = True
-                    break
-            except (ValueError, TypeError):
-                continue
-        if not big:
-            continue
-        content = _compact_ws(" ".join(elem.itertext()))
-        if content:
-            contents.append(content)
-    return contents
-
-
-def _issue_quoted_snippets(message: str) -> list[str]:
-    """Quoted text fragments from a static QA message (truncation stripped)."""
-    snippets: list[str] = []
-    for quoted in _GEOMETRY_QUOTED_RE.findall(message or ""):
-        snippet = _compact_ws(quoted)
-        if snippet.endswith("..."):
-            snippet = snippet[:-3].rstrip()
-        if snippet:
-            snippets.append(snippet)
-    return snippets
-
-
-def _geometry_issue_qualifies(message: str, big_texts: list[str]) -> bool:
-    if not str(message or "").startswith(_GEOMETRY_ARBITRABLE_PREFIXES):
-        return False
-    snippets = _issue_quoted_snippets(message)
-    return any(
-        any(snippet in big for big in big_texts) for snippet in snippets
-    )
-
-
-def _measured_text_nodes(measurements: list[dict]) -> list[tuple[str, float, float, float, float]]:
-    """(compact_text, x1, y1, x2, y2) for measured <text>-level nodes."""
-    nodes: list[tuple[str, float, float, float, float]] = []
-    for entry in measurements:
-        if not isinstance(entry, dict):
-            continue
-        tag = str(entry.get("tag") or "text").lower()
-        if tag != "text":
-            continue
-        bbox = entry.get("bbox") if isinstance(entry.get("bbox"), dict) else {}
-        try:
-            x = float(bbox.get("x", 0))
-            y = float(bbox.get("y", 0))
-            w = float(bbox.get("width", 0))
-            h = float(bbox.get("height", 0))
-        except (TypeError, ValueError):
-            continue
-        nodes.append((_compact_ws(entry.get("text")), x, y, x + w, y + h))
-    return nodes
-
-
-def _measured_issue_confirmed(
-    message: str,
-    nodes: list[tuple[str, float, float, float, float]],
-    canvas_w: int,
-    canvas_h: int,
-) -> bool | None:
-    """Re-verdict one static issue from measured rects.
-
-    Returns True (confirmed), False (cleared), or None when the quoted texts
-    cannot be matched to measured nodes (keep the static verdict).
-    """
-    from .svg_qa import canvas_overflow_margins, text_boxes_overlap
-
-    snippets = _issue_quoted_snippets(message)
-    if message.startswith("Text overlap:"):
-        if len(snippets) < 2:
-            return None
-        set_a = [node for node in nodes if snippets[0] in node[0]]
-        set_b = [node for node in nodes if snippets[1] in node[0]]
-        if not set_a or not set_b:
-            return None
-        for a in set_a:
-            for b in set_b:
-                if a is b:
-                    continue
-                if text_boxes_overlap(a[1], a[2], a[3], a[4], b[1], b[2], b[3], b[4]):
-                    return True
-        return False
-    if not snippets:
-        return None
-    matched = [node for node in nodes if snippets[0] in node[0]]
-    if not matched:
-        return None
-    x_margin, y_margin = canvas_overflow_margins(canvas_w, canvas_h)
-    if "right edge" in message:
-        return any(node[3] > canvas_w + x_margin for node in matched)
-    return any(node[4] > canvas_h + y_margin for node in matched)
+# svg_qa's character-width model is a cheap pre-screen; the browser's
+# getBBox() measurements are the final arbiter for every text-geometry
+# verdict class. The mechanism lives in svg_qa.arbitrate_text_geometry()
+# so the benchmark runner, publish gate, and executor share one arbiter.
+# Since v5.1 BENCH-03 all text sizes qualify (big numerals AND ordinary
+# tspan-dx / text-anchor width / small-text collisions).
 
 
 def _arbitrate_static_text_geometry(svg_text: str, issues: list) -> tuple[list, dict | None]:
-    """Browser-arbitrate big-text overlap/overflow verdicts (QA-02).
+    """Browser-arbitrate static text-geometry verdicts (delegates to svg_qa)."""
+    from .svg_qa import arbitrate_text_geometry
 
-    Returns ``(issues, trace_metadata)``. ``trace_metadata`` is ``None`` when
-    no qualifying issue existed (no browser invoked); otherwise it carries
-    ``geometry_verdict`` (cleared | confirmed | unavailable) plus counts, and
-    cleared issues are removed from the returned list.
-    """
-    if not issues:
-        return issues, None
-    try:
-        root = ET.fromstring(svg_text)
-    except ET.ParseError:
-        return issues, None
-    big_texts = _big_text_contents(root)
-    if not big_texts:
-        return issues, None
-    qualifying = [
-        issue for issue in issues
-        if _geometry_issue_qualifies(getattr(issue, "message", ""), big_texts)
-    ]
-    if not qualifying:
-        return issues, None
+    return arbitrate_text_geometry(svg_text, issues)
 
-    try:
-        canvas_w = int(float(root.attrib.get("width", "1280")))
-        canvas_h = int(float(root.attrib.get("height", "720")))
-    except (ValueError, TypeError):
-        canvas_w, canvas_h = 1280, 720
-
-    from .chrome_geometry import measure_svg_text_geometry
-
-    measurements = measure_svg_text_geometry(svg_text)
-    if measurements is None:
-        return issues, {
-            "geometry_verdict": "unavailable",
-            "geometry_checked": len(qualifying),
-        }
-
-    nodes = _measured_text_nodes(measurements)
-    cleared_ids: set[int] = set()
-    confirmed = 0
-    unarbitrated = 0
-    for issue in qualifying:
-        verdict = _measured_issue_confirmed(issue.message, nodes, canvas_w, canvas_h)
-        if verdict is False:
-            cleared_ids.add(id(issue))
-        elif verdict is True:
-            confirmed += 1
-        else:
-            unarbitrated += 1
-    if cleared_ids:
-        issues = [issue for issue in issues if id(issue) not in cleared_ids]
-    if confirmed:
-        verdict_label = "confirmed"
-    elif cleared_ids:
-        verdict_label = "cleared"
-    else:
-        verdict_label = "unavailable"
-    return issues, {
-        "geometry_verdict": verdict_label,
-        "geometry_checked": len(qualifying),
-        "geometry_cleared": len(cleared_ids),
-        "geometry_confirmed": confirmed,
-    }
 
 
 # QA-03: capability-gap marker recorded when a repair is accepted without a

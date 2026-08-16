@@ -10,7 +10,7 @@ clean, inspectable SVG intermediate.
 
 [English README](README.md) · [中文 README](README.zh-CN.md)
 
-[![version](https://img.shields.io/badge/version-5.0.0a1-3B82F6)](pyproject.toml)
+[![version](https://img.shields.io/badge/version-5.1.0-3B82F6)](pyproject.toml)
 [![tests](https://img.shields.io/badge/tests-900%2B%20passing-22C55E)](tests/)
 [![python](https://img.shields.io/badge/python-3.11%2B-FFD43B)](pyproject.toml)
 [![output](https://img.shields.io/badge/output-editable%20PPTX-D04A02)](examples/sample-dark-tech/deck.pptx)

@@ -36,7 +36,7 @@ def _safe_int(val: str | None, default: int = 0) -> int:
     return int(m.group(0)) if m else default
 
 
-def export_project(project_path: Path | str, output: Path | str | None = None, stage: str = "final", preview: bool = True) -> Path:
+def export_project(project_path: Path | str, output: Path | str | None = None, stage: str = "final", preview: bool = True, com_smoke: bool | None = None) -> Path:
     try:
         from pptx import Presentation
         from pptx.dml.color import RGBColor
@@ -50,10 +50,26 @@ def export_project(project_path: Path | str, output: Path | str | None = None, s
     svg_files = sorted(svg_dir.glob("*.svg"))
     if not svg_files:
         raise FileNotFoundError(f"No SVG files found in {svg_dir}")
-    ok_svg, svg_issues = check_project_svg(project, stage=stage)
-    if not ok_svg:
-        details = "\n".join(f"{issue.level}: {issue.file}: {issue.message}" for issue in svg_issues)
-        raise RuntimeError(f"SVG quality gate failed before export:\n{details}")
+
+    # GATE-03 (v5.1): the render-convergence publish gate runs BEFORE the
+    # deck is assembled — a deck with any truncated, unsupported-content,
+    # black-render, or geometry-confirmed real-overlap page refuses export
+    # and no partial PPTX is produced. Deck-level rhythm/layout-variety QA
+    # is part of the same gate (quality=True). The per-run evidence lands
+    # in qa/PUBLISH-GATE.json whatever the verdict.
+    from .publish_gate import gate_deck, write_gate_report
+    deck = gate_deck(project, stage=stage, quality=True)
+    if not deck.passed:
+        write_gate_report(project, deck)
+        page_blockers = [
+            f"{page.path.name}: {blocker}"
+            for page in deck.pages if not page.passed
+            for blocker in page.blockers
+        ]
+        details = "\n".join(
+            [*(f"deck: {issue}" for issue in deck.deck_issues), *page_blockers]
+        )
+        raise RuntimeError(f"Render-convergence publish gate failed:\n{details}")
 
     prs = Presentation()
     prs.slide_width = Inches(float(meta["canvas"]["pptx_width_in"]))
@@ -207,6 +223,21 @@ def export_project(project_path: Path | str, output: Path | str | None = None, s
     out_path = Path(output) if output else out_dir / f"{meta['name']}_{timestamp()}.pptx"
     prs.save(out_path)
     _write_backup(project, out_path, svg_files)
+    # GATE-04 (v5.1): optional PowerPoint COM final smoke render — attempted
+    # by default on Windows hosts (com_smoke=None → auto); hosts without
+    # PowerPoint/pywin32 record the capability gap in the report instead of
+    # silently passing. A failed smoke render is surfaced but does not
+    # un-export the already-built deck; the verdict is durable evidence.
+    if com_smoke is None:
+        import sys
+        com_smoke = sys.platform == "win32"
+    if com_smoke:
+        from .publish_gate import com_smoke_render
+        status, detail = com_smoke_render(out_path)
+        deck.com_smoke = {"status": status, "detail": detail}
+        if status == "not-executed":
+            deck.capability_gaps.append(f"com-smoke: {detail}")
+    write_gate_report(project, deck)
     if preview:
         try:
             from .preview_pptx import export_preview_pptx
