@@ -104,7 +104,7 @@ def test_guide_sections_complete():
         "2. Colour Palette (12 roles)",
         "3. Typography",
         "3.5. Page Rhythm",
-        "4. Canvas & Chrome",
+        "4. Canvas & Optional Deck Motif",
         "5. SVG Group Structure",
         "6. Layout Templates",
         "7. Layout Examples",

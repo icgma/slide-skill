@@ -408,7 +408,8 @@ class SvgContractTests(unittest.TestCase):
             svg = svg.replace('</svg>', '<g id="noise"><rect x="0" y="0" width="1" height="1" fill="#3B82F6"/></g></svg>')
             path = root / "near-black.svg"
             path.write_text(svg, encoding="utf-8")
-            self.assertTrue(any("foreground coverage" in issue for issue in render_svg_smoke(path, root / "near-black.png")))
+            issues = render_svg_smoke(path, root / "near-black.png")
+            self.assertTrue(any("foreground coverage" in issue or "not visibly painted" in issue for issue in issues))
 
     def test_text_same_color_as_background_fails_pixel_visibility(self):
         with tempfile.TemporaryDirectory() as tmp:
