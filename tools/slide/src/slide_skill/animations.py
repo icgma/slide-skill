@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Sequence
-from lxml import etree as ET
+from xml.etree import ElementTree as ET
 
 _P = "http://schemas.openxmlformats.org/presentationml/2006/main"
 _A = "http://schemas.openxmlformats.org/drawingml/2006/main"

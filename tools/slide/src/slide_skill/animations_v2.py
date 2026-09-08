@@ -27,7 +27,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Iterable, Optional
 
-from lxml import etree as ET
+from xml.etree import ElementTree as ET
 
 _P = "http://schemas.openxmlformats.org/presentationml/2006/main"
 
